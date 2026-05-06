@@ -1,29 +1,61 @@
-# brain-info
+# NeuroAtlas.info
 
 Projekt ma na celu stworzenie interaktywnej platformy edukacyjnej, która pozwoli użytkownikom lepiej zrozumieć funkcjonowanie mózgu oraz wpływ różnych czynników na jego działanie.
 
-## Główne funkcjonalności platformy:
+## 🌟 Główne funkcjonalności (MVP)
 
-### Interaktywne modele mózgu.
+- **Interaktywne modele mózgu**
+  - Wizualizacje działania substancji psychoaktywnych, emocji, chorób i innych czynników wpływających na funkcjonowanie mózgu.
+- **Dobre i złe nawyki dla mózgu**
+  - Pokazanie rzeczy, które warto robić i których unikać.
+  - Prezentacja wartości procentowych i podświetlenie części mózgu, na które wpływa dany czynnik.
+- **Quizy i testy wiedzy**
+  - Quizy dostosowane do różnych poziomów zaawansowania.
+  - Kategorie quizów obejmują m.in.:
+    - Anatomię mózgu,
+    - Funkcje poszczególnych obszarów mózgu,
+    - Wpływ substancji psychoaktywnych,
+    - Choroby i zaburzenia neurologiczne,
+    - Wpływ emocji na funkcjonowanie mózgu.
 
-- Wizualizacje na modelu mózgu działania substancji psychoaktywnych, emocji, chorób i innych czynników wpływających na funkcjonowanie mózgu.
+## 🛠 Technologie i Architektura
 
-### Dobre i złe nawyki dla mózgu.
+- **Frontend:** React.js, TypeScript, Tailwind CSS
+- **Backend:** Python (FastAPI)
+- **Baza danych:** MongoDB
+- **Biblioteka 3D do mózgu:** ...
 
-- Pokazanie rzeczy ktore robic i nie robic dla mozgu. Jezeli mozliwe - pokazanie wartosci procentowych i podswietlenie czesci w mozgu na ktroy wplywa dana rzecz.
+## 📂 Struktura dokumentacji i projektu
 
-### Quizy i testy, które pozwolą użytkownikom sprawdzić swoją wiedzę na temat mózgu i jego funkcjonowania.
+Więcej szczegółów o specyfikacji projektu znajdziesz w folderze `docs/`:
 
-- Quizy będą dostosowane do różnych poziomów zaawansowania, aby każdy mógł znaleźć coś odpowiedniego dla siebie.
-- Kategorie quizów:
-  - Anatomia mózgu
-  - Funkcje poszczególnych obszarów mózgu
-  - Wpływ substancji psychoaktywnych na mózg
-  - Choroby i zaburzenia neurologiczne
-  - Wpływ emocji na funkcjonowanie mózgu
+- [01_MVP_SCOPE.md](docs/01_MVP_SCOPE.md) - Zakres funkcjonalności na pierwszą wersję
+- [02_ARCHITECTURE.md](docs/02_ARCHITECTURE.md) - Architektura systemu
+- [03_AI_AND_FUTURE.md](docs/03_AI_AND_FUTURE.md) - Skalowalność i plany na przyszłość
 
-## Technologie:
+## 🚀 Uruchomienie projektu (Getting Started)
 
-- Frontend: React.js
-- Backend: Python (FastAPI)
-- Baza danych: MongoDB
+### Instalacja i uruchomienie kodu
+
+**1. Klonowanie repozytorium**
+
+```bash
+git clone https://github.com/Veresek/NeuroAtlas.git
+cd brain-info
+```
+
+**2. Odpalenie projektu**
+
+```bash
+docker compose up
+```
+
+## 📜 Prawa autorskie i licencja
+
+Projekt nie jest oprogramowaniem open-source. **Wszelkie prawa zastrzeżone (All rights reserved).**
+Kopiowanie, modyfikowanie, dystrybucja lub użycie komercyjne całości bądź części kodu bez wyraźnej zgody autora są zabronione.
+
+## ✉️ Kontakt
+
+- Autor: [Veresek](https://github.com/Veresek)
+- LinkedIn: [Kacper Filipowski](https://linkedin.com/in/kacper-filipowski)

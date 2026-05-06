@@ -1,7 +1,5 @@
 # Architektura Systemu (MVP)
 
-Wykaz technologii dla MVP, zgodny ze stosami zdefiniowanymi w README:
-
 ## 1. Frontend (React.js)
 - **Biblioteki:** `react-router-dom` do routingu, `zustand` lub `context api` do obsługi stanu.
 - **Model mózgu:** Interaktywne grafiki oparte na SVG z obsługą kliknięć (CSS/hover states) lub prosta scena w `react-three-fiber` jeśli decydujemy się na odchudzone 3D.

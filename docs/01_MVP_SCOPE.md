@@ -23,11 +23,3 @@ Zamiast budować wysoce zaawansowany i kosztowny w renderowaniu model 3D, w MVP 
 2. **Mobile-First:** Aplikacje edukacyjne masowo konsumuje się na telefonach.
 3. **Słowniczek (Glossary):** Dodanie małej bazy pojęć (np. synapsa, dopamina) wyświetlanej jako tooltip.
 4. **Tryb Ciemny (Dark Mode):** Standard dla komfortu oczu przy nauce.
-
----
-
-## Czego celowo NIE robimy w MVP (Out of Scope)
-- Animacji drobin molekularnych, neuroprzekaźników i zjawisk w czasie rzeczywistym.
-- Skomplikowanego algorytmu adaptującego poziom quizu dla użytkownika.
-- Integracji z social mediami.
-- Systemu autoryzacji (Logowanie/Rejestracja).
