@@ -80,9 +80,8 @@ function NeuralNetwork({ meshes }: { meshes: THREE.Mesh[] }) {
 				<bufferGeometry>
 					<bufferAttribute
 						attach="attributes-position"
+						args={[positions, 3]}
 						count={positions.length / 3}
-						array={positions}
-						itemSize={3}
 					/>
 				</bufferGeometry>
 				<pointsMaterial
@@ -98,9 +97,8 @@ function NeuralNetwork({ meshes }: { meshes: THREE.Mesh[] }) {
 				<bufferGeometry>
 					<bufferAttribute
 						attach="attributes-position"
+						args={[linePositions, 3]}
 						count={linePositions.length / 3}
-						array={linePositions}
-						itemSize={3}
 					/>
 				</bufferGeometry>
 				<lineBasicMaterial color="#0088cc" transparent opacity={0.1} />
