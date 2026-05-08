@@ -1,25 +1,21 @@
-# Zakres Funkcjonalności MVP (Faza 1)
+# MVP Scope (Phase 1)
 
-Głównym celem MVP jest jak najszybsze zweryfikowanie pomysłu i dostarczenie podstawowej wartości edukacyjnej użytkownikom przy minimalnym nakładzie pracy początkowej.
+The main goal of the MVP is to deliver visible educational value and verify user engagement through interaction with the 3D model. We are combining a classic knowledge base with an innovative personalized approach.
 
-## A. Uproszczony Model Mózgu (Interaktywny)
-Zamiast budować wysoce zaawansowany i kosztowny w renderowaniu model 3D, w MVP proponuję:
-- **Interaktywna mapa 2D lub prosty model 3D (np. low poly):** Pokazująca główne obszary mózgu (płaty, móżdżek).
-- **Trzy pokazowe stymulanty/czynniki:** (np. Kofeina, Stres, Alkohol).
-- **Działanie:** Wybranie czynnika z listy podświetla docelowe obszary w mózgu i wyświetla krótki opis pokazujący "co się dzieje".
+## A. Interactive Database
 
-## B. Dobre i Złe Nawyki
-- Lista 3 dobrych i 3 złych nawyków (np. regularny sen, nadmiar cukru).
-- Kliknięcie w nawyk podświetla odpowiednią część mózgu (integracja z Modelem) i wyświetla krótki tekst + orientacyjną wartość procentową (np. *wpływ na koncentrację: +20%*).
+- **Knowledge base with 3D model:** The core module allowing selection from a list of various stimulants (e.g., caffeine, alcohol), emotions (e.g., stress), and diseases. Upon selection, the corresponding brain areas light up on the 3D model, and a brief description of the effect is displayed in the side panel.
 
-## C. Podstawowe Quizy (Bez logowania)
-- **Ograniczona pula kategorii:** Na start tylko 2 kategorie: *Anatomia mózgu* oraz *Wpływ substancji psychoaktywnych*.
-- **Ograniczony algorytm:** Jeden, uniwersalny poziom trudności. Brak konieczności zakładania konta – użytkownik po prostu rozwiązuje test (np. 5 pytań) i na końcu widzi swój wynik w ujęciu procentowym.
+## B. Good and Bad Habits for the Brain
+
+- **Habit list:** A collection of habits, including positive ones (meditation, exercising) as well as negative ones (excessive blue light exposure).
+- **Metric values:** Clicking on a habit highlights the corresponding brain area (e.g., prefrontal cortex integration with the model) and displays an estimated metric value (e.g., _impact on concentration: +20%_).
+
+## C. Digital Brain Twin (Personalized Digital Twin)
+
+- **Daily Log (Your Brain Today):** The user takes a short quiz in the morning about their condition (e.g., "I slept 5 hours", "I drank 2 coffees", "I am stressed about work").
+- **Dynamic Visualization:** A simple interactive 3D model of the brain renders based on the user's state. The model live highlights an weakened prefrontal cortex (lack of sleep) and a stimulated amygdala (stress).
+- **Health Bars:** Neurotransmitter indicators (Dopamine, Cortisol, Melatonin levels) are displayed on the side, calculated based on the daily inputs.
+- **MVP Version:** Selecting states from predefined options (e.g., 0-10 hours of sleep, 0-5 coffees) and implementing simple decision rules to determine the brain state.
 
 ---
-
-## Propozycje UX / UI na start
-1. **Brak systemu kont:** Odrzucenie uwierzytelniania w MVP mocno skraca czas developmentu. Wyniki można trzymać w Local Storage.
-2. **Mobile-First:** Aplikacje edukacyjne masowo konsumuje się na telefonach.
-3. **Słowniczek (Glossary):** Dodanie małej bazy pojęć (np. synapsa, dopamina) wyświetlanej jako tooltip.
-4. **Tryb Ciemny (Dark Mode):** Standard dla komfortu oczu przy nauce.
