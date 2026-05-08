@@ -1,29 +1,32 @@
 name: CI
 
 on:
-    push:
-        branches: [main, develop]
-    pull_request:
-        branches: [main, develop]
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 
 jobs:
-    client:
-        runs-on: ubuntu-latest
+  client:
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v4
+    steps:
+      - name: Set working directory
+        run: cd client
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "24"
-                  cache: "npm"
+      - uses: actions/checkout@v4
 
-            - name: Install dependencies
-              run: npm ci
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
 
-            - name: Run lint
-              run: npm run lint
+      - name: Install dependencies
+        run: npm ci
 
-            - name: Run build
-              run: npm run build
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run build
+        run: npm run build

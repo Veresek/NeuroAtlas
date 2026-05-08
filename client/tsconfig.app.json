@@ -16,6 +16,12 @@
 		"jsx": "react-jsx",
 		"resolveJsonModule": true,
 
+		/* Path Alias */
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+
 		/* Linting */
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
