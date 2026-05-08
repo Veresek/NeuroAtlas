@@ -1,8 +1,8 @@
-# NeuroAtlas.info
+# NeuroAtlas
 
 The project aims to create an innovative and interactive platform that, based on 3D visualizations, conversational AI, and a "Digital Twin" module, will allow users to monitor and understand the biochemistry of their brain based on daily habits and events.
 
-## 🌟 Core Features (MVP)
+## Core Features (MVP)
 
 - **Interactive Brain Model with Situational Simulation**
   - Visualizations of the effects of psychoactive substances, emotions, diseases, and other physiological states on the brain directly on the 3D model.
@@ -11,21 +11,22 @@ The project aims to create an innovative and interactive platform that, based on
 - **Digital Brain Twin (Digital Twin)**
   - Generating a dynamic model of your brain for a specific day, based on a daily log (e.g., hours slept, cups of coffee).
 
-## 🛠 Technologies and Architecture
+## Technologies and Architecture
 
-- **Frontend:** React.js, TypeScript, Tailwind CSS
+- **Frontend:** React.js, TypeScript, Tailwind CSS, Vite
+- **3D Brain Library:** React Three Fiber (R3F) + Three.js
 - **Backend:** Python (FastAPI)
 - **Database:** MongoDB
-- **3D Brain Library:** React Three Fiber (R3F) + Three.js
+- **Code Quality:** ESLint
 
-## 📂 Documentation and Project Structure
+## Documentation and Project Structure
 
 More details about the project specification can be found in the `docs/` folder:
 
 - [01_MVP_SCOPE.md](docs/01_MVP_SCOPE.md) - Features scope for the first release
 - [02_AI_AND_FUTURE.md](docs/02_AI_AND_FUTURE.md) - Scalability and future plans
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Installation and Code Execution
 
@@ -39,18 +40,20 @@ cd brain-info
 **2. Run the project**
 
 ```bash
-docker compose up
+cd client
+npm install
+npm run dev
 ```
 
-## 🤝 Contributing
+## Contributing
 
 The project is currently in the MVP phase and is not open for external pull requests. However, if you have an idea for a feature or want to share your knowledge, reach out to me via the contact details provided in the Contact section.
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ✉️ Contact
+## Contact
 
 - Author: [Veresek](https://github.com/Veresek)
 - LinkedIn: [Kacper Filipowski](https://linkedin.com/in/kacper-filipowski)
