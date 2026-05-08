@@ -16,7 +16,7 @@ function NeuralNetwork({ meshes }: { meshes: THREE.Mesh[] }) {
 
 		const allWorldPositions: THREE.Vector3[] = [];
 		const tempVec = new THREE.Vector3();
-		const stride = 500;
+		const stride = 1000;
 
 		for (const mesh of meshes) {
 			if (!mesh.geometry) continue;
@@ -40,7 +40,7 @@ function NeuralNetwork({ meshes }: { meshes: THREE.Mesh[] }) {
 		});
 
 		// Stwórz pozycje linii łączących bliskie punkty
-		const connectionDistance = 0.8;
+		const connectionDistance = 0.5;
 		const lineVerts: number[] = [];
 
 		for (let i = 0; i < allWorldPositions.length; i++) {
@@ -87,9 +87,9 @@ function NeuralNetwork({ meshes }: { meshes: THREE.Mesh[] }) {
 				</bufferGeometry>
 				<pointsMaterial
 					color="#00aaff"
-					size={0.1}
+					size={0.07}
 					transparent
-					opacity={0.8}
+					opacity={1}
 					sizeAttenuation
 				/>
 			</points>
@@ -121,7 +121,7 @@ function BrainMesh() {
 					color: "#00aaff",
 					wireframe: true,
 					transparent: true,
-					opacity: 0.07,
+					opacity: 0.03,
 				});
 				found.push(child);
 			}
@@ -132,14 +132,14 @@ function BrainMesh() {
 	return (
 		<group>
 			<primitive object={scene} />
-			{/* <NeuralNetwork meshes={meshes} /> */}
+			<NeuralNetwork meshes={meshes} />
 		</group>
 	);
 }
 
 function BrainModel() {
 	return (
-		<div className="h-125 w-125">
+		<div className="h-72 w-72 md:h-125 md:w-125">
 			<Canvas camera={{ position: [0, 0, 2.5] }}>
 				<ambientLight intensity={1} />
 				<BrainMesh />
