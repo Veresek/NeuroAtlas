@@ -108,7 +108,9 @@ function NeuralNetwork({ meshes }: { meshes: THREE.Mesh[] }) {
 }
 
 function BrainMesh() {
-	const { scene } = useGLTF("/models/brain_model.glb");
+	const { scene } = useGLTF(
+		`${import.meta.env.BASE_URL}models/brain_model.glb`,
+	);
 
 	const meshes = useMemo(() => {
 		const found: THREE.Mesh[] = [];
