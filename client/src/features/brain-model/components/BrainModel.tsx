@@ -1,13 +1,15 @@
 import { Canvas } from "@react-three/fiber";
-import { useGLTF } from "@react-three/drei";
-import { OrbitControls } from "@react-three/drei";
+import { useGLTF, OrbitControls } from "@react-three/drei";
 import { useMemo } from "react";
 import * as THREE from "three";
 import surfaceMeshNames from "@/data/mesh.json";
 
+useGLTF.preload(`${import.meta.env.BASE_URL}models/brain_model_draco.glb`);
+
 function BrainMesh() {
 	const { scene } = useGLTF(
-		`${import.meta.env.BASE_URL}models/brain_model.glb`,
+		`${import.meta.env.BASE_URL}models/brain_model_draco.glb`,
+		`${import.meta.env.BASE_URL}draco/gltf`,
 	);
 
 	const surfaceSet = useMemo(
