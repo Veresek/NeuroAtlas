@@ -15,8 +15,7 @@ function BrainMesh() {
 		[],
 	);
 
-	const surfaceMeshes = useMemo(() => {
-		const found: THREE.Mesh[] = [];
+	useMemo(() => {
 		scene.traverse(child => {
 			if (child instanceof THREE.Mesh) {
 				if (surfaceSet.has(child.name)) {
@@ -25,15 +24,14 @@ function BrainMesh() {
 						wireframe: true,
 						transparent: true,
 						opacity: 0.07,
+						side: THREE.FrontSide,
 					});
 					child.frustumCulled = false;
-					found.push(child);
 				} else {
 					child.visible = false;
 				}
 			}
 		});
-		return found;
 	}, [scene, surfaceSet]);
 
 	return <primitive object={scene} />;
