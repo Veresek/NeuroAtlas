@@ -6,7 +6,6 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-	base: "/NeuroAtlas/",
 	plugins: [
 		react(),
 		babel({ presets: [reactCompilerPreset()] }),
