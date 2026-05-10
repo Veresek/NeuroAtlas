@@ -43,8 +43,7 @@ function Footer() {
 								target="_blank"
 								rel="noopener noreferrer"
 								className="group flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 hover:border-[#00aaff]/50 hover:bg-[#00aaff]/5 transition-all duration-300"
-								aria-label="GitHub"
-							>
+								aria-label="GitHub">
 								<img
 									src={GitHubIcon}
 									alt="GitHub"
@@ -55,10 +54,9 @@ function Footer() {
 							{/* Credits tooltip */}
 							<div className="relative">
 								<button
-									onClick={() => setCreditsOpen((prev) => !prev)}
+									onClick={() => setCreditsOpen(prev => !prev)}
 									className="group flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 hover:border-[#00aaff]/50 hover:bg-[#00aaff]/5 transition-all duration-300 cursor-pointer"
-									aria-label="Credits"
-								>
+									aria-label="Credits">
 									<img
 										src={InfoIcon}
 										alt="Credits"
@@ -70,19 +68,17 @@ function Footer() {
 										creditsOpen
 											? "opacity-100 translate-y-0 pointer-events-auto"
 											: "opacity-0 translate-y-1 pointer-events-none"
-									}`}
-								>
+									}`}>
 									<p className="font-medium text-gray-700 mb-1.5 text-xs">
 										3D Model Source
 									</p>
-									Kristen Browne; Heidi Schlehlein. 2023. 3D Reference Organ
-									for Brain, Male v1.3.{" "}
+									Kristen Browne; Heidi Schlehlein. 2023. 3D Reference Organ for
+									Brain, Male v1.3.{" "}
 									<a
 										href="https://doi.org/10.48539/HBM929.XKCL.339"
 										target="_blank"
 										rel="noopener noreferrer"
-										className="text-[#00aaff] hover:text-[#0088dd] underline underline-offset-2 transition-colors"
-									>
+										className="text-[#00aaff] hover:text-[#0088dd] underline underline-offset-2 transition-colors">
 										doi.org/10.48539/HBM929.XKCL.339
 									</a>
 									. Accessed on December 15, 2023.
@@ -98,12 +94,11 @@ function Footer() {
 								{title}
 							</h3>
 							<ul className="flex flex-col gap-2">
-								{links.map((link) => (
+								{links.map(link => (
 									<li key={link.label}>
 										<a
 											href={link.href}
-											className="text-sm text-gray-400 hover:text-[#00aaff] transition-colors duration-200"
-										>
+											className="text-sm text-gray-400 hover:text-[#00aaff] transition-colors duration-200">
 											{link.label}
 										</a>
 									</li>
@@ -119,10 +114,6 @@ function Footer() {
 				{/* Bottom bar */}
 				<div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-300">
 					<p>© {new Date().getFullYear()} NeuroAtlas — Open Source</p>
-					<p>
-						Made with{" "}
-						<span className="text-[#00aaff]">♥</span> for neuroscience
-					</p>
 				</div>
 			</div>
 		</footer>
