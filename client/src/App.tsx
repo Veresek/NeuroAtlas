@@ -23,13 +23,13 @@ function App() {
 		<div className="flex flex-col h-screen overflow-hidden">
 			<Navbar />
 			<div className="flex flex-1 min-h-0">
-				<Sidebar onSelectItem={handleSelectItem} />
+				<Sidebar onSelectItem={handleSelectItem} selectedItem={selectedItem} />
 				<DetailPanel
 					item={selectedItem}
 					section={selectedSection}
 					onClose={handleCloseDetail}
 				/>
-				<div className="flex-1 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0 px-4">
+				<div className="flex-1 flex items-center justify-center bg-gray-100/60">
 					<BrainModel />
 				</div>
 			</div>
