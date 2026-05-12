@@ -1,7 +1,7 @@
-import AtlasIcon from "../../assets/atlas.svg?react";
-import SimulationIcon from "../../assets/simulation.svg?react";
-import MyBrainIcon from "../../assets/my-brain.svg?react";
-import ResearchIcon from "../../assets/research.svg?react";
+import AtlasIcon from "@/assets/atlas.svg?react";
+import SimulationIcon from "@/assets/simulation.svg?react";
+import MyBrainIcon from "@/assets/my-brain.svg?react";
+import ResearchIcon from "@/assets/research.svg?react";
 
 interface NavSidebarProps {
 	activeNav: string | null;
