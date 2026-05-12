@@ -1,4 +1,8 @@
 import { useState } from "react";
+import MyBrainIcon from "@/assets/my-brain.svg?react";
+import CloseIcon from "@/assets/close.svg?react";
+import CheckIcon from "@/assets/check.svg?react";
+import { Button } from "../ui/Button";
 
 interface MyBrainPanelProps {
 	onClose: () => void;
@@ -6,20 +10,16 @@ interface MyBrainPanelProps {
 
 const moodLabels = ["Awful", "Bad", "Neutral", "Good", "Great"];
 const moodColors = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#00aaff"];
-const moodEmojis = ["😞", "😕", "😐", "😊", "🤩"];
 
 function MyBrainPanel({ onClose }: MyBrainPanelProps) {
 	const [sleep, setSleep] = useState(7);
 	const [coffee, setCoffee] = useState(2);
 	const [mood, setMood] = useState(2);
-	const [saved, setSaved] = useState(false);
+	const [isGenerating, setIsGenerating] = useState(false);
 
-	const handleSave = () => {
-		setSaved(true);
-		setTimeout(() => {
-			setSaved(false);
-			onClose();
-		}, 1200);
+	const handleGenerate = () => {
+		setIsGenerating(true);
+		// Simulation/Generation logic will go here
 	};
 
 	return (
@@ -64,10 +64,7 @@ function MyBrainPanel({ onClose }: MyBrainPanelProps) {
 								display: "flex", alignItems: "center", justifyContent: "center",
 							}}
 						>
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00aaff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-								<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
-								<path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
-							</svg>
+							<MyBrainIcon className="w-5 h-5 text-[#00aaff]" />
 						</div>
 						<div>
 							<h2 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "#111827", letterSpacing: "-0.3px" }}>
@@ -87,9 +84,7 @@ function MyBrainPanel({ onClose }: MyBrainPanelProps) {
 						onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(0,0,0,0.12)"; }}
 						onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(0,0,0,0.06)"; }}
 					>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-							<path d="M18 6 6 18M6 6l12 12" />
-						</svg>
+						<CloseIcon className="w-[14px] h-[14px]" />
 					</button>
 				</div>
 
@@ -228,45 +223,17 @@ function MyBrainPanel({ onClose }: MyBrainPanelProps) {
 					</div>
 				</div>
 
-				{/* Save button */}
-				<button
-					id="my-brain-save"
-					onClick={handleSave}
-					style={{
-						marginTop: "32px",
-						width: "100%",
-						padding: "13px",
-						borderRadius: "14px",
-						border: "none",
-						background: saved
-							? "linear-gradient(135deg, #22c55e, #16a34a)"
-							: "linear-gradient(135deg, #00aaff, #0077cc)",
-						color: "#fff",
-						fontSize: "15px",
-						fontWeight: 700,
-						cursor: "pointer",
-						letterSpacing: "0.3px",
-						transition: "all 0.3s",
-						boxShadow: saved
-							? "0 4px 20px rgba(34,197,94,0.4)"
-							: "0 4px 20px rgba(0,170,255,0.35)",
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-						gap: "8px",
-					}}
+				{/* Generate button */}
+				<Button
+					id="my-brain-generate"
+					onClick={handleGenerate}
+					fullWidth
+					variant="primary"
+					disabled={isGenerating}
+					className="mt-8"
 				>
-					{saved ? (
-						<>
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-								<path d="M20 6 9 17l-5-5" />
-							</svg>
-							Saved!
-						</>
-					) : (
-						"Save data"
-					)}
-				</button>
+					{isGenerating ? "Generating..." : "Generate"}
+				</Button>
 			</div>
 
 			<style>{`

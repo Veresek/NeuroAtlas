@@ -1,4 +1,11 @@
 import { useState } from "react";
+import AtlasIcon from "@/assets/atlas.svg?react";
+import SimulationIcon from "@/assets/simulation.svg?react";
+import MyBrainIcon from "@/assets/my-brain.svg?react";
+import ResearchIcon from "@/assets/research.svg?react";
+import SearchIcon from "@/assets/search.svg?react";
+import ChevronDownIcon from "@/assets/chevron-down.svg?react";
+import { Button } from "../ui/Button";
 
 /* ─── Atlas sections ─────────────────────────────────────────────────── */
 
@@ -45,10 +52,24 @@ const simulationSections = [
 ];
 
 function SimulationsContent() {
+	const [searchQuery, setSearchQuery] = useState("");
 	const [openSections, setOpenSections] = useState<Record<string, boolean>>({
 		[simulationSections[0].title]: true,
 	});
 	const [selectedHabit, setSelectedHabit] = useState<string | null>(null);
+
+	const filteredSections = searchQuery
+		? simulationSections
+			.map(section => ({
+				...section,
+				items: section.items.filter(
+					item =>
+						item.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						section.title.toLowerCase().includes(searchQuery.toLowerCase()),
+				),
+			}))
+			.filter(section => section.items.length > 0)
+		: simulationSections;
 
 	const toggleSection = (title: string) => {
 		setOpenSections(prev => ({ ...prev, [title]: !prev[title] }));
@@ -67,9 +88,7 @@ function SimulationsContent() {
 							flexShrink: 0,
 						}}
 					>
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00aaff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-							<polygon points="5 3 19 12 5 21 5 3" />
-						</svg>
+						<SimulationIcon className="w-[18px] h-[18px] text-[#00aaff]" />
 					</div>
 					<div>
 						<p className="text-[13px] text-gray-800" style={{ fontWeight: 700 }}>Simulation</p>
@@ -78,10 +97,25 @@ function SimulationsContent() {
 				</div>
 			</div>
 
+			<div className="px-3 pt-3 pb-1">
+				<div className="relative">
+					<SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+					<input
+						type="text"
+						placeholder="Search..."
+						value={searchQuery}
+						onChange={e => setSearchQuery(e.target.value)}
+						className="w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-gray-200/60 bg-gray-50/50 placeholder:text-gray-400 focus:outline-none focus:border-[#00aaff]/50 focus:bg-white transition-colors duration-200"
+					/>
+				</div>
+			</div>
+
 			{/* Sections */}
 			<nav className="flex-1 overflow-y-auto py-2">
-				{simulationSections.map(section => {
-					const isOpen = openSections[section.title] ?? false;
+				{filteredSections.map(section => {
+					const isOpen = searchQuery
+						? true
+						: (openSections[section.title] ?? false);
 
 					return (
 						<div key={section.title} className="mb-1">
@@ -90,12 +124,7 @@ function SimulationsContent() {
 								className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-[#00aaff]/5 transition-colors duration-200 cursor-pointer"
 							>
 								<span>{section.title}</span>
-								<svg
-									className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-									fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-								>
-									<path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-								</svg>
+								<ChevronDownIcon className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
 							</button>
 
 							<div className={`overflow-hidden transition-all duration-200 ${isOpen ? "max-h-72 opacity-100" : "max-h-0 opacity-0"}`}>
@@ -127,17 +156,16 @@ function SimulationsContent() {
 
 const moodLabels = ["Awful", "Bad", "Neutral", "Good", "Great"];
 const moodColors = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#00aaff"];
-const moodEmojis = ["😞", "😕", "😐", "😊", "🤩"];
 
 function MyBrainContent() {
 	const [sleep, setSleep] = useState(7);
 	const [coffee, setCoffee] = useState(2);
 	const [mood, setMood] = useState(2);
-	const [saved, setSaved] = useState(false);
+	const [isGenerating, setIsGenerating] = useState(false);
 
-	const handleSave = () => {
-		setSaved(true);
-		setTimeout(() => setSaved(false), 2000);
+	const handleGenerate = () => {
+		setIsGenerating(true);
+		// Simulation/Generation logic will go here
 	};
 
 	const sliderTrack = (value: number, max: number, color: string) => ({
@@ -157,14 +185,11 @@ function MyBrainContent() {
 							flexShrink: 0,
 						}}
 					>
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00aaff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-							<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
-							<path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
-						</svg>
+						<MyBrainIcon className="w-[18px] h-[18px] text-[#00aaff]" />
 					</div>
 					<div>
 						<p className="text-[13px] font-700 text-gray-800" style={{ fontWeight: 700 }}>My Brain</p>
-						<p className="text-[11px] text-gray-400">How do you feel today?</p>
+						<p className="text-[11px] text-gray-400">How your lifestyle affects your brain?</p>
 					</div>
 				</div>
 			</div>
@@ -287,23 +312,17 @@ function MyBrainContent() {
 				</div>
 			</div>
 
-			{/* Save */}
+			{/* Generate */}
 			<div className="px-4 pb-5">
-				<button
-					id="my-brain-save"
-					onClick={handleSave}
-					className="w-full py-3 rounded-xl text-white text-[13px] font-bold tracking-wide transition-all duration-300 cursor-pointer border-0"
-					style={{
-						background: saved
-							? "linear-gradient(135deg, #22c55e, #16a34a)"
-							: "linear-gradient(135deg, #00aaff, #0077cc)",
-						boxShadow: saved
-							? "0 4px 16px rgba(34,197,94,0.35)"
-							: "0 4px 16px rgba(0,170,255,0.3)",
-					}}
+				<Button
+					id="my-brain-generate"
+					onClick={handleGenerate}
+					fullWidth
+					variant="primary"
+					disabled={isGenerating}
 				>
-					{saved ? "✓ Saved!" : "Save data"}
-				</button>
+					{isGenerating ? "Generating..." : "Generate"}
+				</Button>
 			</div>
 
 			<style>{`
@@ -349,6 +368,8 @@ function MyBrainContent() {
 /* ─── Research ───────────────────────────────────────────────────────── */
 
 function ResearchContent() {
+	const [searchQuery, setSearchQuery] = useState("");
+
 	return (
 		<div className="flex-1 overflow-y-auto">
 			{/* Header */}
@@ -362,9 +383,7 @@ function ResearchContent() {
 							flexShrink: 0,
 						}}
 					>
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00aaff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-							<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-						</svg>
+						<ResearchIcon className="w-[18px] h-[18px] text-[#00aaff]" />
 					</div>
 					<div>
 						<p className="text-[13px] text-gray-800" style={{ fontWeight: 700 }}>Research</p>
@@ -372,6 +391,20 @@ function ResearchContent() {
 					</div>
 				</div>
 			</div>
+
+			<div className="px-3 pt-3 pb-1">
+				<div className="relative">
+					<SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+					<input
+						type="text"
+						placeholder="Search..."
+						value={searchQuery}
+						onChange={e => setSearchQuery(e.target.value)}
+						className="w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-gray-200/60 bg-gray-50/50 placeholder:text-gray-400 focus:outline-none focus:border-[#00aaff]/50 focus:bg-white transition-colors duration-200"
+					/>
+				</div>
+			</div>
+
 			<div className="p-4 flex flex-col items-center justify-center mt-12 text-center">
 				<div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-3">
 					<span style={{ fontSize: 28 }}>🔬</span>
@@ -454,33 +487,18 @@ function Sidebar({ onSelectItem, selectedItem, activeNav }: SidebarProps) {
 							flexShrink: 0,
 						}}
 					>
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00aaff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-							<circle cx="12" cy="12" r="10" />
-							<path d="M12 2a14.5 14.5 0 0 0 0 20A14.5 14.5 0 0 0 12 2z" />
-							<path d="M2 12h20" />
-						</svg>
+						<AtlasIcon className="w-[18px] h-[18px] text-[#00aaff]" />
 					</div>
 					<div>
 						<p className="text-[13px] text-gray-800" style={{ fontWeight: 700 }}>Atlas</p>
-						<p className="text-[11px] text-gray-400">Explore and learn about brain structures</p>
+						<p className="text-[11px] text-gray-400">Explore and learn about brain</p>
 					</div>
 				</div>
 			</div>
 
 			<div className="px-3 pt-3 pb-1">
 				<div className="relative">
-					<svg
-						className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						strokeWidth={2}>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-						/>
-					</svg>
+					<SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
 					<input
 						type="text"
 						placeholder="Search..."
@@ -502,19 +520,7 @@ function Sidebar({ onSelectItem, selectedItem, activeNav }: SidebarProps) {
 								onClick={() => toggleSection(section.title)}
 								className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-[#00aaff]/5 transition-colors duration-200 cursor-pointer">
 								<span>{section.title}</span>
-								<svg
-									className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""
-										}`}
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									strokeWidth={2}>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M19 9l-7 7-7-7"
-									/>
-								</svg>
+								<ChevronDownIcon className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
 							</button>
 
 							<div
