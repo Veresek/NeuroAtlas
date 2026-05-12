@@ -8,7 +8,8 @@ function Navbar() {
 			</h1>
 			<button
 				className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
-				aria-label="Settings">
+				aria-label="Settings"
+			>
 				<img src={settingIcon} alt="Settings" className="w-5 h-5" />
 			</button>
 		</nav>
