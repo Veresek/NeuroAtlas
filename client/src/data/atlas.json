@@ -1,0 +1,26 @@
+[
+	{
+		"title": "Psychoactive Substances",
+		"items": [
+			"Alcohol",
+			"Caffeine",
+			"Nicotine"
+		]
+	},
+	{
+		"title": "Emotions",
+		"items": [
+			"Joy",
+			"Fear",
+			"Sadness"
+		]
+	},
+	{
+		"title": "Diseases",
+		"items": [
+			"Alzheimer's",
+			"Parkinson's",
+			"Depression"
+		]
+	}
+]

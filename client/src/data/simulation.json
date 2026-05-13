@@ -1,0 +1,10 @@
+[
+	{
+		"title": "Substances",
+		"items": ["Alcohol", "Caffeine", "Nicotine"]
+	},
+	{
+		"title": "Lifestyle",
+		"items": ["Meditation", "Sleep Deprivation", "Cognitive Overload", "Physical Activity"]
+	}
+]
