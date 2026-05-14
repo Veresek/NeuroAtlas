@@ -13,7 +13,7 @@ export function DailyQuiz() {
 	return (
 		<div className="flex-1 overflow-y-auto">
 			{/* Header */}
-			<div className="px-4 pt-5 pb-4 border-b border-gray-200/60">
+			<div className="hidden md:block px-4 pt-5 pb-4 border-b border-gray-200/60">
 				<div className="flex items-center gap-3">
 					<div
 						style={{

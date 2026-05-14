@@ -2,7 +2,7 @@ import { useState } from "react";
 import SimulationIcon from "@/assets/simulation.svg?react";
 import SearchIcon from "@/assets/search.svg?react";
 import ChevronDownIcon from "@/assets/chevron-down.svg?react";
-import simulationSections from "@/data/atlas.json";
+import simulationSections from "@/data/simulation.json";
 
 export function SimulationSidebar() {
 	const [searchQuery, setSearchQuery] = useState("");
@@ -17,7 +17,7 @@ export function SimulationSidebar() {
 				...section,
 				items: section.items.filter(
 					item =>
-						item.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 						section.title.toLowerCase().includes(searchQuery.toLowerCase()),
 				),
 			}))
@@ -31,7 +31,7 @@ export function SimulationSidebar() {
 	return (
 		<div className="flex-1 overflow-y-auto flex flex-col">
 			{/* Header */}
-			<div className="px-4 pt-5 pb-4 border-b border-gray-200/60">
+			<div className="hidden md:block px-4 pt-5 pb-4 border-b border-gray-200/60">
 				<div className="flex items-center gap-3">
 					<div
 						style={{
@@ -80,15 +80,15 @@ export function SimulationSidebar() {
 							<div className={`overflow-hidden transition-all duration-200 ${isOpen ? "max-h-72 opacity-100" : "max-h-0 opacity-0"}`}>
 								<ul className="pb-2">
 									{section.items.map(item => (
-										<li key={item}>
+										<li key={item.id}>
 											<button
-												onClick={() => setSelectedItem(prev => prev === item ? null : item)}
-												className={`w-full text-left px-4 pl-8 py-1.5 text-sm transition-colors duration-200 cursor-pointer rounded-r-lg ${selectedItem === item
+												onClick={() => setSelectedItem(prev => prev === item.name ? null : item.name)}
+												className={`w-full text-left px-4 pl-8 py-1.5 text-sm transition-colors duration-200 cursor-pointer rounded-r-lg ${selectedItem === item.name
 														? "text-[#00aaff] bg-[#00aaff]/10 font-medium"
 														: "text-gray-500 hover:text-[#00aaff] hover:bg-[#00aaff]/5"
 													}`}
 											>
-												{item}
+												{item.name}
 											</button>
 										</li>
 									))}

@@ -2,25 +2,203 @@
 	{
 		"title": "Psychoactive Substances",
 		"items": [
-			"Alcohol",
-			"Caffeine",
-			"Nicotine"
+			{
+				"id": "alcohol",
+				"name": "Alcohol",
+				"category": "Psychoactive Substances",
+				"shortDescription": "A central nervous system depressant that slows down brain activity.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Alcohol interferes with the brain's communication pathways, leading to loss of coordination and lowered inhibitions.",
+						"affectedBrainAreas": [
+							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "depresses" },
+							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "depresses" },
+							{ "areaId": "cerebellum", "name": "Cerebellum", "effectType": "depresses" }
+						],
+						"neurotransmitters": [
+							{ "name": "GABA", "effect": "increase" },
+							{ "name": "Glutamate", "effect": "decrease" },
+							{ "name": "Dopamine", "effect": "increase" }
+						]
+					},
+					"chronic": {
+						"brainImpact": "Long-term heavy alcohol use can shrink the frontal lobes and reduce overall brain volume, impairing memory and cognitive function.",
+						"affectedBrainAreas": [
+							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "damages" },
+							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "damages" },
+							{ "areaId": "cerebral_cortex", "name": "Cerebral Cortex", "effectType": "damages" }
+						],
+						"neurotransmitters": [
+							{ "name": "GABA", "effect": "decrease" },
+							{ "name": "Glutamate", "effect": "increase" },
+							{ "name": "Serotonin", "effect": "decrease" }
+						]
+					},
+					"withdrawal": {
+						"brainImpact": "The brain, having adapted to the constant presence of a depressant, goes into a state of hyper-excitability when alcohol is removed.",
+						"affectedBrainAreas": [
+							{ "areaId": "amygdala", "name": "Amygdala", "effectType": "stimulates" }
+						],
+						"neurotransmitters": [
+							{ "name": "Glutamate", "effect": "increase" },
+							{ "name": "Adrenaline", "effect": "increase" }
+						]
+					}
+				}
+			},
+			{
+				"id": "caffeine",
+				"name": "Caffeine",
+				"category": "Psychoactive Substances",
+				"shortDescription": "A central nervous system stimulant that blocks adenosine receptors.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Blocks adenosine receptors, preventing drowsiness and increasing alertness.",
+						"affectedBrainAreas": [],
+						"neurotransmitters": [
+							{ "name": "Adenosine", "effect": "modulate" },
+							{ "name": "Dopamine", "effect": "increase" }
+						]
+					}
+				}
+			},
+			{
+				"id": "nicotine",
+				"name": "Nicotine",
+				"category": "Psychoactive Substances",
+				"shortDescription": "A stimulant and relaxant that alters mood and attention.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Activates nicotinic acetylcholine receptors, leading to release of neurotransmitters.",
+						"affectedBrainAreas": [
+							{ "areaId": "nucleus_accumbens", "name": "Nucleus Accumbens", "effectType": "stimulates" }
+						],
+						"neurotransmitters": [
+							{ "name": "Acetylcholine", "effect": "modulate" },
+							{ "name": "Dopamine", "effect": "increase" }
+						]
+					}
+				}
+			}
 		]
 	},
 	{
 		"title": "Emotions",
 		"items": [
-			"Joy",
-			"Fear",
-			"Sadness"
+			{
+				"id": "joy",
+				"name": "Joy",
+				"category": "Emotions",
+				"shortDescription": "A feeling of great pleasure and happiness.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Activates reward pathways and promotes well-being.",
+						"affectedBrainAreas": [
+							{ "areaId": "nucleus_accumbens", "name": "Nucleus Accumbens", "effectType": "stimulates" }
+						],
+						"neurotransmitters": [
+							{ "name": "Dopamine", "effect": "increase" },
+							{ "name": "Serotonin", "effect": "increase" }
+						]
+					}
+				}
+			},
+			{
+				"id": "fear",
+				"name": "Fear",
+				"category": "Emotions",
+				"shortDescription": "An unpleasant emotion caused by the threat of danger, pain, or harm.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Triggers the fight-or-flight response, preparing the body for action.",
+						"affectedBrainAreas": [
+							{ "areaId": "amygdala", "name": "Amygdala", "effectType": "stimulates" },
+							{ "areaId": "hypothalamus", "name": "Hypothalamus", "effectType": "stimulates" }
+						],
+						"neurotransmitters": [
+							{ "name": "Adrenaline", "effect": "increase" },
+							{ "name": "Cortisol", "effect": "increase" }
+						]
+					}
+				}
+			},
+			{
+				"id": "sadness",
+				"name": "Sadness",
+				"category": "Emotions",
+				"shortDescription": "Emotional pain associated with feeling of disadvantage or loss.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Can reduce overall brain activity in certain areas associated with motivation.",
+						"affectedBrainAreas": [
+							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "depresses" }
+						],
+						"neurotransmitters": [
+							{ "name": "Serotonin", "effect": "decrease" }
+						]
+					}
+				}
+			}
 		]
 	},
 	{
 		"title": "Diseases",
 		"items": [
-			"Alzheimer's",
-			"Parkinson's",
-			"Depression"
+			{
+				"id": "alzheimers",
+				"name": "Alzheimer's",
+				"category": "Diseases",
+				"shortDescription": "A progressive disease that destroys memory and other important mental functions.",
+				"phases": {
+					"chronic": {
+						"brainImpact": "Causes brain cells to degenerate and die, leading to brain shrinkage.",
+						"affectedBrainAreas": [
+							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "damages" },
+							{ "areaId": "cerebral_cortex", "name": "Cerebral Cortex", "effectType": "damages" }
+						],
+						"neurotransmitters": [
+							{ "name": "Acetylcholine", "effect": "decrease" }
+						]
+					}
+				}
+			},
+			{
+				"id": "parkinsons",
+				"name": "Parkinson's",
+				"category": "Diseases",
+				"shortDescription": "A disorder of the central nervous system that affects movement.",
+				"phases": {
+					"chronic": {
+						"brainImpact": "Gradual loss of dopamine-producing neurons in the substantia nigra.",
+						"affectedBrainAreas": [
+							{ "areaId": "substantia_nigra", "name": "Substantia Nigra", "effectType": "damages" }
+						],
+						"neurotransmitters": [
+							{ "name": "Dopamine", "effect": "decrease" }
+						]
+					}
+				}
+			},
+			{
+				"id": "depression",
+				"name": "Depression",
+				"category": "Diseases",
+				"shortDescription": "A mood disorder that causes a persistent feeling of sadness and loss of interest.",
+				"phases": {
+					"chronic": {
+						"brainImpact": "Changes in brain structure and function, particularly in emotional regulation areas.",
+						"affectedBrainAreas": [
+							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "depresses" },
+							{ "areaId": "amygdala", "name": "Amygdala", "effectType": "stimulates" }
+						],
+						"neurotransmitters": [
+							{ "name": "Serotonin", "effect": "decrease" },
+							{ "name": "Dopamine", "effect": "decrease" },
+							{ "name": "Norepinephrine", "effect": "decrease" }
+						]
+					}
+				}
+			}
 		]
 	}
 ]

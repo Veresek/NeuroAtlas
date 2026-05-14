@@ -9,17 +9,21 @@ interface SidebarProps {
 	activeNav: string | null;
 }
 
-function Sidebar({ onSelectItem, selectedItem, activeNav }: SidebarProps) {
+function SidebarContent({ onSelectItem, selectedItem, activeNav }: SidebarProps) {
+	if (activeNav === "simulation") return <SimulationSidebar />;
+	if (activeNav === "my-brain") return <DailyQuiz />;
+	if (activeNav === "research") return <ResearchSidebar />;
+	return <SubstancesSidebar onSelectItem={onSelectItem} selectedItem={selectedItem} />;
+}
+
+// Desktop only — hidden on mobile (mobile panel lives in App.tsx)
+function Sidebar(props: SidebarProps) {
 	return (
-		<aside className="w-72 shrink-0 border-r border-gray-200/60 bg-gray-50/90 backdrop-blur-sm flex flex-col">
-			{activeNav === "simulation" && <SimulationSidebar />}
-			{activeNav === "my-brain" && <DailyQuiz />}
-			{activeNav === "research" && <ResearchSidebar />}
-			{(activeNav === "atlas" || !activeNav) && (
-				<SubstancesSidebar onSelectItem={onSelectItem} selectedItem={selectedItem} />
-			)}
+		<aside className="hidden md:flex w-72 shrink-0 border-r border-gray-200/60 bg-gray-50/90 backdrop-blur-sm flex-col">
+			<SidebarContent {...props} />
 		</aside>
 	);
 }
 
+export { SidebarContent };
 export default Sidebar;

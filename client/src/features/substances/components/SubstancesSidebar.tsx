@@ -21,7 +21,7 @@ export function SubstancesSidebar({ onSelectItem, selectedItem }: SubstancesSide
 				...section,
 				items: section.items.filter(
 					item =>
-						item.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 						section.title.toLowerCase().includes(searchQuery.toLowerCase()),
 				),
 			}))
@@ -35,7 +35,7 @@ export function SubstancesSidebar({ onSelectItem, selectedItem }: SubstancesSide
 	return (
 		<div className="flex-1 overflow-y-auto flex flex-col">
 			{/* Header */}
-			<div className="px-4 pt-5 pb-4 border-b border-gray-200/60">
+			<div className="hidden md:block px-4 pt-5 pb-4 border-b border-gray-200/60">
 				<div className="flex items-center gap-3">
 					<div
 						style={{
@@ -84,15 +84,15 @@ export function SubstancesSidebar({ onSelectItem, selectedItem }: SubstancesSide
 							<div className={`overflow-hidden transition-all duration-200 ${isOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}>
 								<ul className="pb-2">
 									{section.items.map(item => (
-										<li key={item}>
+										<li key={item.id}>
 											<button
-												onClick={() => onSelectItem(item, section.title)}
-												className={`w-full text-left px-4 pl-8 py-1.5 text-sm transition-colors duration-200 cursor-pointer rounded-r-lg ${selectedItem === item
+												onClick={() => onSelectItem(item.name, section.title)}
+												className={`w-full text-left px-4 pl-8 py-1.5 text-sm transition-colors duration-200 cursor-pointer rounded-r-lg ${selectedItem === item.name
 													? "text-[#00aaff] bg-[#00aaff]/10 font-medium"
 													: "text-gray-500 hover:text-[#00aaff] hover:bg-[#00aaff]/5"
 													}`}
 											>
-												{item}
+												{item.name}
 											</button>
 										</li>
 									))}

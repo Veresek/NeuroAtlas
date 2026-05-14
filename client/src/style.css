@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Safe-area support for iPhone notch / home bar */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+	.safe-area-pb {
+		padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+	}
+}
+
 *,
 *::before,
 *::after {
