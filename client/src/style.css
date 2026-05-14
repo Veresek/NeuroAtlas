@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Safe-area support for iPhone notch / home bar */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+	.safe-area-pb {
+		padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+	}
+}
+
 *,
 *::before,
 *::after {
@@ -16,4 +23,32 @@ body {
 #root {
 	width: 100%;
 	height: 100vh;
+}
+
+/* ─── Slider ─────────────────────────────────────────────────────────── */
+
+.neuroatlas-slider {
+	-webkit-appearance: none;
+	appearance: none;
+	background: transparent;
+	cursor: pointer;
+	height: 20px;
+	position: relative;
+}
+
+.neuroatlas-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #fff;
+	border: 2.5px solid var(--slider-color, #00aaff);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	cursor: pointer;
+	transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.neuroatlas-slider::-webkit-slider-thumb:hover {
+	transform: scale(1.25);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
