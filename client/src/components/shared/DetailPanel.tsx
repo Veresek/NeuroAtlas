@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CloseIcon from "@/assets/close.svg?react";
 import atlasData from "@/data/atlas.json";
 import simulationData from "@/data/simulation.json";
@@ -20,7 +20,7 @@ function findItemData(itemName: string | null): BrainItemData | null {
 	
 	const allSections = [...atlasData, ...simulationData];
 	for (const section of allSections) {
-		const found = section.items.find((i: any) => i.name === itemName);
+		const found = section.items.find((i: { name?: string }) => i.name === itemName);
 		if (found) return found as BrainItemData;
 	}
 	return null;
@@ -28,21 +28,24 @@ function findItemData(itemName: string | null): BrainItemData | null {
 
 function DetailContent({ item, section, onClose }: DetailPanelProps) {
 	const itemData = findItemData(item);
-	const [activePhase, setActivePhase] = useState<PhaseType>("acute");
+	const availablePhases = itemData?.phases ? (Object.keys(itemData.phases) as PhaseType[]) : [];
 
-	// Reset phase when selecting a new item
-	useEffect(() => {
-		setActivePhase("acute");
-	}, [item]);
+	const [selectedPhase, setSelectedPhase] = useState<PhaseType | null>(null);
+	const [prevItem, setPrevItem] = useState<string | null>(item);
 
-	// Automatically fallback to the first available phase if "acute" is missing
-	const availablePhases = itemData?.phases ? Object.keys(itemData.phases) as PhaseType[] : [];
-	
-	useEffect(() => {
-		if (availablePhases.length > 0 && !availablePhases.includes(activePhase)) {
-			setActivePhase(availablePhases[0]);
-		}
-	}, [item, availablePhases, activePhase]);
+	if (item !== prevItem) {
+		setPrevItem(item);
+		setSelectedPhase(null);
+	}
+
+	let activePhase: PhaseType = "acute";
+	if (selectedPhase && availablePhases.includes(selectedPhase)) {
+		activePhase = selectedPhase;
+	} else if (availablePhases.length > 0 && !availablePhases.includes("acute")) {
+		activePhase = availablePhases[0];
+	}
+
+	const setActivePhase = (phase: PhaseType) => setSelectedPhase(phase);
 
 	const currentPhaseData = itemData?.phases ? itemData.phases[activePhase] : null;
 
