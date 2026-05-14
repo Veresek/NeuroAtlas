@@ -1,7 +1,6 @@
 import { useState } from "react";
 import CloseIcon from "@/assets/close.svg?react";
 import atlasData from "@/data/atlas.json";
-import simulationData from "@/data/simulation.json";
 import type { BrainItemData } from "@/types/brain";
 
 import ChevronDownIcon from "@/assets/chevron-down.svg?react";
@@ -18,7 +17,7 @@ type PhaseType = "acute" | "chronic" | "withdrawal";
 function findItemData(itemName: string | null): BrainItemData | null {
 	if (!itemName) return null;
 	
-	const allSections = [...atlasData, ...simulationData];
+	const allSections = [...atlasData];
 	for (const section of allSections) {
 		const found = section.items.find((i: { name?: string }) => i.name === itemName);
 		if (found) return found as BrainItemData;

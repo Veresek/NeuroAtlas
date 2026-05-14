@@ -83,6 +83,70 @@
 		]
 	},
 	{
+		"title": "Lifestyle",
+		"items": [
+			{
+				"id": "meditation",
+				"name": "Meditation",
+				"category": "Lifestyle",
+				"shortDescription": "Simulate the calming effects of meditation.",
+				"phases": {
+					"chronic": {
+						"brainImpact": "Increases grey matter density and enhances connectivity.",
+						"affectedBrainAreas": [
+							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "stimulates" }
+						],
+						"neurotransmitters": [
+							{ "name": "GABA", "effect": "increase" },
+							{ "name": "Serotonin", "effect": "increase" }
+						]
+					}
+				}
+			},
+			{
+				"id": "sleep_deprivation",
+				"name": "Sleep Deprivation",
+				"category": "Lifestyle",
+				"shortDescription": "Simulate the cognitive impairment caused by lack of sleep.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Impairs memory consolidation and emotional regulation.",
+						"affectedBrainAreas": [
+							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "depresses" }
+						]
+					}
+				}
+			},
+			{
+				"id": "cognitive_overload",
+				"name": "Cognitive Overload",
+				"category": "Lifestyle",
+				"shortDescription": "Simulate the effects of excessive mental effort.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Depletes cognitive resources."
+					}
+				}
+			},
+			{
+				"id": "physical_activity",
+				"name": "Physical Activity",
+				"category": "Lifestyle",
+				"shortDescription": "Simulate the neuroprotective effects of exercise.",
+				"phases": {
+					"acute": {
+						"brainImpact": "Promotes neurogenesis and increases brain plasticity.",
+						"neurotransmitters": [
+							{ "name": "Endorphins", "effect": "increase" },
+							{ "name": "Dopamine", "effect": "increase" },
+							{ "name": "Serotonin", "effect": "increase" }
+						]
+					}
+				}
+			}
+		]
+	},
+	{
 		"title": "Emotions",
 		"items": [
 			{
