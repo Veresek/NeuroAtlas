@@ -1,5 +1,4 @@
 import AtlasIcon from "@/assets/atlas.svg?react";
-import SimulationIcon from "@/assets/simulation.svg?react";
 import MyBrainIcon from "@/assets/my-brain.svg?react";
 import ResearchIcon from "@/assets/research.svg?react";
 
@@ -10,7 +9,6 @@ interface NavSidebarProps {
 
 const navItems = [
 	{ id: "atlas", label: "Atlas", icon: <AtlasIcon /> },
-	{ id: "simulation", label: "Simulation", icon: <SimulationIcon /> },
 	{ id: "my-brain", label: "My Brain", icon: <MyBrainIcon /> },
 	{ id: "research", label: "Research", icon: <ResearchIcon /> },
 ];

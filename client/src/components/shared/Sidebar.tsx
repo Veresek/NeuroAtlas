@@ -1,5 +1,4 @@
 import { SubstancesSidebar } from "@/features/substances/components/SubstancesSidebar";
-import { SimulationSidebar } from "@/features/simulation/components/SimulationSidebar";
 import { DailyQuiz } from "@/features/digital-twin/components/DailyQuiz";
 import { ResearchSidebar } from "@/features/research/components/ResearchSidebar";
 
@@ -10,7 +9,6 @@ interface SidebarProps {
 }
 
 function SidebarContent({ onSelectItem, selectedItem, activeNav }: SidebarProps) {
-	if (activeNav === "simulation") return <SimulationSidebar />;
 	if (activeNav === "my-brain") return <DailyQuiz />;
 	if (activeNav === "research") return <ResearchSidebar />;
 	return <SubstancesSidebar onSelectItem={onSelectItem} selectedItem={selectedItem} />;
