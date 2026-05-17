@@ -18,37 +18,18 @@ interface ChangelogEntry {
 // ── Data ─────────────────────────────────────────────────────
 const entries: ChangelogEntry[] = [
 	{
-		version: "0.2.0",
+		version: "0.1.0",
 		date: "2026-05-18",
 		tag: "minor",
 		summary: "Introduced a new global highlight system and a brain area selector.",
 		added: [
-			"New global state hook (useBrainHighlight) to manage 3D model highlighting across the app.",
 			"Responsive dropdown selector on the canvas for picking specific brain areas.",
 			"Categorized dropdown options by anatomical regions using brainSections data.",
-			"Support for rendering and highlighting anatomical areas on demand, even if hidden by default."
+			"Support for rendering and highlighting anatomical areas on demand, even if hidden by default.",
+			"Added changelog page.",
 		],
 		modified: [
 			"Refactored BrainModel component to consume the new highlight hook internally."
-		]
-	},
-	{
-		version: "0.1.0",
-		date: "2026-05-17",
-		tag: "minor",
-		summary: "Official initial launch of NeuroAtlas with consolidated 3D anatomical features and optimized user architecture.",
-		added: [
-			"Interactive 3D model engine with dynamic structural highlighting.",
-			"Comprehensive anatomical atlas system mapping detailed lobes and sections.",
-			"Responsive multi-device layout featuring an expandable drag-handle panel.",
-			"Clean sidebar-focused navigation workflows."
-		],
-		modified: [
-			"Refactored mesh coordinates to a unified high-performance data mapper.",
-			"Reorganized configurations to reduce DOM clutter and improve initial paints."
-		],
-		deleted: [
-			"Deprecated legacy unstructured mapping modules."
 		]
 	},
 ];
