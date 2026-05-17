@@ -1,5 +1,5 @@
-import { SubstancesSidebar } from "@/features/substances/components/SubstancesSidebar";
-import { DailyQuiz } from "@/features/digital-twin/components/DailyQuiz";
+import { AtlasSidebar } from "@/features/atlas/components/AtlasSidebar";
+import { MyBrainSidebar } from "@/features/my-brain/components/MyBrainSidebar";
 import { ResearchSidebar } from "@/features/research/components/ResearchSidebar";
 
 interface SidebarProps {
@@ -9,9 +9,9 @@ interface SidebarProps {
 }
 
 function SidebarContent({ onSelectItem, selectedItem, activeNav }: SidebarProps) {
-	if (activeNav === "my-brain") return <DailyQuiz />;
+	if (activeNav === "my-brain") return <MyBrainSidebar />;
 	if (activeNav === "research") return <ResearchSidebar />;
-	return <SubstancesSidebar onSelectItem={onSelectItem} selectedItem={selectedItem} />;
+	return <AtlasSidebar onSelectItem={onSelectItem} selectedItem={selectedItem} />;
 }
 
 // Desktop only — hidden on mobile (mobile panel lives in App.tsx)

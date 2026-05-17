@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-export interface DailyLog {
+export interface MyBrainLog {
 	sleep: number;
 	coffee: number;
 	mood: number;
 }
 
-export interface UseDailyLog {
-	log: DailyLog;
+export interface UseMyBrainLog {
+	log: MyBrainLog;
 	setSleep: (v: number) => void;
 	setCoffee: (v: number) => void;
 	setMood: (v: number) => void;
@@ -15,7 +15,7 @@ export interface UseDailyLog {
 	generate: () => void;
 }
 
-export function useDailyLog(): UseDailyLog {
+export function useMyBrainLog(): UseMyBrainLog {
 	const [sleep, setSleep] = useState(7);
 	const [coffee, setCoffee] = useState(2);
 	const [mood, setMood] = useState(2);

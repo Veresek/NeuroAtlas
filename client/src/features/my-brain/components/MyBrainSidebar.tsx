@@ -1,13 +1,13 @@
 import MyBrainIcon from "@/assets/my-brain.svg?react";
 import { Slider } from "@/components/ui/Slider";
 import { Button } from "@/components/ui/Button";
-import { useDailyLog } from "../hooks/useDailyLog";
+import { useMyBrainLog } from "../hooks/useMyBrainLog";
 
 const MOOD_LABELS = ["Awful", "Bad", "Neutral", "Good", "Great"];
 const MOOD_COLORS = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#00aaff"];
 
-export function DailyQuiz() {
-	const { log, setSleep, setCoffee, setMood, isGenerating, generate } = useDailyLog();
+export function MyBrainSidebar() {
+	const { log, setSleep, setCoffee, setMood, isGenerating, generate } = useMyBrainLog();
 	const { sleep, coffee, mood } = log;
 
 	return (

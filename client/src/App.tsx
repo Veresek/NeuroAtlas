@@ -1,17 +1,34 @@
 import { useState } from "react";
 import BrainModel from "./features/brain-model/components/BrainModel";
 import Footer from "./components/shared/Footer";
-import Navbar from "./components/shared/Navbar";
+import Navbar from "./components/shared/Header";
 import NavSidebar from "./components/shared/NavSidebar";
 import Sidebar, { SidebarContent } from "./components/shared/Sidebar";
 import DetailPanel, { DetailContent } from "./components/shared/DetailPanel";
 import ChevronDownIcon from "@/assets/chevron-down.svg?react";
+import { meshMapping } from "@/data/meshMapping";
+import { brainSections } from "@/data/brainSections";
+import { useBrainHighlight } from "@/hooks/useBrainHighlight";
+
+const groupedAreas: Record<string, string[]> = {};
+for (const [section, ids] of Object.entries(brainSections)) {
+	const displayNames = new Set<string>();
+	for (const id of ids) {
+		if (meshMapping[id]) {
+			displayNames.add(meshMapping[id].displayName);
+		}
+	}
+	if (displayNames.size > 0) {
+		groupedAreas[section] = Array.from(displayNames).sort();
+	}
+}
 
 function App() {
 	const [selectedItem, setSelectedItem] = useState<string | null>(null);
 	const [selectedSection, setSelectedSection] = useState<string | null>(null);
 	const [activeNav, setActiveNav] = useState<string>("atlas");
 	const [isMobileExpanded, setIsMobileExpanded] = useState(true);
+	const { highlightedArea, setBrainHighlight } = useBrainHighlight();
 
 	const handleSelectItem = (item: string, section: string) => {
 		setSelectedItem(item);
@@ -31,7 +48,6 @@ function App() {
 			return;
 		}
 		setActiveNav(id);
-		// Zamknij otwartą kartę atlasu przy zmianie trybu
 		setSelectedItem(null);
 		setSelectedSection(null);
 		setIsMobileExpanded(true);
@@ -39,7 +55,6 @@ function App() {
 
 	return (
 		<div className="flex flex-col h-screen overflow-hidden">
-			{/* Landscape blocker overlay for mobile */}
 			<div className="hidden [@media(max-height:500px)_and_(orientation:landscape)]:flex fixed inset-0 z-50 bg-gray-50 items-center justify-center flex-col p-8 text-center">
 				<h2 className="text-xl font-bold text-gray-800 mb-2">Rotate your device</h2>
 				<p className="text-sm text-gray-500 max-w-xs">
@@ -62,7 +77,25 @@ function App() {
 				/>
 
 				{/* Brain canvas — flex-1 takes remaining space (top half on mobile) */}
-				<div className="flex-1 flex items-center justify-center bg-gray-100/60 min-h-[30vh]">
+				<div className="flex-1 flex items-center justify-center bg-gray-100/60 min-h-[30vh] relative">
+					<div className="absolute top-4 right-4 z-10">
+						<select
+							value={highlightedArea || ""}
+							onChange={(e) => setBrainHighlight(e.target.value || null)}
+							className="px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-gray-200/60 bg-white/80 backdrop-blur-md text-xs md:text-sm text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00aaff]/50 transition-all cursor-pointer max-w-[150px] md:max-w-none"
+						>
+							<option value="">Select brain area...</option>
+							{Object.entries(groupedAreas).sort().map(([region, areas]) => (
+								<optgroup key={region} label={region} className="font-bold text-gray-900">
+									{areas.map((area) => (
+										<option key={area} value={area} className="font-normal text-gray-700">
+											{area}
+										</option>
+									))}
+								</optgroup>
+							))}
+						</select>
+					</div>
 					<BrainModel />
 				</div>
 

@@ -4,12 +4,12 @@ import SearchIcon from "@/assets/search.svg?react";
 import ChevronDownIcon from "@/assets/chevron-down.svg?react";
 import atlasSections from "@/data/atlas.json";
 
-interface SubstancesSidebarProps {
+interface AtlasSidebarProps {
 	onSelectItem: (item: string, section: string) => void;
 	selectedItem: string | null;
 }
 
-export function SubstancesSidebar({ onSelectItem, selectedItem }: SubstancesSidebarProps) {
+export function AtlasSidebar({ onSelectItem, selectedItem }: AtlasSidebarProps) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [openSections, setOpenSections] = useState<Record<string, boolean>>({
 		[atlasSections[0].title]: true,
