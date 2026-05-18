@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CloseIcon from "@/assets/close.svg?react";
 import atlasData from "@/data/atlas.json";
-import type { BrainItemData } from "@/types/brain";
+import type { BrainItemData, AffectedBrainArea } from "@/types/brain";
+import { setBrainHighlight } from "@/hooks/useBrainHighlight";
 
 import ChevronDownIcon from "@/assets/chevron-down.svg?react";
 
@@ -48,6 +49,21 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 
 	const currentPhaseData = itemData?.phases ? itemData.phases[activePhase] : null;
 
+	useEffect(() => {
+		if (currentPhaseData?.affectedBrainAreas && currentPhaseData.affectedBrainAreas.length > 0) {
+			const areasToHighlight = currentPhaseData.affectedBrainAreas.map((a: AffectedBrainArea) => a.name);
+			setBrainHighlight(areasToHighlight);
+		} else {
+			setBrainHighlight(null);
+		}
+		
+		return () => {
+			// Optional: could clear on unmount, but we might want it to persist until another action.
+			// Let's clear it when the component unmounts (panel closes).
+			setBrainHighlight(null);
+		};
+	}, [currentPhaseData]);
+
 	// Helper to format phase names nicely
 	const formatPhaseName = (phase: string) => {
 		if (phase === "acute") return "Acute";
@@ -68,7 +84,7 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 					<ChevronDownIcon className="w-5 h-5 text-gray-500 rotate-90" />
 				</button>
 				<div className="flex-1">
-					<p className="text-[10px] font-semibold uppercase tracking-widest text-gray-300">{section}</p>
+					<p className="text-[11px] font-bold uppercase tracking-widest text-gray-500">{section}</p>
 					<h2 className="text-base font-bold text-gray-800 leading-tight">{item}</h2>
 				</div>
 				<button
@@ -116,7 +132,7 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 				) : (
 					<div>
 						<h3 className="font-semibold text-gray-800 mb-1">Description</h3>
-						<p className="leading-relaxed text-gray-400 italic">No description available.</p>
+						<p className="leading-relaxed text-gray-500 italic">No description available.</p>
 					</div>
 				)}
 

@@ -27,7 +27,7 @@ export function MyBrainSidebar() {
 					</div>
 					<div>
 						<p className="text-[13px] text-gray-800" style={{ fontWeight: 700 }}>My Brain</p>
-						<p className="text-[11px] text-gray-400">How your lifestyle affects your brain?</p>
+						<p className="text-xs text-gray-500">How your lifestyle affects your brain?</p>
 					</div>
 				</div>
 			</div>

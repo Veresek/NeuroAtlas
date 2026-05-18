@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import BrainModel from "./features/brain-model/components/BrainModel";
 import Footer from "./components/shared/Footer";
 import Navbar from "./components/shared/Header";
@@ -57,7 +57,7 @@ function App() {
 		<div className="flex flex-col h-screen overflow-hidden">
 			<div className="hidden [@media(max-height:500px)_and_(orientation:landscape)]:flex fixed inset-0 z-50 bg-gray-50 items-center justify-center flex-col p-8 text-center">
 				<h2 className="text-xl font-bold text-gray-800 mb-2">Rotate your device</h2>
-				<p className="text-sm text-gray-500 max-w-xs">
+				<p className="text-[15px] text-gray-600 max-w-xs">
 					NeuroAtlas is optimized for portrait mode. Please rotate your phone back to continue.
 				</p>
 			</div>
@@ -80,19 +80,22 @@ function App() {
 				<div className="flex-1 flex items-center justify-center bg-gray-100/60 min-h-[30vh] relative">
 					<div className="absolute top-4 right-4 z-10">
 						<select
-							value={highlightedArea || ""}
+							value={typeof highlightedArea === 'string' ? highlightedArea : ""}
 							onChange={(e) => setBrainHighlight(e.target.value || null)}
 							className="px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-gray-200/60 bg-white/80 backdrop-blur-md text-xs md:text-sm text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00aaff]/50 transition-all cursor-pointer max-w-[150px] md:max-w-none"
 						>
 							<option value="">Select brain area...</option>
 							{Object.entries(groupedAreas).sort().map(([region, areas]) => (
-								<optgroup key={region} label={region} className="font-bold text-gray-900">
+								<Fragment key={region}>
+									<option value={region} className="font-bold text-gray-900 bg-gray-50">
+										{region}
+									</option>
 									{areas.map((area) => (
 										<option key={area} value={area} className="font-normal text-gray-700">
-											{area}
+											&nbsp;&nbsp;&nbsp;&nbsp;{area}
 										</option>
 									))}
-								</optgroup>
+								</Fragment>
 							))}
 						</select>
 					</div>
@@ -114,7 +117,7 @@ function App() {
 						{/* Info shown only when collapsed and an item is selected */}
 						{!isMobileExpanded && selectedItem && (
 							<div className="flex flex-col items-center px-8 w-full transition-opacity duration-300 opacity-100">
-								<span className="text-[9px] font-semibold uppercase tracking-widest text-gray-400 leading-tight truncate w-full text-center">
+								<span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 leading-tight truncate w-full text-center">
 									{selectedSection}
 								</span>
 								<span className="text-[13px] font-bold text-gray-800 truncate w-full text-center leading-tight">

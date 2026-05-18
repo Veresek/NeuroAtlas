@@ -22,7 +22,7 @@ export function ResearchSidebar() {
 					</div>
 					<div>
 						<p className="text-[13px] text-gray-800" style={{ fontWeight: 700 }}>Research</p>
-						<p className="text-[11px] text-gray-400">Explore research papers and data</p>
+						<p className="text-xs text-gray-500">Explore research papers and data</p>
 					</div>
 				</div>
 			</div>
@@ -47,7 +47,7 @@ export function ResearchSidebar() {
 					<span style={{ fontSize: 28 }}>🔬</span>
 				</div>
 				<p className="text-sm font-semibold text-gray-700">Coming soon</p>
-				<p className="text-xs text-gray-400 mt-1 max-w-[200px]">We're building a library of neuroscience research papers and datasets.</p>
+				<p className="text-xs text-gray-500 mt-1 max-w-[200px]">We're building a library of neuroscience research papers and datasets.</p>
 			</div>
 		</div>
 	);

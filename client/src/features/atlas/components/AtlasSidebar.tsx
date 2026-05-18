@@ -49,7 +49,7 @@ export function AtlasSidebar({ onSelectItem, selectedItem }: AtlasSidebarProps) 
 					</div>
 					<div>
 						<p className="text-[13px] text-gray-800" style={{ fontWeight: 700 }}>Atlas</p>
-						<p className="text-[11px] text-gray-400">Explore and learn about brain</p>
+						<p className="text-xs text-gray-500">Explore and learn about brain</p>
 					</div>
 				</div>
 			</div>

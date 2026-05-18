@@ -11,7 +11,7 @@
 					"acute": {
 						"brainImpact": "Alcohol interferes with the brain's communication pathways, leading to loss of coordination and lowered inhibitions.",
 						"affectedBrainAreas": [
-							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "depresses" },
+							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "depresses" },
 							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "depresses" },
 							{ "areaId": "cerebellum", "name": "Cerebellum", "effectType": "depresses" }
 						],
@@ -24,7 +24,7 @@
 					"chronic": {
 						"brainImpact": "Long-term heavy alcohol use can shrink the frontal lobes and reduce overall brain volume, impairing memory and cognitive function.",
 						"affectedBrainAreas": [
-							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "damages" },
+							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "damages" },
 							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "damages" },
 							{ "areaId": "cerebral_cortex", "name": "Cerebral Cortex", "effectType": "damages" }
 						],
@@ -37,7 +37,7 @@
 					"withdrawal": {
 						"brainImpact": "The brain, having adapted to the constant presence of a depressant, goes into a state of hyper-excitability when alcohol is removed.",
 						"affectedBrainAreas": [
-							{ "areaId": "amygdala", "name": "Amygdala", "effectType": "stimulates" }
+							{ "areaId": "amygdaloid_complex", "name": "Amygdaloid Complex", "effectType": "stimulates" }
 						],
 						"neurotransmitters": [
 							{ "name": "Glutamate", "effect": "increase" },
@@ -94,7 +94,7 @@
 					"chronic": {
 						"brainImpact": "Increases grey matter density and enhances connectivity.",
 						"affectedBrainAreas": [
-							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "stimulates" }
+							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "stimulates" }
 						],
 						"neurotransmitters": [
 							{ "name": "GABA", "effect": "increase" },
@@ -112,7 +112,7 @@
 					"acute": {
 						"brainImpact": "Impairs memory consolidation and emotional regulation.",
 						"affectedBrainAreas": [
-							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "depresses" }
+							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "depresses" }
 						]
 					}
 				}
@@ -176,7 +176,7 @@
 					"acute": {
 						"brainImpact": "Triggers the fight-or-flight response, preparing the body for action.",
 						"affectedBrainAreas": [
-							{ "areaId": "amygdala", "name": "Amygdala", "effectType": "stimulates" },
+							{ "areaId": "amygdaloid_complex", "name": "Amygdaloid Complex", "effectType": "stimulates" },
 							{ "areaId": "hypothalamus", "name": "Hypothalamus", "effectType": "stimulates" }
 						],
 						"neurotransmitters": [
@@ -252,8 +252,8 @@
 					"chronic": {
 						"brainImpact": "Changes in brain structure and function, particularly in emotional regulation areas.",
 						"affectedBrainAreas": [
-							{ "areaId": "prefrontal_cortex", "name": "Prefrontal Cortex", "effectType": "depresses" },
-							{ "areaId": "amygdala", "name": "Amygdala", "effectType": "stimulates" }
+							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "depresses" },
+							{ "areaId": "amygdaloid_complex", "name": "Amygdaloid Complex", "effectType": "stimulates" }
 						],
 						"neurotransmitters": [
 							{ "name": "Serotonin", "effect": "decrease" },

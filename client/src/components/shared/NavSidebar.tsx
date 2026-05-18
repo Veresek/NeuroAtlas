@@ -58,7 +58,7 @@ function NavSidebar({ activeNav, onNavSelect }: NavSidebarProps) {
 									{item.icon}
 								</span>
 								<span
-									className="text-[9px] font-semibold tracking-wide leading-none text-center"
+									className="text-[10px] font-semibold tracking-wide leading-none text-center"
 									style={{ color: "inherit", whiteSpace: "nowrap" }}
 								>
 									{item.label}
@@ -79,7 +79,7 @@ function NavSidebar({ activeNav, onNavSelect }: NavSidebarProps) {
 							id={`nav-bottom-${item.id}`}
 							onClick={() => onNavSelect(item.id)}
 							className="relative flex flex-col items-center gap-1 flex-1 py-2 rounded-xl transition-all duration-200 cursor-pointer"
-							style={{ color: isActive ? "#00aaff" : "#9ca3af" }}
+							style={{ color: isActive ? "#00aaff" : "#6b7280" }}
 						>
 							{/* Active dot indicator */}
 							{isActive && (
@@ -92,7 +92,7 @@ function NavSidebar({ activeNav, onNavSelect }: NavSidebarProps) {
 								{item.icon}
 							</span>
 							<span
-								className="text-[9px] font-semibold tracking-wide leading-none"
+								className="text-[10px] font-semibold tracking-wide leading-none"
 								style={{ color: "inherit" }}
 							>
 								{item.label}
