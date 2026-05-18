@@ -32,6 +32,18 @@ const entries: ChangelogEntry[] = [
 			"Refactored BrainModel component to consume the new highlight hook internally."
 		]
 	},
+	{
+		version: "0.1.1",
+		date: "2026-05-18",
+		tag: "minor",
+		summary: "Improved readability and added highlighting sections.",
+		added: [
+			"Added highlighting for sections after choosing element from atlas",
+		],
+		modified: [
+			"Fixed readeablity for light colored text on white background."
+		]
+	}
 ];
 
 // ── Tag styles ───────────────────────────────────────────────
@@ -84,11 +96,10 @@ function ChangelogPage() {
 								<li key={entry.version}>
 									<button
 										onClick={() => setSelected(entry)}
-										className={`w-full text-left px-4 py-3 flex flex-col gap-1 transition-colors duration-150 ${
-											selected?.version === entry.version
+										className={`w-full text-left px-4 py-3 flex flex-col gap-1 transition-colors duration-150 ${selected?.version === entry.version
 												? "bg-[#00aaff]/8 border-r-2 border-[#00aaff]"
 												: "hover:bg-gray-50"
-										}`}
+											}`}
 									>
 										<div className="flex items-center gap-2">
 											<span className="text-sm font-semibold text-gray-800">
