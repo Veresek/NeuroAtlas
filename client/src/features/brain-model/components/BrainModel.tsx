@@ -46,7 +46,7 @@ function BrainMesh() {
 							if (displayName) {
 								const lowerArea = area.toLowerCase();
 								const lowerDisplay = displayName.toLowerCase();
-								
+
 								// Direct or substring match
 								if (lowerDisplay.includes(lowerArea) || lowerArea.includes(lowerDisplay)) return true;
 							}
@@ -65,6 +65,7 @@ function BrainMesh() {
 						transparent: true,
 						opacity: opacity,
 						side: THREE.FrontSide,
+						depthWrite: false,
 					});
 					child.visible = true;
 					child.frustumCulled = false;
@@ -80,7 +81,7 @@ function BrainMesh() {
 
 function BrainModel() {
 	return (
-		<div className="h-72 w-72 md:h-125 md:w-125 relative">
+		<div className="w-auto h-full max-w-full max-h-full aspect-square relative">
 			<Canvas camera={{ position: [0, 0, 2.5] }}>
 				<ambientLight intensity={1} />
 				<BrainMesh />
@@ -88,6 +89,8 @@ function BrainModel() {
 					enableZoom={true}
 					enablePan={true}
 					enableRotate={true}
+					minDistance={2.2}
+					maxDistance={5.0}
 				/>
 			</Canvas>
 		</div>
