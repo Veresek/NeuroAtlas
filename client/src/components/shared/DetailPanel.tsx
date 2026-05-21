@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import CloseIcon from "@/assets/close.svg?react";
 import atlasData from "@/data/atlas.json";
 import type { BrainItemData, AffectedBrainArea } from "@/types/brain";
@@ -17,7 +17,7 @@ type PhaseType = "acute" | "chronic" | "withdrawal";
 // Helper to find item data across our JSON files
 function findItemData(itemName: string | null): BrainItemData | null {
 	if (!itemName) return null;
-	
+
 	const allSections = [...atlasData];
 	for (const section of allSections) {
 		const found = section.items.find((i: { name?: string }) => i.name === itemName);
@@ -49,20 +49,46 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 
 	const currentPhaseData = itemData?.phases ? itemData.phases[activePhase] : null;
 
+	const [hoveredArea, setHoveredArea] = useState<string | null>(null);
+	const [clickedArea, setClickedArea] = useState<string | null>(null);
+	const leaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	// Reset interaction states when phase data changes
 	useEffect(() => {
-		if (currentPhaseData?.affectedBrainAreas && currentPhaseData.affectedBrainAreas.length > 0) {
+		if (leaveTimeoutRef.current) {
+			clearTimeout(leaveTimeoutRef.current);
+			leaveTimeoutRef.current = null;
+		}
+		setHoveredArea(null);
+		setClickedArea(null);
+	}, [currentPhaseData]);
+
+	// Reactively synchronize the 3D model highlights with hover & click interactions
+	useEffect(() => {
+		if (!currentPhaseData?.affectedBrainAreas || currentPhaseData.affectedBrainAreas.length === 0) {
+			setBrainHighlight(null);
+			return;
+		}
+
+		if (hoveredArea) {
+			setBrainHighlight(hoveredArea);
+		} else if (clickedArea) {
+			setBrainHighlight(clickedArea);
+		} else {
 			const areasToHighlight = currentPhaseData.affectedBrainAreas.map((a: AffectedBrainArea) => a.name);
 			setBrainHighlight(areasToHighlight);
-		} else {
-			setBrainHighlight(null);
 		}
-		
+	}, [hoveredArea, clickedArea, currentPhaseData]);
+
+	// Clean up timers on unmount
+	useEffect(() => {
 		return () => {
-			// Optional: could clear on unmount, but we might want it to persist until another action.
-			// Let's clear it when the component unmounts (panel closes).
+			if (leaveTimeoutRef.current) {
+				clearTimeout(leaveTimeoutRef.current);
+			}
 			setBrainHighlight(null);
 		};
-	}, [currentPhaseData]);
+	}, []);
 
 	// Helper to format phase names nicely
 	const formatPhaseName = (phase: string) => {
@@ -103,18 +129,17 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 						{(["acute", "chronic", "withdrawal"] as PhaseType[]).map((phase) => {
 							const isAvailable = availablePhases.includes(phase);
 							const isActive = activePhase === phase;
-							
+
 							if (!isAvailable && !isActive) return null; // Only show available phases
 
 							return (
 								<button
 									key={phase}
 									onClick={() => setActivePhase(phase)}
-									className={`flex-1 min-w-[70px] px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
-										isActive 
-											? "bg-white text-gray-800 shadow-sm ring-1 ring-gray-900/5" 
-											: "text-gray-500 hover:text-gray-700 hover:bg-gray-200/50 cursor-pointer"
-									}`}
+									className={`flex-1 min-w-[70px] px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${isActive
+										? "bg-white text-gray-800 shadow-sm ring-1 ring-gray-900/5"
+										: "text-gray-500 hover:text-gray-700 hover:bg-gray-200/50 cursor-pointer"
+										}`}
 								>
 									{formatPhaseName(phase)}
 								</button>
@@ -149,19 +174,57 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 					<div>
 						<h3 className="font-semibold text-gray-800 mb-1">Brain Areas</h3>
 						<div className="flex flex-wrap gap-1.5 mt-1">
-							{currentPhaseData.affectedBrainAreas.map((area, idx) => (
-								<span
-									key={`${area.areaId}-${idx}`}
-									className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${
-										area.effectType === "stimulates" ? "bg-green-100 text-green-700" :
-										area.effectType === "depresses" ? "bg-blue-100 text-blue-700" :
-										area.effectType === "damages" ? "bg-red-100 text-red-700" :
-										"bg-[#00aaff]/10 text-[#00aaff]"
-									}`}
-								>
-									{area.name} {area.effectType ? `(${area.effectType})` : ""}
-								</span>
-							))}
+							{currentPhaseData.affectedBrainAreas.map((area, idx) => {
+								const isAnyHovered = hoveredArea !== null;
+								const isCurrentHovered = hoveredArea === area.name;
+								const isAnyClicked = clickedArea !== null;
+								const isCurrentClicked = clickedArea === area.name;
+
+								// An area is visually "active" (fully colored) if:
+								// 1. We are currently hovering it
+								// 2. OR: Nothing is hovered, but this area is clicked
+								// 3. OR: Nothing is hovered and nothing is clicked (everything colored by default)
+								const isActive = isCurrentHovered || (!isAnyHovered && isCurrentClicked) || (!isAnyHovered && !isAnyClicked);
+
+								return (
+									<span
+										key={`${area.areaId}-${idx}`}
+										onClick={() => {
+											setClickedArea(prev => prev === area.name ? null : area.name);
+										}}
+										onMouseEnter={() => {
+											if (leaveTimeoutRef.current) {
+												clearTimeout(leaveTimeoutRef.current);
+												leaveTimeoutRef.current = null;
+											}
+											setHoveredArea(area.name);
+										}}
+										onMouseLeave={() => {
+											if (leaveTimeoutRef.current) {
+												clearTimeout(leaveTimeoutRef.current);
+											}
+											leaveTimeoutRef.current = setTimeout(() => {
+												setHoveredArea(null);
+												leaveTimeoutRef.current = null;
+											}, 300);
+										}}
+										className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium transition-all duration-200 cursor-pointer ${
+											area.effectType === "stimulates" ? "bg-green-100 text-green-700 hover:bg-green-200/80" :
+											area.effectType === "depresses" ? "bg-blue-100 text-blue-700 hover:bg-blue-200/80" :
+											area.effectType === "damages" ? "bg-red-100 text-red-700 hover:bg-red-200/80" :
+											"bg-[#00aaff]/10 text-[#00aaff] hover:bg-[#00aaff]/20"
+										} ${
+											isCurrentClicked ? "ring-1 ring-[#00aaff]/70" : ""
+										} ${
+											isActive
+												? "scale-105 shadow-sm opacity-100"
+												: "opacity-40 scale-95"
+										}`}
+									>
+										{area.name} {area.effectType ? `(${area.effectType})` : ""}
+									</span>
+								);
+							})}
 						</div>
 					</div>
 				)}
@@ -174,11 +237,10 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 							{currentPhaseData.neurotransmitters.map((nt, idx) => (
 								<span
 									key={`${nt.name}-${idx}`}
-									className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${
-										nt.effect === "increase" ? "bg-emerald-50 text-emerald-600 border border-emerald-200/50" :
+									className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${nt.effect === "increase" ? "bg-emerald-50 text-emerald-600 border border-emerald-200/50" :
 										nt.effect === "decrease" ? "bg-rose-50 text-rose-600 border border-rose-200/50" :
-										"bg-gray-100 text-gray-600 border border-gray-200"
-									}`}
+											"bg-gray-100 text-gray-600 border border-gray-200"
+										}`}
 								>
 									{nt.effect === "increase" ? "↑ " : nt.effect === "decrease" ? "↓ " : "∼ "}
 									{nt.name}
@@ -199,9 +261,8 @@ function DetailPanel({ item, section, onClose }: DetailPanelProps) {
 		<>
 			{/* ── Desktop: animated side column ───────────────────────── */}
 			<div
-				className={`hidden md:flex shrink-0 border-r border-gray-200/60 bg-white flex-col transition-all duration-300 overflow-hidden ${
-					isOpen ? "w-80 opacity-100" : "w-0 opacity-0 border-r-0"
-				}`}
+				className={`hidden md:flex shrink-0 border-r border-gray-200/60 bg-white flex-col transition-all duration-300 overflow-hidden ${isOpen ? "w-80 opacity-100" : "w-0 opacity-0 border-r-0"
+					}`}
 			>
 				<DetailContent item={item} section={section} onClose={onClose} />
 			</div>
