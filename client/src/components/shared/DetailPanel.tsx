@@ -32,10 +32,15 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 
 	const [selectedPhase, setSelectedPhase] = useState<PhaseType | null>(null);
 	const [prevItem, setPrevItem] = useState<string | null>(item);
+	const [hoveredArea, setHoveredArea] = useState<string | null>(null);
+	const [clickedArea, setClickedArea] = useState<string | null>(null);
+	const leaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	if (item !== prevItem) {
 		setPrevItem(item);
 		setSelectedPhase(null);
+		setHoveredArea(null);
+		setClickedArea(null);
 	}
 
 	let activePhase: PhaseType = "acute";
@@ -45,23 +50,25 @@ function DetailContent({ item, section, onClose }: DetailPanelProps) {
 		activePhase = availablePhases[0];
 	}
 
-	const setActivePhase = (phase: PhaseType) => setSelectedPhase(phase);
+	const setActivePhase = (phase: PhaseType) => {
+		setSelectedPhase(phase);
+		setHoveredArea(null);
+		setClickedArea(null);
+		if (leaveTimeoutRef.current) {
+			clearTimeout(leaveTimeoutRef.current);
+			leaveTimeoutRef.current = null;
+		}
+	};
 
 	const currentPhaseData = itemData?.phases ? itemData.phases[activePhase] : null;
 
-	const [hoveredArea, setHoveredArea] = useState<string | null>(null);
-	const [clickedArea, setClickedArea] = useState<string | null>(null);
-	const leaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-	// Reset interaction states when phase data changes
+	// Clear any pending leave timers when the selected item changes
 	useEffect(() => {
 		if (leaveTimeoutRef.current) {
 			clearTimeout(leaveTimeoutRef.current);
 			leaveTimeoutRef.current = null;
 		}
-		setHoveredArea(null);
-		setClickedArea(null);
-	}, [currentPhaseData]);
+	}, [item]);
 
 	// Reactively synchronize the 3D model highlights with hover & click interactions
 	useEffect(() => {
