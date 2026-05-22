@@ -1,7 +1,13 @@
+export type BrainSectionEffectType =
+	| "stimulates"
+	| "depresses"
+	| "damages"
+	| "modulates";
+
 export interface AffectedBrainArea {
 	areaId: string;
 	name: string;
-	effectType?: "stimulates" | "depresses" | "damages" | "modulates";
+	effectType?: BrainSectionEffectType;
 }
 
 export interface NeurotransmitterEffect {

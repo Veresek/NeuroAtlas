@@ -1,6 +1,6 @@
-import { AtlasSidebar } from "@/features/atlas/components/AtlasSidebar";
-import { MyBrainSidebar } from "@/features/my-brain/components/MyBrainSidebar";
-import { ResearchSidebar } from "@/features/research/components/ResearchSidebar";
+import { AtlasSidebar } from '@/features/atlas/components/AtlasSidebar';
+import { MyBrainSidebar } from '@/features/my-brain/components/MyBrainSidebar';
+import { ResearchSidebar } from '@/features/research/components/ResearchSidebar';
 
 interface SidebarProps {
 	onSelectItem: (item: string, section: string) => void;
@@ -8,16 +8,29 @@ interface SidebarProps {
 	activeNav: string | null;
 }
 
-function SidebarContent({ onSelectItem, selectedItem, activeNav }: SidebarProps) {
-	if (activeNav === "my-brain") return <MyBrainSidebar />;
-	if (activeNav === "research") return <ResearchSidebar />;
-	return <AtlasSidebar onSelectItem={onSelectItem} selectedItem={selectedItem} />;
+function SidebarContent({
+	onSelectItem,
+	selectedItem,
+	activeNav,
+}: SidebarProps) {
+	if (activeNav === 'my-brain')
+		return <MyBrainSidebar onSelectItem={onSelectItem} />;
+	if (activeNav === 'research')
+		return (
+			<ResearchSidebar
+				onSelectItem={onSelectItem}
+				selectedItem={selectedItem}
+			/>
+		);
+	return (
+		<AtlasSidebar onSelectItem={onSelectItem} selectedItem={selectedItem} />
+	);
 }
 
 // Desktop only — hidden on mobile (mobile panel lives in App.tsx)
 function Sidebar(props: SidebarProps) {
 	return (
-		<aside className="hidden md:flex w-72 shrink-0 border-r border-gray-200/60 bg-gray-50/90 backdrop-blur-sm flex-col">
+		<aside className='hidden md:flex w-72 shrink-0 border-r border-gray-200/60 bg-gray-50/90 backdrop-blur-sm flex-col'>
 			<SidebarContent {...props} />
 		</aside>
 	);

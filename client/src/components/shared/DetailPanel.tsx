@@ -1,267 +1,47 @@
-import { useState, useEffect, useRef } from "react";
-import CloseIcon from "@/assets/close.svg?react";
-import atlasData from "@/data/atlas.json";
-import type { BrainItemData, AffectedBrainArea } from "@/types/brain";
-import { setBrainHighlight } from "@/hooks/useBrainHighlight";
-
-import ChevronDownIcon from "@/assets/chevron-down.svg?react";
+import { AtlasDetail } from "@/features/atlas/components/AtlasDetail";
+import { ResearchDetail } from "@/features/research/components/ResearchDetail";
+import { MyBrainDetail } from "@/features/my-brain/components/MyBrainDetail";
 
 interface DetailPanelProps {
 	item: string | null;
 	section: string | null;
 	onClose: () => void;
+	onSelectItem: (item: string, section: string) => void;
 }
 
-type PhaseType = "acute" | "chronic" | "withdrawal";
+function DetailContent({ item, section, onClose, onSelectItem }: DetailPanelProps) {
+	if (!item || !section) return null;
 
-// Helper to find item data across our JSON files
-function findItemData(itemName: string | null): BrainItemData | null {
-	if (!itemName) return null;
-
-	const allSections = [...atlasData];
-	for (const section of allSections) {
-		const found = section.items.find((i: { name?: string }) => i.name === itemName);
-		if (found) return found as BrainItemData;
-	}
-	return null;
-}
-
-function DetailContent({ item, section, onClose }: DetailPanelProps) {
-	const itemData = findItemData(item);
-	const availablePhases = itemData?.phases ? (Object.keys(itemData.phases) as PhaseType[]) : [];
-
-	const [selectedPhase, setSelectedPhase] = useState<PhaseType | null>(null);
-	const [prevItem, setPrevItem] = useState<string | null>(item);
-	const [hoveredArea, setHoveredArea] = useState<string | null>(null);
-	const [clickedArea, setClickedArea] = useState<string | null>(null);
-	const leaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-	if (item !== prevItem) {
-		setPrevItem(item);
-		setSelectedPhase(null);
-		setHoveredArea(null);
-		setClickedArea(null);
+	if (section === "Research") {
+		return (
+			<ResearchDetail
+				item={item}
+				section={section}
+				onClose={onClose}
+			/>
+		);
 	}
 
-	let activePhase: PhaseType = "acute";
-	if (selectedPhase && availablePhases.includes(selectedPhase)) {
-		activePhase = selectedPhase;
-	} else if (availablePhases.length > 0 && !availablePhases.includes("acute")) {
-		activePhase = availablePhases[0];
+	if (section === "MyBrain" || section === "my-brain" || section === "My Brain") {
+		return (
+			<MyBrainDetail
+				item={item}
+				onClose={onClose}
+			/>
+		);
 	}
-
-	const setActivePhase = (phase: PhaseType) => {
-		setSelectedPhase(phase);
-		setHoveredArea(null);
-		setClickedArea(null);
-		if (leaveTimeoutRef.current) {
-			clearTimeout(leaveTimeoutRef.current);
-			leaveTimeoutRef.current = null;
-		}
-	};
-
-	const currentPhaseData = itemData?.phases ? itemData.phases[activePhase] : null;
-
-	// Clear any pending leave timers when the selected item changes
-	useEffect(() => {
-		if (leaveTimeoutRef.current) {
-			clearTimeout(leaveTimeoutRef.current);
-			leaveTimeoutRef.current = null;
-		}
-	}, [item]);
-
-	// Reactively synchronize the 3D model highlights with hover & click interactions
-	useEffect(() => {
-		if (!currentPhaseData?.affectedBrainAreas || currentPhaseData.affectedBrainAreas.length === 0) {
-			setBrainHighlight(null);
-			return;
-		}
-
-		if (hoveredArea) {
-			setBrainHighlight(hoveredArea);
-		} else if (clickedArea) {
-			setBrainHighlight(clickedArea);
-		} else {
-			const areasToHighlight = currentPhaseData.affectedBrainAreas.map((a: AffectedBrainArea) => a.name);
-			setBrainHighlight(areasToHighlight);
-		}
-	}, [hoveredArea, clickedArea, currentPhaseData]);
-
-	// Clean up timers on unmount
-	useEffect(() => {
-		return () => {
-			if (leaveTimeoutRef.current) {
-				clearTimeout(leaveTimeoutRef.current);
-			}
-			setBrainHighlight(null);
-		};
-	}, []);
-
-	// Helper to format phase names nicely
-	const formatPhaseName = (phase: string) => {
-		if (phase === "acute") return "Acute";
-		if (phase === "chronic") return "Chronic";
-		if (phase === "withdrawal") return "Withdrawal";
-		return phase;
-	};
 
 	return (
-		<>
-			{/* Header - Fixed */}
-			<div className="flex items-center px-4 py-2 border-b border-gray-200/60 shrink-0">
-				<button
-					onClick={onClose}
-					className="p-1.5 -ml-1.5 mr-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 cursor-pointer md:hidden flex items-center justify-center"
-					aria-label="Back"
-				>
-					<ChevronDownIcon className="w-5 h-5 text-gray-500 rotate-90" />
-				</button>
-				<div className="flex-1">
-					<p className="text-[11px] font-bold uppercase tracking-widest text-gray-500">{section}</p>
-					<h2 className="text-base font-bold text-gray-800 leading-tight">{item}</h2>
-				</div>
-				<button
-					onClick={onClose}
-					className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-200 cursor-pointer hidden md:flex items-center justify-center"
-					aria-label="Close"
-				>
-					<CloseIcon className="w-4 h-4 text-gray-400" />
-				</button>
-			</div>
-
-			<div className="flex-1 overflow-y-auto p-4 space-y-4 text-sm text-gray-600">
-				{/* Phase Toggle Capsule - Now scrolls with content */}
-				{availablePhases.length > 0 && (
-					<div className="flex p-1 space-x-1 bg-gray-100/80 rounded-xl max-w-full overflow-x-auto hide-scrollbar mb-2">
-						{(["acute", "chronic", "withdrawal"] as PhaseType[]).map((phase) => {
-							const isAvailable = availablePhases.includes(phase);
-							const isActive = activePhase === phase;
-
-							if (!isAvailable && !isActive) return null; // Only show available phases
-
-							return (
-								<button
-									key={phase}
-									onClick={() => setActivePhase(phase)}
-									className={`flex-1 min-w-[70px] px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${isActive
-										? "bg-white text-gray-800 shadow-sm ring-1 ring-gray-900/5"
-										: "text-gray-500 hover:text-gray-700 hover:bg-gray-200/50 cursor-pointer"
-										}`}
-								>
-									{formatPhaseName(phase)}
-								</button>
-							);
-						})}
-					</div>
-				)}
-
-				{/* Description (Overall) */}
-				{itemData?.shortDescription ? (
-					<div>
-						<h3 className="font-semibold text-gray-800 mb-1">Description</h3>
-						<p className="leading-relaxed">{itemData.shortDescription}</p>
-					</div>
-				) : (
-					<div>
-						<h3 className="font-semibold text-gray-800 mb-1">Description</h3>
-						<p className="leading-relaxed text-gray-500 italic">No description available.</p>
-					</div>
-				)}
-
-				{/* Brain Impact for specific phase */}
-				{currentPhaseData?.brainImpact && (
-					<div>
-						<h3 className="font-semibold text-gray-800 mb-1">Brain Impact ({formatPhaseName(activePhase)})</h3>
-						<p className="leading-relaxed">{currentPhaseData.brainImpact}</p>
-					</div>
-				)}
-
-				{/* Brain Areas for specific phase */}
-				{currentPhaseData?.affectedBrainAreas && currentPhaseData.affectedBrainAreas.length > 0 && (
-					<div>
-						<h3 className="font-semibold text-gray-800 mb-1">Brain Areas</h3>
-						<div className="flex flex-wrap gap-1.5 mt-1">
-							{currentPhaseData.affectedBrainAreas.map((area, idx) => {
-								const isAnyHovered = hoveredArea !== null;
-								const isCurrentHovered = hoveredArea === area.name;
-								const isAnyClicked = clickedArea !== null;
-								const isCurrentClicked = clickedArea === area.name;
-
-								// An area is visually "active" (fully colored) if:
-								// 1. We are currently hovering it
-								// 2. OR: Nothing is hovered, but this area is clicked
-								// 3. OR: Nothing is hovered and nothing is clicked (everything colored by default)
-								const isActive = isCurrentHovered || (!isAnyHovered && isCurrentClicked) || (!isAnyHovered && !isAnyClicked);
-
-								return (
-									<span
-										key={`${area.areaId}-${idx}`}
-										onClick={() => {
-											setClickedArea(prev => prev === area.name ? null : area.name);
-										}}
-										onMouseEnter={() => {
-											if (leaveTimeoutRef.current) {
-												clearTimeout(leaveTimeoutRef.current);
-												leaveTimeoutRef.current = null;
-											}
-											setHoveredArea(area.name);
-										}}
-										onMouseLeave={() => {
-											if (leaveTimeoutRef.current) {
-												clearTimeout(leaveTimeoutRef.current);
-											}
-											leaveTimeoutRef.current = setTimeout(() => {
-												setHoveredArea(null);
-												leaveTimeoutRef.current = null;
-											}, 300);
-										}}
-										className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium transition-all duration-200 cursor-pointer ${
-											area.effectType === "stimulates" ? "bg-green-100 text-green-700 hover:bg-green-200/80" :
-											area.effectType === "depresses" ? "bg-blue-100 text-blue-700 hover:bg-blue-200/80" :
-											area.effectType === "damages" ? "bg-red-100 text-red-700 hover:bg-red-200/80" :
-											"bg-[#00aaff]/10 text-[#00aaff] hover:bg-[#00aaff]/20"
-										} ${
-											isCurrentClicked ? "ring-1 ring-[#00aaff]/70" : ""
-										} ${
-											isActive
-												? "scale-105 shadow-sm opacity-100"
-												: "opacity-40 scale-95"
-										}`}
-									>
-										{area.name} {area.effectType ? `(${area.effectType})` : ""}
-									</span>
-								);
-							})}
-						</div>
-					</div>
-				)}
-
-				{/* Neurotransmitters for specific phase */}
-				{currentPhaseData?.neurotransmitters && currentPhaseData.neurotransmitters.length > 0 && (
-					<div>
-						<h3 className="font-semibold text-gray-800 mb-1">Neurotransmitters</h3>
-						<div className="flex flex-wrap gap-1.5 mt-1">
-							{currentPhaseData.neurotransmitters.map((nt, idx) => (
-								<span
-									key={`${nt.name}-${idx}`}
-									className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${nt.effect === "increase" ? "bg-emerald-50 text-emerald-600 border border-emerald-200/50" :
-										nt.effect === "decrease" ? "bg-rose-50 text-rose-600 border border-rose-200/50" :
-											"bg-gray-100 text-gray-600 border border-gray-200"
-										}`}
-								>
-									{nt.effect === "increase" ? "↑ " : nt.effect === "decrease" ? "↓ " : "∼ "}
-									{nt.name}
-								</span>
-							))}
-						</div>
-					</div>
-				)}
-			</div>
-		</>
+		<AtlasDetail
+			item={item}
+			section={section}
+			onClose={onClose}
+			onSelectItem={onSelectItem}
+		/>
 	);
 }
 
-function DetailPanel({ item, section, onClose }: DetailPanelProps) {
+function DetailPanel({ item, section, onClose, onSelectItem }: DetailPanelProps) {
 	const isOpen = item !== null;
 
 	return (
@@ -271,7 +51,7 @@ function DetailPanel({ item, section, onClose }: DetailPanelProps) {
 				className={`hidden md:flex shrink-0 border-r border-gray-200/60 bg-white flex-col transition-all duration-300 overflow-hidden ${isOpen ? "w-80 opacity-100" : "w-0 opacity-0 border-r-0"
 					}`}
 			>
-				<DetailContent item={item} section={section} onClose={onClose} />
+				<DetailContent item={item} section={section} onClose={onClose} onSelectItem={onSelectItem} />
 			</div>
 		</>
 	);

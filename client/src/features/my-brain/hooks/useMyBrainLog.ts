@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { analyzeDailyLog, type DailyLogAnalysis } from "../api/analyzeDailyLog";
 
 export interface MyBrainLog {
 	sleep: number;
@@ -12,7 +13,9 @@ export interface UseMyBrainLog {
 	setCoffee: (v: number) => void;
 	setMood: (v: number) => void;
 	isGenerating: boolean;
-	generate: () => void;
+	analysis: DailyLogAnalysis | null;
+	error: string | null;
+	generate: () => Promise<void>;
 }
 
 export function useMyBrainLog(): UseMyBrainLog {
@@ -20,10 +23,24 @@ export function useMyBrainLog(): UseMyBrainLog {
 	const [coffee, setCoffee] = useState(2);
 	const [mood, setMood] = useState(2);
 	const [isGenerating, setIsGenerating] = useState(false);
+	const [analysis, setAnalysis] = useState<DailyLogAnalysis | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
-	const generate = () => {
+	const generate = async () => {
+		const log = { sleep, coffee, mood };
 		setIsGenerating(true);
-		// TODO: call daily-log-engine and push highlight regions to BrainModel
+		setError(null);
+		setAnalysis(null);
+
+		try {
+			const result = await analyzeDailyLog(log);
+			setAnalysis(result);
+		} catch (err) {
+			console.error("[MyBrain] Analysis generation failed:", err);
+			setError(err instanceof Error ? err.message : "Failed to generate analysis.");
+		} finally {
+			setIsGenerating(false);
+		}
 	};
 
 	return {
@@ -32,6 +49,8 @@ export function useMyBrainLog(): UseMyBrainLog {
 		setCoffee,
 		setMood,
 		isGenerating,
+		analysis,
+		error,
 		generate,
 	};
 }

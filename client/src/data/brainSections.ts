@@ -43,8 +43,6 @@ export const brainSections: Record<BrainSectionName, string[]> = {
     "frontal_operculum_L",
     "paracingulate_gyrus_L",
     "rostral_gyrus_L",
-    "frontomarginal_gyrus_L",
-    "frontal_pole_L",
     "precentral_gyrus_R",
     "superior_frontal_gyrus_R",
     "middle_frontal_gyrus_R",
@@ -59,8 +57,6 @@ export const brainSections: Record<BrainSectionName, string[]> = {
     "frontal_operculum_R",
     "paracingulate_gyrus_R",
     "rostral_gyrus_R",
-    "frontomarginal_gyrus_R",
-    "frontal_pole_R"
   ],
   "Parietal Lobe": [
     "postcentral_gyrus_L",
@@ -110,7 +106,9 @@ export const brainSections: Record<BrainSectionName, string[]> = {
     "planum_temporale_R",
     "temporal_pole_R",
     "planum_polare_R",
-    "perirhinal_gyrus_rostral_part_of_FuGt_R"
+    "perirhinal_gyrus_rostral_part_of_FuGt_R",
+    "frontomarginal_gyrus_L",
+    "frontomarginal_gyrus_R"
   ],
   "Insular Cortex": [
     "frontal_agranular_insular_cortex_area_Fl_L",
@@ -197,7 +195,6 @@ export const brainSections: Record<BrainSectionName, string[]> = {
     "external_segment_of_globus_pallidus_L",
     "internal_segment_of_globus_pallidus_L",
     "claustrum_L",
-    "posteroventral_putamen_L",
     "subthalamic_nucleus_L",
     "head_of_caudate_R",
     "body_of_caudate_R",
@@ -206,7 +203,6 @@ export const brainSections: Record<BrainSectionName, string[]> = {
     "external_segment_of_globus_pallidus_R",
     "internal_segment_of_globus_pallidus_R",
     "claustrum_R",
-    "posteroventral_putamen_R",
     "subthalamic_nucleus_R"
   ],
   "Thalamus": [
@@ -334,15 +330,13 @@ export const brainSections: Record<BrainSectionName, string[]> = {
     "third_ventricle_L",
     "cerebral_aqueduct_L",
     "fourth_ventricle_L",
-    "atrium_of_lateral_ventricle_L",
     "anterior_horn_of_lateral_ventricle_R",
     "body_of_lateral_ventricle_R",
     "posterior_horn_of_lateral_ventricle_R",
     "inferior_horn_of_lateral_ventricle_R",
     "third_ventricle_R",
     "cerebral_aqueduct_R",
-    "fourth_ventricle_R",
-    "atrium_of_lateral_ventricle_R"
+    "fourth_ventricle_R"
   ],
   "Other": []
 };

@@ -87,7 +87,7 @@ function BrainModel() {
 				<BrainMesh />
 				<OrbitControls
 					enableZoom={true}
-					enablePan={true}
+					enablePan={false}
 					enableRotate={true}
 					minDistance={2.2}
 					maxDistance={5.0}

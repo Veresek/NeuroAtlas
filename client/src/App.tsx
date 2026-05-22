@@ -33,6 +33,9 @@ function App() {
 	const handleSelectItem = (item: string, section: string) => {
 		setSelectedItem(item);
 		setSelectedSection(section);
+		if (section === "Research") {
+			setActiveNav("research");
+		}
 		setIsMobileExpanded(true);
 	};
 
@@ -74,6 +77,7 @@ function App() {
 					item={selectedItem}
 					section={selectedSection}
 					onClose={handleCloseDetail}
+					onSelectItem={handleSelectItem}
 				/>
 
 				{/* Brain canvas — flex-1 takes remaining space (top half on mobile) */}
@@ -135,7 +139,12 @@ function App() {
 					<div className={`flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${isMobileExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
 						}`}>
 						{selectedItem ? (
-							<DetailContent item={selectedItem} section={selectedSection} onClose={handleCloseDetail} />
+							<DetailContent
+								item={selectedItem}
+								section={selectedSection}
+								onClose={handleCloseDetail}
+								onSelectItem={handleSelectItem}
+							/>
 						) : activeNav ? (
 							<SidebarContent onSelectItem={handleSelectItem} selectedItem={selectedItem} activeNav={activeNav} />
 						) : null}

@@ -11,37 +11,84 @@
 					"acute": {
 						"brainImpact": "Alcohol interferes with the brain's communication pathways, leading to loss of coordination and lowered inhibitions.",
 						"affectedBrainAreas": [
-							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "depresses" },
-							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "depresses" },
-							{ "areaId": "cerebellum", "name": "Cerebellum", "effectType": "depresses" }
+							{
+								"areaId": "frontal_lobe",
+								"name": "Frontal Lobe",
+								"effectType": "depresses"
+							},
+							{
+								"areaId": "hippocampus",
+								"name": "Hippocampus",
+								"effectType": "depresses"
+							},
+							{
+								"areaId": "cerebellum",
+								"name": "Cerebellum",
+								"effectType": "depresses"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "GABA", "effect": "increase" },
-							{ "name": "Glutamate", "effect": "decrease" },
-							{ "name": "Dopamine", "effect": "increase" }
+							{
+								"name": "GABA",
+								"effect": "increase"
+							},
+							{
+								"name": "Glutamate",
+								"effect": "decrease"
+							},
+							{
+								"name": "Dopamine",
+								"effect": "increase"
+							}
 						]
 					},
 					"chronic": {
 						"brainImpact": "Long-term heavy alcohol use can shrink the frontal lobes and reduce overall brain volume, impairing memory and cognitive function.",
 						"affectedBrainAreas": [
-							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "damages" },
-							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "damages" },
-							{ "areaId": "cerebral_cortex", "name": "Cerebral Cortex", "effectType": "damages" }
+							{
+								"areaId": "frontal_lobe",
+								"name": "Frontal Lobe",
+								"effectType": "damages"
+							},
+							{
+								"areaId": "hippocampus",
+								"name": "Hippocampus",
+								"effectType": "damages"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "GABA", "effect": "decrease" },
-							{ "name": "Glutamate", "effect": "increase" },
-							{ "name": "Serotonin", "effect": "decrease" }
+							{
+								"name": "GABA",
+								"effect": "decrease"
+							},
+							{
+								"name": "Glutamate",
+								"effect": "increase"
+							},
+							{
+								"name": "Serotonin",
+								"effect": "decrease"
+							}
 						]
 					},
 					"withdrawal": {
 						"brainImpact": "The brain, having adapted to the constant presence of a depressant, goes into a state of hyper-excitability when alcohol is removed.",
 						"affectedBrainAreas": [
-							{ "areaId": "amygdaloid_complex", "name": "Amygdaloid Complex", "effectType": "stimulates" }
+							{
+								"areaId": "amygdaloid_complex",
+								"name": "Amygdaloid Complex",
+								"effectType": "stimulates"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "Glutamate", "effect": "increase" },
-							{ "name": "Adrenaline", "effect": "increase" }
+							{
+								"name": "Glutamate",
+								"effect": "increase"
+							},
+							{
+								"name": "Adrenaline",
+								"effect": "increase"
+							}
 						]
 					}
 				}
@@ -56,8 +103,14 @@
 						"brainImpact": "Blocks adenosine receptors, preventing drowsiness and increasing alertness.",
 						"affectedBrainAreas": [],
 						"neurotransmitters": [
-							{ "name": "Adenosine", "effect": "modulate" },
-							{ "name": "Dopamine", "effect": "increase" }
+							{
+								"name": "Adenosine",
+								"effect": "modulate"
+							},
+							{
+								"name": "Dopamine",
+								"effect": "increase"
+							}
 						]
 					}
 				}
@@ -71,11 +124,21 @@
 					"acute": {
 						"brainImpact": "Activates nicotinic acetylcholine receptors, leading to release of neurotransmitters.",
 						"affectedBrainAreas": [
-							{ "areaId": "nucleus_accumbens", "name": "Nucleus Accumbens", "effectType": "stimulates" }
+							{
+								"areaId": "nucleus_accumbens",
+								"name": "Nucleus Accumbens",
+								"effectType": "stimulates"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "Acetylcholine", "effect": "modulate" },
-							{ "name": "Dopamine", "effect": "increase" }
+							{
+								"name": "Acetylcholine",
+								"effect": "modulate"
+							},
+							{
+								"name": "Dopamine",
+								"effect": "increase"
+							}
 						]
 					}
 				}
@@ -94,11 +157,21 @@
 					"chronic": {
 						"brainImpact": "Increases grey matter density and enhances connectivity.",
 						"affectedBrainAreas": [
-							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "stimulates" }
+							{
+								"areaId": "frontal_lobe",
+								"name": "Frontal Lobe",
+								"effectType": "stimulates"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "GABA", "effect": "increase" },
-							{ "name": "Serotonin", "effect": "increase" }
+							{
+								"name": "GABA",
+								"effect": "increase"
+							},
+							{
+								"name": "Serotonin",
+								"effect": "increase"
+							}
 						]
 					}
 				}
@@ -112,7 +185,11 @@
 					"acute": {
 						"brainImpact": "Impairs memory consolidation and emotional regulation.",
 						"affectedBrainAreas": [
-							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "depresses" }
+							{
+								"areaId": "frontal_lobe",
+								"name": "Frontal Lobe",
+								"effectType": "depresses"
+							}
 						]
 					}
 				}
@@ -137,9 +214,18 @@
 					"acute": {
 						"brainImpact": "Promotes neurogenesis and increases brain plasticity.",
 						"neurotransmitters": [
-							{ "name": "Endorphins", "effect": "increase" },
-							{ "name": "Dopamine", "effect": "increase" },
-							{ "name": "Serotonin", "effect": "increase" }
+							{
+								"name": "Endorphins",
+								"effect": "increase"
+							},
+							{
+								"name": "Dopamine",
+								"effect": "increase"
+							},
+							{
+								"name": "Serotonin",
+								"effect": "increase"
+							}
 						]
 					}
 				}
@@ -158,11 +244,21 @@
 					"acute": {
 						"brainImpact": "Activates reward pathways and promotes well-being.",
 						"affectedBrainAreas": [
-							{ "areaId": "nucleus_accumbens", "name": "Nucleus Accumbens", "effectType": "stimulates" }
+							{
+								"areaId": "nucleus_accumbens",
+								"name": "Nucleus Accumbens",
+								"effectType": "stimulates"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "Dopamine", "effect": "increase" },
-							{ "name": "Serotonin", "effect": "increase" }
+							{
+								"name": "Dopamine",
+								"effect": "increase"
+							},
+							{
+								"name": "Serotonin",
+								"effect": "increase"
+							}
 						]
 					}
 				}
@@ -176,12 +272,26 @@
 					"acute": {
 						"brainImpact": "Triggers the fight-or-flight response, preparing the body for action.",
 						"affectedBrainAreas": [
-							{ "areaId": "amygdaloid_complex", "name": "Amygdaloid Complex", "effectType": "stimulates" },
-							{ "areaId": "hypothalamus", "name": "Hypothalamus", "effectType": "stimulates" }
+							{
+								"areaId": "amygdaloid_complex",
+								"name": "Amygdaloid Complex",
+								"effectType": "stimulates"
+							},
+							{
+								"areaId": "hypothalamus",
+								"name": "Hypothalamus",
+								"effectType": "stimulates"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "Adrenaline", "effect": "increase" },
-							{ "name": "Cortisol", "effect": "increase" }
+							{
+								"name": "Adrenaline",
+								"effect": "increase"
+							},
+							{
+								"name": "Cortisol",
+								"effect": "increase"
+							}
 						]
 					}
 				}
@@ -195,10 +305,17 @@
 					"acute": {
 						"brainImpact": "Can reduce overall brain activity in certain areas associated with motivation.",
 						"affectedBrainAreas": [
-							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "depresses" }
+							{
+								"areaId": "hippocampus",
+								"name": "Hippocampus",
+								"effectType": "depresses"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "Serotonin", "effect": "decrease" }
+							{
+								"name": "Serotonin",
+								"effect": "decrease"
+							}
 						]
 					}
 				}
@@ -217,11 +334,17 @@
 					"chronic": {
 						"brainImpact": "Causes brain cells to degenerate and die, leading to brain shrinkage.",
 						"affectedBrainAreas": [
-							{ "areaId": "hippocampus", "name": "Hippocampus", "effectType": "damages" },
-							{ "areaId": "cerebral_cortex", "name": "Cerebral Cortex", "effectType": "damages" }
+							{
+								"areaId": "hippocampus",
+								"name": "Hippocampus",
+								"effectType": "damages"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "Acetylcholine", "effect": "decrease" }
+							{
+								"name": "Acetylcholine",
+								"effect": "decrease"
+							}
 						]
 					}
 				}
@@ -235,10 +358,17 @@
 					"chronic": {
 						"brainImpact": "Gradual loss of dopamine-producing neurons in the substantia nigra.",
 						"affectedBrainAreas": [
-							{ "areaId": "substantia_nigra", "name": "Substantia Nigra", "effectType": "damages" }
+							{
+								"areaId": "substantia_nigra",
+								"name": "Substantia Nigra",
+								"effectType": "damages"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "Dopamine", "effect": "decrease" }
+							{
+								"name": "Dopamine",
+								"effect": "decrease"
+							}
 						]
 					}
 				}
@@ -252,13 +382,30 @@
 					"chronic": {
 						"brainImpact": "Changes in brain structure and function, particularly in emotional regulation areas.",
 						"affectedBrainAreas": [
-							{ "areaId": "frontal_lobe", "name": "Frontal Lobe", "effectType": "depresses" },
-							{ "areaId": "amygdaloid_complex", "name": "Amygdaloid Complex", "effectType": "stimulates" }
+							{
+								"areaId": "frontal_lobe",
+								"name": "Frontal Lobe",
+								"effectType": "depresses"
+							},
+							{
+								"areaId": "amygdaloid_complex",
+								"name": "Amygdaloid Complex",
+								"effectType": "stimulates"
+							}
 						],
 						"neurotransmitters": [
-							{ "name": "Serotonin", "effect": "decrease" },
-							{ "name": "Dopamine", "effect": "decrease" },
-							{ "name": "Norepinephrine", "effect": "decrease" }
+							{
+								"name": "Serotonin",
+								"effect": "decrease"
+							},
+							{
+								"name": "Dopamine",
+								"effect": "decrease"
+							},
+							{
+								"name": "Norepinephrine",
+								"effect": "decrease"
+							}
 						]
 					}
 				}
