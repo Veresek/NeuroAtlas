@@ -24,7 +24,6 @@ export function ResearchSidebar({
 	selectedItem,
 }: ResearchSidebarProps) {
 	const [searchQuery, setSearchQuery] = useState('');
-	const [hoveredPaperId, setHoveredPaperId] = useState<string | null>(null);
 
 	const filteredPapers = researchData.filter(paper => {
 		const query = searchQuery.toLowerCase();
@@ -36,18 +35,10 @@ export function ResearchSidebar({
 		);
 	});
 
-	const handlePaperMouseEnter = (paperId: string) => {
-		setHoveredPaperId(paperId);
-	};
-
-	const handlePaperMouseLeave = () => {
-		setHoveredPaperId(null);
-	};
-
 	return (
-		<div className='flex flex-col h-full overflow-hidden'>
+		<div className='flex-1 overflow-y-auto flex flex-col h-full min-h-0'>
 			{/* Header */}
-			<div className='hidden md:block px-4 pt-5 pb-4 border-b border-gray-200/60 shrink-0'>
+			<div className='hidden md:block px-4 pt-5 pb-4 border-b border-gray-200/60'>
 				<div className='flex items-center gap-3'>
 					<div
 						style={{
@@ -77,108 +68,94 @@ export function ResearchSidebar({
 			</div>
 
 			{/* Search */}
-			<div className='px-3 pt-3 pb-2 border-b border-gray-100 shrink-0 bg-white'>
+			<div className='px-3 pt-3 pb-1'>
 				<div className='relative'>
 					<SearchIcon className='absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400' />
 					<input
 						type='text'
-						placeholder='Search papers...'
+						placeholder='Search...'
 						value={searchQuery}
 						onChange={e => setSearchQuery(e.target.value)}
-						className='w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-gray-200/60 bg-gray-50/50 placeholder:text-gray-400 focus:outline-none focus:border-[#00aaff]/50 focus:bg-white transition-colors duration-200'
+						className='w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-gray-200/60 bg-gray-50/50 placeholder:text-gray-400 focus:outline-none focus:border-[#00aaff]/50 focus:bg-white transition-colors duration-200'
 					/>
 				</div>
-				{searchQuery && (
-					<p className='text-[9px] text-gray-400 mt-1 px-1'>
-						Found {filteredPapers.length}{' '}
-						{filteredPapers.length === 1 ? 'paper' : 'papers'}
-					</p>
-				)}
 			</div>
 
 			{/* Papers list */}
-			<div className='flex-1 overflow-y-auto p-2 space-y-2 bg-gray-50/30'>
+			<nav className='flex-1 overflow-y-auto py-2 px-2'>
 				{filteredPapers.length > 0 ? (
-					filteredPapers.map(paper => {
-						const isHovered = hoveredPaperId === paper.id;
-						const isSelected = selectedItem === paper.title;
+					<div className='space-y-2'>
+						{filteredPapers.map(paper => {
+							const isSelected = selectedItem === paper.title;
 
-						// Create "Concerns" text
-						const concernsList: string[] = [];
-						if (paper.relatedAtlasItems) {
-							paper.relatedAtlasItems.forEach(itemId => {
-								concernsList.push(getAtlasItemName(itemId));
-							});
-						}
-						if (paper.relatedBrainAreas) {
-							paper.relatedBrainAreas.forEach(areaName => {
-								concernsList.push(areaName);
-							});
-						}
-						const concernsText = concernsList.join(', ');
+							const concernsList: string[] = [];
+							if (paper.relatedAtlasItems) {
+								paper.relatedAtlasItems.forEach(itemId => {
+									concernsList.push(getAtlasItemName(itemId));
+								});
+							}
+							if (paper.relatedBrainAreas) {
+								paper.relatedBrainAreas.forEach(areaName => {
+									concernsList.push(areaName);
+								});
+							}
+							const concernsText = concernsList.join(', ');
 
-						return (
-							<div
-								key={paper.id}
-								onMouseEnter={() => handlePaperMouseEnter(paper.id)}
-								onMouseLeave={handlePaperMouseLeave}
-								onClick={() => onSelectItem(paper.title, 'Research')}
-								className={`p-2.5 rounded-lg border transition-all duration-200 bg-white shadow-sm flex flex-col gap-1 cursor-pointer select-none ${
-									isSelected
-										? 'border-[#00aaff] bg-[#00aaff]/5 ring-1 ring-[#00aaff]/20'
-										: isHovered
-											? 'border-[#00aaff]/30 ring-1 ring-[#00aaff]/10 shadow'
-											: 'border-gray-200/70'
-								}`}>
-								{/* Title */}
-								<div className='flex items-start justify-between gap-1 group'>
-									<span
-										className={`text-[12px] font-bold leading-snug transition-colors duration-150 ${isSelected ? 'text-[#00aaff]' : 'text-gray-800'}`}>
-										{paper.title}
-									</span>
-									<a
-										href={paper.doi}
-										target='_blank'
-										rel='noopener noreferrer'
-										onClick={e => e.stopPropagation()}
-										className='text-gray-300 hover:text-[#00aaff] shrink-0 mt-0.5 transition-colors p-0.5 rounded hover:bg-gray-100'
-										title='Open DOI link'>
-										<ExternalLinkIcon className='w-3.5 h-3.5' />
-									</a>
+							return (
+								<div
+									key={paper.id}
+									onClick={() => onSelectItem(paper.title, 'Research')}
+									className={`block p-2.5 rounded-lg border transition-all duration-200 group cursor-pointer ${
+										isSelected
+											? 'border-[#00aaff]/40 bg-[#00aaff]/10'
+											: 'border-gray-200/60 bg-gray-50/50 hover:border-[#00aaff]/40 hover:bg-[#00aaff]/5'
+									}`}>
+									<div className='flex items-start justify-between gap-1'>
+										<p
+											className={`text-sm font-medium leading-snug transition-colors duration-200 ${
+												isSelected
+													? 'text-[#00aaff]'
+													: 'text-gray-800 group-hover:text-[#00aaff]'
+											}`}>
+											{paper.title}
+										</p>
+										<a
+											href={paper.doi}
+											target='_blank'
+											rel='noopener noreferrer'
+											onClick={e => e.stopPropagation()}
+											className='text-gray-300 hover:text-[#00aaff] shrink-0 mt-0.5 transition-colors p-0.5 rounded hover:bg-gray-100'
+											title='Open DOI link'>
+											<ExternalLinkIcon className='w-3.5 h-3.5' />
+										</a>
+									</div>
+
+									{concernsText && (
+										<p className='mt-1 text-xs text-gray-500 leading-relaxed line-clamp-2'>
+											{concernsText}
+										</p>
+									)}
+
+									<div className='flex items-center justify-between mt-1 text-xs text-gray-400'>
+										<span
+											className='truncate max-w-[180px]'
+											title={paper.authors.join(', ')}>
+											{paper.authors.join(', ')}
+										</span>
+										<span className='font-semibold text-[#00aaff] shrink-0'>
+											{paper.year}
+										</span>
+									</div>
 								</div>
-
-								{/* Concerns */}
-								{concernsText && (
-									<p className='text-[10px] text-gray-500 leading-tight'>
-										<span className='font-semibold text-[#00aaff]'>
-											Concerns:
-										</span>{' '}
-										{concernsText}
-									</p>
-								)}
-
-								{/* Authors & Year */}
-								<div className='flex items-center justify-between mt-0.5 text-[10px] text-gray-400'>
-									<span
-										className='truncate max-w-[180px]'
-										title={paper.authors.join(', ')}>
-										{paper.authors.join(', ')}
-									</span>
-								</div>
-							</div>
-						);
-					})
+							);
+						})}
+					</div>
 				) : (
-					<div className='p-6 flex flex-col items-center justify-center text-center mt-6'>
-						<span style={{ fontSize: 20 }} className='mb-1'>
-							🔍
-						</span>
-						<p className='text-xs font-semibold text-gray-500'>
-							No papers found
-						</p>
+					<div className='px-4 py-6 text-center'>
+						<p className='text-sm text-gray-500'>No papers found</p>
 					</div>
 				)}
-			</div>
+			</nav>
 		</div>
 	);
 }

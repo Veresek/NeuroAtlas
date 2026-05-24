@@ -183,7 +183,7 @@ export function AtlasDetail({ item, section, onClose, onSelectItem }: AtlasDetai
 										className="block p-2.5 rounded-lg border border-gray-200/60 hover:border-[#00aaff]/40 bg-gray-50/50 hover:bg-[#00aaff]/5 transition-all duration-200 group cursor-pointer"
 									>
 										<div className="flex items-start justify-between gap-1">
-											<p className="text-[12px] font-bold text-gray-800 group-hover:text-[#00aaff] leading-snug transition-colors duration-200">
+											<p className="text-sm font-medium text-gray-800 group-hover:text-[#00aaff] leading-snug transition-colors duration-200">
 												{paper.title}
 											</p>
 											<a
@@ -197,7 +197,7 @@ export function AtlasDetail({ item, section, onClose, onSelectItem }: AtlasDetai
 												<ExternalLinkIcon className="w-3.5 h-3.5" />
 											</a>
 										</div>
-										<div className="flex items-center justify-between mt-1 text-[10px] text-gray-400">
+										<div className="flex items-center justify-between mt-1 text-xs text-gray-400">
 											<span className="truncate max-w-[180px]" title={paper.authors.join(", ")}>
 												{paper.authors.join(", ")}
 											</span>

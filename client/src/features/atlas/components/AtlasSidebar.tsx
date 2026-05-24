@@ -33,7 +33,7 @@ export function AtlasSidebar({ onSelectItem, selectedItem }: AtlasSidebarProps) 
 	};
 
 	return (
-		<div className="flex-1 overflow-y-auto flex flex-col">
+		<div className="flex-1 overflow-y-auto flex flex-col h-full min-h-0">
 			{/* Header */}
 			<div className="hidden md:block px-4 pt-5 pb-4 border-b border-gray-200/60">
 				<div className="flex items-center gap-3">

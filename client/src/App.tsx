@@ -57,7 +57,7 @@ function App() {
 	};
 
 	return (
-		<div className="flex flex-col h-screen overflow-hidden">
+		<div className="flex flex-col h-dvh max-h-dvh overflow-hidden max-md:fixed max-md:inset-0 max-md:w-full">
 			<div className="hidden [@media(max-height:500px)_and_(orientation:landscape)]:flex fixed inset-0 z-50 bg-gray-50 items-center justify-center flex-col p-8 text-center">
 				<h2 className="text-xl font-bold text-gray-800 mb-2">Rotate your device</h2>
 				<p className="text-[15px] text-gray-600 max-w-xs">
@@ -66,7 +66,7 @@ function App() {
 			</div>
 
 			<Navbar />
-			<div className="flex flex-1 min-h-0 flex-col md:flex-row pb-16 md:pb-0">
+			<div className="flex flex-1 min-h-0 flex-col md:flex-row pb-16 md:pb-0 overflow-hidden">
 				<NavSidebar activeNav={activeNav} onNavSelect={handleNavSelect} />
 				<Sidebar
 					onSelectItem={handleSelectItem}
@@ -81,7 +81,7 @@ function App() {
 				/>
 
 				{/* Brain canvas — flex-1 takes remaining space (top half on mobile) */}
-				<div className="flex-1 flex items-center justify-center bg-gray-100/60 min-h-[30vh] relative">
+				<div className="flex-1 min-h-0 flex items-center justify-center bg-gray-100/60 relative overflow-hidden md:min-h-[30vh]">
 					<div className="absolute top-4 right-4 z-10">
 						<select
 							value={typeof highlightedArea === 'string' ? highlightedArea : ""}
@@ -107,7 +107,7 @@ function App() {
 				</div>
 
 				{/* Mobile only active panel (bottom half) */}
-				<div className={`md:hidden flex flex-col bg-white border-t border-gray-200/60 z-20 shadow-[0_-8px_32px_rgba(0,0,0,0.08)] transition-all duration-300 ease-in-out ${isMobileExpanded ? "h-[45vh]" : (selectedItem ? "h-[52px]" : "h-9")
+				<div className={`md:hidden flex flex-col min-h-0 shrink-0 bg-white border-t border-gray-200/60 z-20 shadow-[0_-8px_32px_rgba(0,0,0,0.08)] transition-all duration-300 ease-in-out overflow-hidden ${isMobileExpanded ? "flex-[0.46] min-h-0" : (selectedItem ? "h-[52px]" : "h-9")
 					}`}>
 					{/* Drag handle + toggle button */}
 					<button

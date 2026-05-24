@@ -70,7 +70,7 @@ function NavSidebar({ activeNav, onNavSelect }: NavSidebarProps) {
 			</aside>
 
 			{/* ── Mobile: fixed bottom tab bar ────────────────────────── */}
-			<nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around bg-white/95 backdrop-blur-md border-t border-gray-200/60 h-16 px-2 safe-area-pb">
+			<nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-stretch justify-around bg-white/95 backdrop-blur-md border-t border-gray-200/60 h-16 px-2 safe-area-pb">
 				{navItems.map(item => {
 					const isActive = activeNav === item.id;
 					return (
@@ -78,16 +78,13 @@ function NavSidebar({ activeNav, onNavSelect }: NavSidebarProps) {
 							key={item.id}
 							id={`nav-bottom-${item.id}`}
 							onClick={() => onNavSelect(item.id)}
-							className="relative flex flex-col items-center gap-1 flex-1 py-2 rounded-xl transition-all duration-200 cursor-pointer"
+							className="flex flex-col items-center justify-center gap-0.5 flex-1 py-1.5 rounded-xl transition-all duration-200 cursor-pointer"
 							style={{ color: isActive ? "#00aaff" : "#6b7280" }}
 						>
-							{/* Active dot indicator */}
-							{isActive && (
-								<span
-									className="absolute top-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-									style={{ background: "#00aaff" }}
-								/>
-							)}
+							<span
+								className={`w-1 h-1 rounded-full shrink-0 ${isActive ? "bg-[#00aaff]" : "bg-transparent"}`}
+								aria-hidden="true"
+							/>
 							<span className="w-5 h-5 flex items-center justify-center" style={{ color: "inherit" }}>
 								{item.icon}
 							</span>

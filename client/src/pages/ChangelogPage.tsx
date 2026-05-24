@@ -18,6 +18,17 @@ interface ChangelogEntry {
 // ── Data ─────────────────────────────────────────────────────
 const entries: ChangelogEntry[] = [
 	{
+		version: '0.2.1',
+		date: '2026-05-24',
+		tag: 'patch',
+		summary: 'Improved readability and mobile compatibility.',
+		modified: [
+			'Improved readability in research section.',
+			'Improved mobile UI and UX for detail panels.',
+			'Fixed mobile UI bugs in detail panels.',
+		],
+	},
+	{
 		version: '0.2.0',
 		date: '2026-05-22',
 		tag: 'major',
