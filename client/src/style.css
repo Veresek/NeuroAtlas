@@ -1,5 +1,26 @@
 @import "tailwindcss";
 
+/* Animowane przejścia między snap pointami panelu mobilnego */
+@property --brain-h {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 0px;
+}
+
+@property --panel-h {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 0px;
+}
+
+@media (max-width: 767px) {
+	.mobile-snap-layout {
+		transition:
+			--brain-h 300ms cubic-bezier(0.4, 0, 0.2, 1),
+			--panel-h 300ms cubic-bezier(0.4, 0, 0.2, 1);
+	}
+}
+
 /* Safe-area support for iPhone notch / home bar */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
 	.safe-area-pb {

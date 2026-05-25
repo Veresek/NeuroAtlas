@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, type CSSProperties } from "react";
 import BrainModel from "./features/brain-model/components/BrainModel";
 import Footer from "./components/shared/Footer";
 import Navbar from "./components/shared/Header";
@@ -9,6 +9,7 @@ import ChevronDownIcon from "@/assets/chevron-down.svg?react";
 import { meshMapping } from "@/data/meshMapping";
 import { brainSections } from "@/data/brainSections";
 import { useBrainHighlight } from "@/hooks/useBrainHighlight";
+import { useMobilePanelSnap } from "@/hooks/useMobilePanelSnap";
 
 const groupedAreas: Record<string, string[]> = {};
 for (const [section, ids] of Object.entries(brainSections)) {
@@ -27,8 +28,8 @@ function App() {
 	const [selectedItem, setSelectedItem] = useState<string | null>(null);
 	const [selectedSection, setSelectedSection] = useState<string | null>(null);
 	const [activeNav, setActiveNav] = useState<string>("atlas");
-	const [isMobileExpanded, setIsMobileExpanded] = useState(true);
 	const { highlightedArea, setBrainHighlight } = useBrainHighlight();
+	const mobilePanel = useMobilePanelSnap(selectedItem);
 
 	const handleSelectItem = (item: string, section: string) => {
 		setSelectedItem(item);
@@ -36,24 +37,24 @@ function App() {
 		if (section === "Research") {
 			setActiveNav("research");
 		}
-		setIsMobileExpanded(true);
+		mobilePanel.openToMedium();
 	};
 
 	const handleCloseDetail = () => {
 		setSelectedItem(null);
 		setSelectedSection(null);
-		setIsMobileExpanded(true);
+		mobilePanel.openToMedium();
 	};
 
 	const handleNavSelect = (id: string) => {
 		if (activeNav === id) {
-			setIsMobileExpanded(true);
+			mobilePanel.openToMedium();
 			return;
 		}
 		setActiveNav(id);
 		setSelectedItem(null);
 		setSelectedSection(null);
-		setIsMobileExpanded(true);
+		mobilePanel.openToMedium();
 	};
 
 	return (
@@ -80,64 +81,73 @@ function App() {
 					onSelectItem={handleSelectItem}
 				/>
 
-				{/* Brain canvas — flex-1 takes remaining space (top half on mobile) */}
-				<div className="flex-1 min-h-0 flex items-center justify-center bg-gray-100/60 relative overflow-hidden md:min-h-[30vh]">
-					<div className="absolute top-4 right-4 z-10">
-						<select
-							value={typeof highlightedArea === 'string' ? highlightedArea : ""}
-							onChange={(e) => setBrainHighlight(e.target.value || null)}
-							className="px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-gray-200/60 bg-white/80 backdrop-blur-md text-xs md:text-sm text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00aaff]/50 transition-all cursor-pointer max-w-[150px] md:max-w-none"
-						>
-							<option value="">Select brain area...</option>
-							{Object.entries(groupedAreas).sort().map(([region, areas]) => (
-								<Fragment key={region}>
-									<option value={region} className="font-bold text-gray-900 bg-gray-50">
-										{region}
-									</option>
-									{areas.map((area) => (
-										<option key={area} value={area} className="font-normal text-gray-700">
-											&nbsp;&nbsp;&nbsp;&nbsp;{area}
+				{/* Mobile: jeden layout — animowane wysokości modelu i panelu (px via CSS vars) */}
+				<div
+					ref={mobilePanel.layoutRef}
+					className="mobile-snap-layout relative flex flex-1 min-h-0 flex-col md:contents overflow-hidden"
+					style={
+						{
+							"--brain-h": `${mobilePanel.brainHeight}px`,
+							"--panel-h": `${mobilePanel.panelHeight}px`,
+						} as CSSProperties
+					}
+				>
+					<div className="flex-1 min-h-0 flex items-center justify-center bg-gray-100/60 relative overflow-hidden md:min-h-[30vh] max-md:absolute max-md:top-0 max-md:left-0 max-md:right-0 max-md:h-[var(--brain-h)]">
+						<div className="absolute top-4 right-4 z-10">
+							<select
+								value={typeof highlightedArea === 'string' ? highlightedArea : ""}
+								onChange={(e) => setBrainHighlight(e.target.value || null)}
+								className="px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-gray-200/60 bg-white/80 backdrop-blur-md text-xs md:text-sm text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00aaff]/50 transition-all cursor-pointer max-w-[150px] md:max-w-none"
+							>
+								<option value="">Select brain area...</option>
+								{Object.entries(groupedAreas).sort().map(([region, areas]) => (
+									<Fragment key={region}>
+										<option value={region} className="font-bold text-gray-900 bg-gray-50">
+											{region}
 										</option>
-									))}
-								</Fragment>
-							))}
-						</select>
+										{areas.map((area) => (
+											<option key={area} value={area} className="font-normal text-gray-700">
+												&nbsp;&nbsp;&nbsp;&nbsp;{area}
+											</option>
+										))}
+									</Fragment>
+								))}
+							</select>
+						</div>
+						<BrainModel />
 					</div>
-					<BrainModel />
-				</div>
 
-				{/* Mobile only active panel (bottom half) */}
-				<div className={`md:hidden flex flex-col min-h-0 shrink-0 bg-white border-t border-gray-200/60 z-20 shadow-[0_-8px_32px_rgba(0,0,0,0.08)] transition-all duration-300 ease-in-out overflow-hidden ${isMobileExpanded ? "flex-[0.46] min-h-0" : (selectedItem ? "h-[52px]" : "h-9")
-					}`}>
-					{/* Drag handle + toggle button */}
-					<button
-						onClick={() => setIsMobileExpanded(prev => !prev)}
-						className="flex flex-col items-center justify-start pt-2 shrink-0 w-full cursor-pointer relative"
-						aria-label={isMobileExpanded ? "Collapse panel" : "Expand panel"}
-						style={{ height: isMobileExpanded ? '36px' : (selectedItem ? '52px' : '36px') }}
-					>
-						<div className="w-9 h-1 rounded-full bg-gray-200 mb-1 shrink-0" />
+					<div className="md:hidden absolute inset-x-0 bottom-0 z-30 flex flex-col min-h-0 bg-white border-t border-gray-200/60 overflow-hidden h-[var(--panel-h)] shadow-[0_-8px_32px_rgba(0,0,0,0.08)]">
+						<button
+							type="button"
+							onPointerDown={mobilePanel.onHandlePointerDown}
+							onPointerUp={mobilePanel.onHandlePointerUp}
+							onPointerCancel={mobilePanel.onHandlePointerCancel}
+							className="flex flex-col items-center justify-start pt-2 shrink-0 w-full cursor-grab active:cursor-grabbing relative touch-none select-none"
+							aria-label={mobilePanel.snap === 0 ? "Expand panel" : "Collapse panel"}
+							style={{ height: mobilePanel.handleHeight }}
+						>
+							<div className="w-9 h-1 rounded-full bg-gray-200 mb-1 shrink-0" />
 
-						{/* Info shown only when collapsed and an item is selected */}
-						{!isMobileExpanded && selectedItem && (
-							<div className="flex flex-col items-center px-8 w-full transition-opacity duration-300 opacity-100">
-								<span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 leading-tight truncate w-full text-center">
-									{selectedSection}
-								</span>
-								<span className="text-[13px] font-bold text-gray-800 truncate w-full text-center leading-tight">
-									{selectedItem}
-								</span>
-							</div>
-						)}
+							{mobilePanel.snap === 0 && selectedItem && (
+								<div className="flex flex-col items-center px-8 w-full transition-opacity duration-300 opacity-100">
+									<span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 leading-tight truncate w-full text-center">
+										{selectedSection}
+									</span>
+									<span className="text-[13px] font-bold text-gray-800 truncate w-full text-center leading-tight">
+										{selectedItem}
+									</span>
+								</div>
+							)}
 
-						<ChevronDownIcon
-							className={`w-4 h-4 text-gray-300 absolute right-4 top-2.5 transition-transform duration-300 ${isMobileExpanded ? "" : "rotate-180"
-								}`}
-						/>
-					</button>
+							<ChevronDownIcon
+								className={`w-4 h-4 text-gray-300 absolute right-4 top-2.5 transition-transform duration-300 ${mobilePanel.snap === 0 ? "rotate-180" : ""
+									}`}
+							/>
+						</button>
 
-					<div className={`flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${isMobileExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
-						}`}>
+						<div className={`flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${mobilePanel.isContentVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+							}`}>
 						{selectedItem ? (
 							<DetailContent
 								item={selectedItem}
@@ -148,6 +158,7 @@ function App() {
 						) : activeNav ? (
 							<SidebarContent onSelectItem={handleSelectItem} selectedItem={selectedItem} activeNav={activeNav} />
 						) : null}
+						</div>
 					</div>
 				</div>
 			</div>
