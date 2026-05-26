@@ -21,50 +21,31 @@ jobs:
           command_timeout: 30m
           script: |
             set -eu
-            echo "[deploy] start"
 
             cd NeuroAtlas
-            echo "[deploy] git pull"
             git pull origin main
 
-            # Backend secrets
-            echo "[deploy] write server/.env"
+            nvm use 24.16.0
+
             cat > server/.env <<'EOF'
             GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
             EOF
 
-            # Backend (FastAPI)
-            cd server
-            echo "[deploy] backend venv + deps"
-            if [ ! -d ".venv" ]; then
-              python3 -m venv .venv
-            fi
-            . .venv/bin/activate
-            python -m pip install --upgrade pip
-            python -m pip install -r requirements.txt
-
-            # Safe restart via pidfile (avoid pkill -f killing the SSH session)
-            echo "[deploy] backend restart"
-            PIDFILE="uvicorn.pid"
-            if [ -f "$PIDFILE" ]; then
-              OLD_PID="$(cat "$PIDFILE" || true)"
-              if [ -n "${OLD_PID:-}" ] && kill -0 "$OLD_PID" 2>/dev/null; then
-                kill "$OLD_PID" || true
-                sleep 1
-                kill -9 "$OLD_PID" 2>/dev/null || true
-              fi
-              rm -f "$PIDFILE"
-            fi
-
-            # Make sure the SSH session can't be held open by stdio
-            nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 </dev/null > uvicorn.log 2>&1 &
-            echo $! > "$PIDFILE"
-            sleep 0.2
-            kill -0 "$(cat "$PIDFILE")" 2>/dev/null || (echo "[deploy] uvicorn failed to start" && tail -n 200 uvicorn.log && exit 1)
-
             # Frontend build
-            echo "[deploy] frontend build"
-            cd ../client
+            cd client
             npm ci
             npm run build
-            echo "[deploy] done"
+
+            # Backend (FastAPI) start/restart
+            cd ../server
+            if [ ! -d ".venv" ]; then python3 -m venv .venv; fi
+            . .venv/bin/activate
+            python -m pip install -r requirements.txt
+
+            PIDFILE="uvicorn.pid"
+            if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE" 2>/dev/null)" 2>/dev/null; then
+              kill "$(cat "$PIDFILE")" || true
+              sleep 1
+            fi
+            nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 </dev/null > uvicorn.log 2>&1 &
+            echo $! > "$PIDFILE"
