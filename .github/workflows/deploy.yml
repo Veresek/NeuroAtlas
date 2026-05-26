@@ -37,22 +37,22 @@ jobs:
 
       - name: Restart backend
         run: |
-          ssh -p "${{ secrets.DEPLOY_PORT }}" "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" 'bash -lc '"'"'
-            set -eu
-            cd NeuroAtlas/server
+          ssh -p "${{ secrets.DEPLOY_PORT }}" "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" 'bash -s' <<'SSH'
+          set -eu
+          cd NeuroAtlas/server
 
-            cat > .env <<'"'"'EOF'"'"'
-            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-            EOF
+          cat > .env <<'EOF'
+          GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+          EOF
 
-            if [ ! -d ".venv" ]; then python3 -m venv .venv; fi
-            . .venv/bin/activate
-            python -m pip install -r requirements.txt
+          if [ ! -d ".venv" ]; then python3 -m venv .venv; fi
+          . .venv/bin/activate
+          python -m pip install -r requirements.txt
 
-            # Simple restart without pidfiles
-            if pgrep -f "uvicorn app.main:app --host 127.0.0.1 --port 8000" >/dev/null 2>&1; then
-              pkill -f "uvicorn app.main:app --host 127.0.0.1 --port 8000" || true
-              sleep 1
-            fi
-            nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 </dev/null > uvicorn.log 2>&1 &
-          '"'"'"'"'"''
+          # Simple restart without pidfiles
+          if pgrep -f "uvicorn app.main:app --host 127.0.0.1 --port 8000" >/dev/null 2>&1; then
+            pkill -f "uvicorn app.main:app --host 127.0.0.1 --port 8000" || true
+            sleep 1
+          fi
+          nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 </dev/null > uvicorn.log 2>&1 &
+          SSH
