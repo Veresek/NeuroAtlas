@@ -11,20 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 24.16
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.16.0
-          cache: npm
-          cache-dependency-path: client/package-lock.json
-
-      - name: Build frontend (client)
-        working-directory: client
-        run: |
-          node -v
-          npm ci
-          npm run build
-
       - name: Setup SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
@@ -35,24 +21,17 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ secrets.DEPLOY_PORT }}" "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Restart backend
+      - name: Deploy (docker compose)
         run: |
           ssh -p "${{ secrets.DEPLOY_PORT }}" "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" 'bash -s' <<'SSH'
           set -eu
-          cd NeuroAtlas/server
+          cd NeuroAtlas
+
+          git pull origin main
 
           cat > .env <<'EOF'
           GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
           EOF
 
-          if [ ! -d ".venv" ]; then python3 -m venv .venv; fi
-          . .venv/bin/activate
-          python -m pip install -r requirements.txt
-
-          # Simple restart without pidfiles
-          if pgrep -f "uvicorn app.main:app --host 127.0.0.1 --port 8000" >/dev/null 2>&1; then
-            pkill -f "uvicorn app.main:app --host 127.0.0.1 --port 8000" || true
-            sleep 1
-          fi
-          nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 </dev/null > uvicorn.log 2>&1 &
+          docker compose up -d --build
           SSH
