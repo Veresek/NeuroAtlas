@@ -9,7 +9,7 @@ import "./style.css";
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<MyBrainProvider>
-			<BrowserRouter basename="/NeuroAtlas">
+			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<App />} />
 					<Route path="/changelog" element={<ChangelogPage />} />

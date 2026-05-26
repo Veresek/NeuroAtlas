@@ -7,13 +7,18 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-	base: "/NeuroAtlas/",
+	base: "/",
 	plugins: [
 		react(),
 		babel({ presets: [reactCompilerPreset()] }),
 		tailwindcss(),
 		svgr(),
 	],
+	server: {
+		proxy: {
+			"/api": "http://localhost:8000",
+		},
+	},
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "./src"),

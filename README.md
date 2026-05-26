@@ -34,7 +34,7 @@ More details about the project specification can be found in the `docs/` folder:
 
 ```bash
 git clone https://github.com/Veresek/NeuroAtlas.git
-cd brain-info
+cd NeuroAtlas
 ```
 
 **2. Run the project**

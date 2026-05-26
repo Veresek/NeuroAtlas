@@ -18,6 +18,22 @@ interface ChangelogEntry {
 // ── Data ─────────────────────────────────────────────────────
 const entries: ChangelogEntry[] = [
 	{
+		version: '0.3.0',
+		date: '2026-05-26',
+		tag: 'major',
+		summary: 'My Brain works with Gemini API.',
+		added: [
+			"Added backend server for My Brain AI analysis in FastAPI",
+		],
+		modified: [
+			"Modified domain name to NeuroAtlas.info",
+			"Changed hosting from github pages to VPS",
+			"Modified size of brain model at the start of the app",
+			"Detail panel doesn't open automatically at the start of the app",
+		]
+
+	},
+	{
 		version: '0.2.1',
 		date: '2026-05-24',
 		tag: 'patch',

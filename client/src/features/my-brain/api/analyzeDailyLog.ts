@@ -2,11 +2,6 @@ import { brainSections, type BrainSectionName } from '@/data/brainSections';
 import type { BrainSectionEffectType } from '@/types/brain';
 import type { MyBrainLog } from '../hooks/useMyBrainLog';
 
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY ?? '';
-const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL ?? '';
-
-const MOOD_LABELS = ['Awful', 'Bad', 'Neutral', 'Good', 'Great'] as const;
-
 const MAX_ATTEMPTS = 3;
 const RETRY_DELAY_MS = 800;
 
@@ -25,8 +20,6 @@ export interface DailyLogAnalysis {
 	affectedSections: AffectedBrainSection[];
 }
 
-const BRAIN_SECTION_NAMES = Object.keys(brainSections) as BrainSectionName[];
-
 const EFFECT_TYPES: BrainSectionEffectType[] = [
 	'stimulates',
 	'depresses',
@@ -34,66 +27,8 @@ const EFFECT_TYPES: BrainSectionEffectType[] = [
 	'modulates',
 ];
 
-const RESPONSE_SCHEMA = {
-	type: 'object',
-	properties: {
-		message: {
-			type: 'string',
-			description:
-				'2–4 short paragraphs of expert neuro analysis in plain text.',
-		},
-		affectedSections: {
-			type: 'array',
-			description:
-				'Brain atlas sections materially influenced by today’s sleep, caffeine, and mood.',
-			items: {
-				type: 'object',
-				properties: {
-					section: {
-						type: 'string',
-						enum: BRAIN_SECTION_NAMES,
-						description: 'Exact NeuroAtlas section name.',
-					},
-					effectType: {
-						type: 'string',
-						enum: EFFECT_TYPES,
-						description:
-							'How today’s factors affect this section: stimulates, depresses, damages, or modulates.',
-					},
-				},
-				required: ['section', 'effectType'],
-			},
-		},
-	},
-	required: ['message', 'affectedSections'],
-};
-
-const SYSTEM_INSTRUCTION = `You are an expert neurobiologist and neurochemist writing for NeuroAtlas.
-
-Return JSON matching the schema only.
-
-Field rules:
-- message: 2–3 short paragraphs. Explain how today's lifestyle factors likely affected mind and brain: relevant regions, neurotransmitters (e.g. adenosine, dopamine, cortisol, serotonin), cognition and mood. Do not greet the user or repeat their raw inputs.
-- affectedSections: 1–6 entries. Pick section names only from the allowed enum. Assign effectType per NeuroAtlas conventions:
-  - stimulates: increased activity, alertness, or engagement
-  - depresses: reduced activity, inhibition, or fatigue-related dampening
-  - damages: stress-related harm, overload, or impaired function from poor inputs
-  - modulates: mixed, context-dependent, or balancing influence
-- Accessible language for a curious non-specialist. No medical diagnoses or treatment advice.`;
-
-function buildUserMessage(log: MyBrainLog): string {
-	const moodLabel = MOOD_LABELS[log.mood] ?? 'Unknown';
-	return `Analyze today's log.
-
-sleep_hours=${log.sleep}
-coffee_cups=${log.coffee}
-mood_label=${moodLabel}`;
-}
 
 interface GeminiResponse {
-	candidates?: Array<{
-		content?: { parts?: Array<{ text?: string }> };
-	}>;
 	error?: { message?: string };
 }
 
@@ -160,29 +95,19 @@ function isRetryableGeminiFailure(message: string, status?: number): boolean {
 }
 
 async function requestGeminiAnalysis(log: MyBrainLog): Promise<DailyLogAnalysis> {
-	const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
-
-	const response = await fetch(url, {
+	const response = await fetch('/api/my-brain/analyze', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			systemInstruction: {
-				parts: [{ text: SYSTEM_INSTRUCTION }],
-			},
-			contents: [{ parts: [{ text: buildUserMessage(log) }] }],
-			generationConfig: {
-				temperature: 0.7,
-				responseMimeType: 'application/json',
-				responseSchema: RESPONSE_SCHEMA,
-			},
-		}),
+		body: JSON.stringify(log),
 	});
 
-	const data = (await response.json()) as GeminiResponse;
+	const data = (await response.json().catch(() => ({}))) as GeminiResponse;
 
 	if (!response.ok) {
 		const message =
-			data.error?.message ?? `Gemini API error (${response.status})`;
+			(data as unknown as { detail?: string }).detail ??
+			data.error?.message ??
+			`API error (${response.status})`;
 		const err = new Error(message);
 		if (isRetryableGeminiFailure(message, response.status)) {
 			(err as Error & { retryable?: boolean }).retryable = true;
@@ -190,12 +115,7 @@ async function requestGeminiAnalysis(log: MyBrainLog): Promise<DailyLogAnalysis>
 		throw err;
 	}
 
-	const text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-	if (!text) {
-		throw new Error('No analysis returned from Gemini.');
-	}
-
-	return parseAnalysisJson(text);
+	return parseAnalysisJson(JSON.stringify(data));
 }
 
 function isRetryableError(err: unknown): boolean {
@@ -208,13 +128,6 @@ function isRetryableError(err: unknown): boolean {
 export async function analyzeDailyLog(
 	log: MyBrainLog,
 ): Promise<DailyLogAnalysis> {
-	if (!GEMINI_API_KEY.trim()) {
-		throw new Error('Gemini API key is not configured.');
-	}
-	if (!GEMINI_MODEL.trim()) {
-		throw new Error('Gemini model is not configured.');
-	}
-
 	let lastError: Error | null = null;
 
 	for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {

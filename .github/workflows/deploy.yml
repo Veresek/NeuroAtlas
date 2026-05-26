@@ -1,45 +1,44 @@
 name: Deploy
 
 on:
-    push:
-        branches: [main]
+  push:
+    branches: [main]
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            pages: write
-            id-token: write
-        environment:
-            name: github-pages
-            url: ${{ steps.deployment.outputs.page_url }}
-        steps:
-            - uses: actions/checkout@v4
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "24"
-                  cache: "npm"
-                  cache-dependency-path: client/package-lock.json
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.2.4
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            set -euo pipefail
 
-            - name: Install dependencies
-              run: npm ci
-              working-directory: client
+            cd NeuroAtlas
+            git pull origin main
 
-            - name: Build
-              run: npm run build
-              working-directory: client
+            cat > server/.env <<'EOF'
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            EOF
 
-            - name: Setup Pages
-              uses: actions/configure-pages@v5
+            cd server
+            if [ ! -d ".venv" ]; then
+              python3 -m venv .venv
+            fi
+            . .venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
 
-            - name: Upload artifact
-              uses: actions/upload-pages-artifact@v3
-              with:
-                  path: client/dist
+            pkill -f "uvicorn app.main:app" || true
+            nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 > uvicorn.log 2>&1 &
 
-            - name: Deploy to GitHub Pages
-              id: deployment
-              uses: actions/deploy-pages@v4
+            cd NeuroAtlas/client
+            npm ci
+            npm run build
