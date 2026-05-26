@@ -27,13 +27,13 @@ jobs:
             echo "[deploy] git pull"
             git pull origin main
 
-            # Backend secrets (NOT exposed to frontend bundle)
+            # Backend secrets
             echo "[deploy] write server/.env"
             cat > server/.env <<'EOF'
             GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
             EOF
 
-            # Backend (FastAPI) — install deps + restart process
+            # Backend (FastAPI)
             cd server
             echo "[deploy] backend venv + deps"
             if [ ! -d ".venv" ]; then
