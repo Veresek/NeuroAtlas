@@ -29,7 +29,18 @@ function App() {
 	const [selectedSection, setSelectedSection] = useState<string | null>(null);
 	const [activeNav, setActiveNav] = useState<string>("atlas");
 	const { highlightedArea, setBrainHighlight } = useBrainHighlight();
-	const mobilePanel = useMobilePanelSnap(selectedItem);
+	const {
+		snap: mobileSnap,
+		layoutRef: mobileLayoutRef,
+		panelHeight: mobilePanelHeight,
+		brainHeight: mobileBrainHeight,
+		isContentVisible: mobileContentVisible,
+		handleHeight: mobileHandleHeight,
+		openToMedium: openMobileToMedium,
+		onHandlePointerDown,
+		onHandlePointerUp,
+		onHandlePointerCancel,
+	} = useMobilePanelSnap(selectedItem);
 
 	const handleSelectItem = (item: string, section: string) => {
 		setSelectedItem(item);
@@ -37,24 +48,24 @@ function App() {
 		if (section === "Research") {
 			setActiveNav("research");
 		}
-		mobilePanel.openToMedium();
+		openMobileToMedium();
 	};
 
 	const handleCloseDetail = () => {
 		setSelectedItem(null);
 		setSelectedSection(null);
-		mobilePanel.openToMedium();
+		openMobileToMedium();
 	};
 
 	const handleNavSelect = (id: string) => {
 		if (activeNav === id) {
-			mobilePanel.openToMedium();
+			openMobileToMedium();
 			return;
 		}
 		setActiveNav(id);
 		setSelectedItem(null);
 		setSelectedSection(null);
-		mobilePanel.openToMedium();
+		openMobileToMedium();
 	};
 
 	return (
@@ -83,12 +94,12 @@ function App() {
 
 				{/* Mobile: jeden layout — animowane wysokości modelu i panelu (px via CSS vars) */}
 				<div
-					ref={mobilePanel.layoutRef}
+					ref={mobileLayoutRef}
 					className="mobile-snap-layout relative flex flex-1 min-h-0 flex-col md:contents overflow-hidden"
 					style={
 						{
-							"--brain-h": `${mobilePanel.brainHeight}px`,
-							"--panel-h": `${mobilePanel.panelHeight}px`,
+							"--brain-h": `${mobileBrainHeight}px`,
+							"--panel-h": `${mobilePanelHeight}px`,
 						} as CSSProperties
 					}
 				>
@@ -120,16 +131,16 @@ function App() {
 					<div className="md:hidden absolute inset-x-0 bottom-0 z-30 flex flex-col min-h-0 bg-white border-t border-gray-200/60 overflow-hidden h-[var(--panel-h)] shadow-[0_-8px_32px_rgba(0,0,0,0.08)]">
 						<button
 							type="button"
-							onPointerDown={mobilePanel.onHandlePointerDown}
-							onPointerUp={mobilePanel.onHandlePointerUp}
-							onPointerCancel={mobilePanel.onHandlePointerCancel}
+							onPointerDown={onHandlePointerDown}
+							onPointerUp={onHandlePointerUp}
+							onPointerCancel={onHandlePointerCancel}
 							className="flex flex-col items-center justify-start pt-2 shrink-0 w-full cursor-grab active:cursor-grabbing relative touch-none select-none"
-							aria-label={mobilePanel.snap === 0 ? "Expand panel" : "Collapse panel"}
-							style={{ height: mobilePanel.handleHeight }}
+							aria-label={mobileSnap === 0 ? "Expand panel" : "Collapse panel"}
+							style={{ height: mobileHandleHeight }}
 						>
 							<div className="w-9 h-1 rounded-full bg-gray-200 mb-1 shrink-0" />
 
-							{mobilePanel.snap === 0 && selectedItem && (
+							{mobileSnap === 0 && selectedItem && (
 								<div className="flex flex-col items-center px-8 w-full transition-opacity duration-300 opacity-100">
 									<span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 leading-tight truncate w-full text-center">
 										{selectedSection}
@@ -141,12 +152,12 @@ function App() {
 							)}
 
 							<ChevronDownIcon
-								className={`w-4 h-4 text-gray-300 absolute right-4 top-2.5 transition-transform duration-300 ${mobilePanel.snap === 0 ? "rotate-180" : ""
+								className={`w-4 h-4 text-gray-300 absolute right-4 top-2.5 transition-transform duration-300 ${mobileSnap === 0 ? "rotate-180" : ""
 									}`}
 							/>
 						</button>
 
-						<div className={`flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${mobilePanel.isContentVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+						<div className={`flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${mobileContentVisible ? "opacity-100" : "opacity-0 pointer-events-none"
 							}`}>
 						{selectedItem ? (
 							<DetailContent

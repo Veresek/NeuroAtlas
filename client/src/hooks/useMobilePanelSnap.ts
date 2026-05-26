@@ -9,7 +9,7 @@ const DRAG_CLICK_THRESHOLD = 8;
 const DRAG_SNAP_THRESHOLD = 40;
 
 export function useMobilePanelSnap(selectedItem: string | null) {
-	const [snap, setSnap] = useState<MobilePanelSnap>(1);
+	const [snap, setSnap] = useState<MobilePanelSnap>(0);
 	const layoutRef = useRef<HTMLDivElement>(null);
 	const [layoutHeight, setLayoutHeight] = useState(0);
 	const isDraggingRef = useRef(false);

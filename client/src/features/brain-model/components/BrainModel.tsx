@@ -82,7 +82,7 @@ function BrainMesh() {
 function BrainModel() {
 	return (
 		<div className="w-auto h-full max-w-full max-h-full aspect-square relative">
-			<Canvas camera={{ position: [0, 0, 2.5] }}>
+			<Canvas camera={{ position: [0, 0, 2.9] }}>
 				<ambientLight intensity={1} />
 				<BrainMesh />
 				<OrbitControls
