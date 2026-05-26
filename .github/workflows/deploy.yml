@@ -37,7 +37,7 @@ jobs:
             pip install -r requirements.txt
 
             pkill -f "uvicorn app.main:app" || true
-            nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 > uvicorn.log 2>&1 &
+            nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 > uvicorn.log 2>&1 & disown 
 
             cd NeuroAtlas/client
             npm ci
