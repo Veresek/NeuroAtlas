@@ -15,6 +15,9 @@ export default defineConfig({
 		svgr(),
 	],
 	server: {
+		port: 3000,
+		strictPort: true,
+		allowedHosts: ["neuroatlas.info", "www.neuroatlas.info"],
 		proxy: {
 			"/api": "http://localhost:8000",
 		},
