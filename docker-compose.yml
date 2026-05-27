@@ -4,7 +4,7 @@ services:
       context: ./client
     restart: unless-stopped
     ports:
-      - "5173:5173"
+      - "127.0.0.1:3000:3000"
 
   server:
     build:
@@ -13,4 +13,4 @@ services:
       - ./.env
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
