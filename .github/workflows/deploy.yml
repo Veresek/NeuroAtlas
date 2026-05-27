@@ -36,8 +36,5 @@ jobs:
           # Backend (Docker)
           sudo docker compose up -d --build server
 
-          # Frontend (static build for Nginx)
-          cd client
-          npm ci
-          npm run build
+          sudo docker compose run --rm client-build
           SSH
