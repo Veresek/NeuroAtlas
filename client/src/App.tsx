@@ -157,8 +157,16 @@ function App() {
 							/>
 						</button>
 
-						<div className={`flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${mobileContentVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+						<div className={`relative flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${mobileContentVisible ? "opacity-100" : "opacity-0 pointer-events-none"
 							}`}>
+						{activeNav ? (
+							<div
+								className={`flex-1 min-h-0 flex flex-col overflow-hidden ${selectedItem ? "invisible absolute inset-0 pointer-events-none" : ""}`}
+								aria-hidden={!!selectedItem}
+							>
+								<SidebarContent onSelectItem={handleSelectItem} selectedItem={selectedItem} activeNav={activeNav} />
+							</div>
+						) : null}
 						{selectedItem ? (
 							<DetailContent
 								item={selectedItem}
@@ -166,8 +174,6 @@ function App() {
 								onClose={handleCloseDetail}
 								onSelectItem={handleSelectItem}
 							/>
-						) : activeNav ? (
-							<SidebarContent onSelectItem={handleSelectItem} selectedItem={selectedItem} activeNav={activeNav} />
 						) : null}
 						</div>
 					</div>
