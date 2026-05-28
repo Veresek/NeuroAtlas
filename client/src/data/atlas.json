@@ -76,7 +76,7 @@
 						"affectedBrainAreas": [
 							{
 								"areaId": "amygdaloid_complex",
-								"name": "Amygdaloid Complex",
+								"name": "Amygdala",
 								"effectType": "stimulates"
 							}
 						],
@@ -274,7 +274,7 @@
 						"affectedBrainAreas": [
 							{
 								"areaId": "amygdaloid_complex",
-								"name": "Amygdaloid Complex",
+								"name": "Amygdala",
 								"effectType": "stimulates"
 							},
 							{
@@ -360,7 +360,7 @@
 						"affectedBrainAreas": [
 							{
 								"areaId": "substantia_nigra",
-								"name": "Substantia Nigra",
+								"name": "Brainstem",
 								"effectType": "damages"
 							}
 						],
@@ -389,7 +389,7 @@
 							},
 							{
 								"areaId": "amygdaloid_complex",
-								"name": "Amygdaloid Complex",
+								"name": "Amygdala",
 								"effectType": "stimulates"
 							}
 						],

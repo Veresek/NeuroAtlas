@@ -12,6 +12,27 @@ from ..settings import settings
 
 MOOD_LABELS = ["Awful", "Bad", "Neutral", "Good", "Great"]
 
+ALLOWED_SECTION_NAMES = [
+	"Frontal Lobe",
+	"Parietal Lobe",
+	"Occipital Lobe",
+	"Temporal Lobe",
+	"Insular Cortex",
+	"Hippocampus",
+	"Nucleus Accumbens",
+	"Amygdala",
+	"Ventral Tegmental Area",
+	"Limbic System",
+	"Basal Ganglia",
+	"Thalamus",
+	"Hypothalamus",
+	"Cerebellum",
+	"Brainstem",
+	"White Matter",
+	"Ventricular System",
+	"Other",
+]
+
 SYSTEM_INSTRUCTION = """You are an expert neurobiologist and neurochemist writing for NeuroAtlas.
 
 Return JSON matching the schema only.
@@ -54,7 +75,7 @@ def _schema() -> dict:
 				"items": {
 					"type": "object",
 					"properties": {
-						"section": {"type": "string"},
+						"section": {"type": "string", "enum": ALLOWED_SECTION_NAMES},
 						"effectType": {
 							"type": "string",
 							"enum": ["stimulates", "depresses", "damages", "modulates"],
@@ -76,7 +97,15 @@ async def generate_daily_log_analysis(log: MyBrainLog) -> DailyLogAnalysis:
 	params = {"key": settings.gemini_api_key}
 
 	payload = {
-		"systemInstruction": {"parts": [{"text": SYSTEM_INSTRUCTION}]},
+		"systemInstruction": {
+			"parts": [
+				{
+					"text": SYSTEM_INSTRUCTION
+					+ "\n\nAllowed section names (affectedSections[].section):\n- "
+					+ "\n- ".join(ALLOWED_SECTION_NAMES),
+				}
+			]
+		},
 		"contents": [{"parts": [{"text": build_user_message(log)}]}],
 		"generationConfig": {
 			"temperature": 0.7,
