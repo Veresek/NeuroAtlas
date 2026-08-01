@@ -20,26 +20,21 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ secrets.DEPLOY_PORT }}" "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
-
       - name: Deploy (docker compose)
         run: |
           ssh -p "${{ secrets.DEPLOY_PORT }}" "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" 'bash -s' <<'SSH'
           set -eu
-          cd NeuroAtlas
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm use 24
 
+          cd NeuroAtlas
           git pull origin main
 
-          # Backend (Docker)
           sudo docker compose up -d --build server
 
           cd client
-          # Frontend (Vite)
-          sudo rm -rf node_modules package-lock.json
+          rm -rf node_modules package-lock.json dist
           npm install
           npm run build
-          SSH
-      - name: daw
-        run: |
-          ssh -p "..." "user@host" 'bash -s' <<'SSH'
-          which node; node -v; which npm; npm -v
           SSH
