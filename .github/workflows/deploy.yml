@@ -34,6 +34,7 @@ jobs:
 
           cd client
           # Frontend (Vite)
+          sudo rm -rf node_modules
           npm ci
           npm run build
           SSH
