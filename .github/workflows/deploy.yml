@@ -34,7 +34,7 @@ jobs:
 
           cd client
           # Frontend (Vite)
-          sudo rm -rf node_modules
+          sudo rm -rf node_modules package-lock.json
           npm install
           npm run build
           SSH
