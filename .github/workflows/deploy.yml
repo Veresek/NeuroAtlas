@@ -38,3 +38,8 @@ jobs:
           npm install
           npm run build
           SSH
+      - name: daw
+        run: |
+          ssh -p "..." "user@host" 'bash -s' <<'SSH'
+          which node; node -v; which npm; npm -v
+          SSH
