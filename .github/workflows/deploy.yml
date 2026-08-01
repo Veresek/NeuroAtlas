@@ -29,12 +29,8 @@ jobs:
 
           git pull origin main
 
-          cat > .env <<'EOF'
-          GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-          EOF
-
           # Backend (Docker)
           sudo docker compose up -d --build server
 
-          sudo docker compose run --rm client-build
+          sudo docker compose run --rm client
           SSH
