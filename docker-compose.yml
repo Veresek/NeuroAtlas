@@ -1,10 +1,9 @@
 services:
-  client-build:
-    image: node:24.16.0-alpine
-    working_dir: /app
-    volumes:
-      - ./client:/app
-    command: sh -lc "npm ci && npm run build"
+  client:
+    build:
+      context: ./client
+    ports:
+      - "127.0.0.1:3000:3000"
 
   server:
     build:
