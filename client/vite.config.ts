@@ -15,15 +15,7 @@ export default defineConfig({
 		svgr(),
 	],
 	build: {
-		// The three.js 3D viewer is lazy-loaded into its own ~1.3 MB chunk that
-		// only loads when the brain view mounts, so it's fine to exceed 500 kB.
 		chunkSizeWarningLimit: 1600,
-		rolldownOptions: {
-			// Disable the informational [PLUGIN_TIMINGS] report from the build.
-			checks: {
-				pluginTimings: false,
-			},
-		},
 	},
 	server: {
 		port: 3000,

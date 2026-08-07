@@ -71,9 +71,12 @@ function App() {
 	return (
 		<div className="flex flex-col h-dvh max-h-dvh overflow-hidden max-md:fixed max-md:inset-0 max-md:w-full">
 			<div className="hidden [@media(max-height:500px)_and_(orientation:landscape)]:flex fixed inset-0 z-50 bg-gray-50 items-center justify-center flex-col p-8 text-center">
-				<h2 className="text-xl font-bold text-gray-800 mb-2">Rotate your device</h2>
+				<h2 className="text-xl font-bold text-gray-800 mb-2">
+					Rotate your device
+				</h2>
 				<p className="text-[15px] text-gray-600 max-w-xs">
-					NeuroAtlas is optimized for portrait mode. Please rotate your phone back to continue.
+					NeuroAtlas is optimized for portrait mode. Please rotate your phone
+					back to continue.
 				</p>
 			</div>
 
@@ -101,34 +104,41 @@ function App() {
 							"--brain-h": `${mobileBrainHeight}px`,
 							"--panel-h": `${mobilePanelHeight}px`,
 						} as CSSProperties
-					}
-				>
-					<div className="flex-1 min-h-0 flex items-center justify-center bg-gray-100/60 relative overflow-hidden md:min-h-[30vh] max-md:absolute max-md:top-0 max-md:left-0 max-md:right-0 max-md:h-[var(--brain-h)]">
+					}>
+					<div className="flex-1 min-h-0 flex items-center justify-center bg-gray-100/60 relative overflow-hidden md:min-h-[30vh] max-md:absolute max-md:top-0 max-md:left-0 max-md:right-0 max-md:h-(--brain-h)">
 						<div className="absolute top-4 right-4 z-10">
 							<select
-								value={typeof highlightedArea === 'string' ? highlightedArea : ""}
-								onChange={(e) => setBrainHighlight(e.target.value || null)}
-								className="px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-gray-200/60 bg-white/80 backdrop-blur-md text-xs md:text-sm text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00aaff]/50 transition-all cursor-pointer max-w-[150px] md:max-w-none"
-							>
+								value={
+									typeof highlightedArea === "string" ? highlightedArea : ""
+								}
+								onChange={e => setBrainHighlight(e.target.value || null)}
+								className="px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-gray-200/60 bg-white/80 backdrop-blur-md text-xs md:text-sm text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00aaff]/50 transition-all cursor-pointer max-w-37.5 md:max-w-none">
 								<option value="">Select brain area...</option>
-								{Object.entries(groupedAreas).sort().map(([region, areas]) => (
-									<Fragment key={region}>
-										<option value={region} className="font-bold text-gray-900 bg-gray-50">
-											{region}
-										</option>
-										{areas.map((area) => (
-											<option key={area} value={area} className="font-normal text-gray-700">
-												&nbsp;&nbsp;&nbsp;&nbsp;{area}
+								{Object.entries(groupedAreas)
+									.sort()
+									.map(([region, areas]) => (
+										<Fragment key={region}>
+											<option
+												value={region}
+												className="font-bold text-gray-900 bg-gray-50">
+												{region}
 											</option>
-										))}
-									</Fragment>
-								))}
+											{areas.map(area => (
+												<option
+													key={area}
+													value={area}
+													className="font-normal text-gray-700">
+													&nbsp;&nbsp;&nbsp;&nbsp;{area}
+												</option>
+											))}
+										</Fragment>
+									))}
 							</select>
 						</div>
 						<BrainModel />
 					</div>
 
-					<div className="md:hidden absolute inset-x-0 bottom-0 z-30 flex flex-col min-h-0 bg-white border-t border-gray-200/60 overflow-hidden h-[var(--panel-h)] shadow-[0_-8px_32px_rgba(0,0,0,0.08)]">
+					<div className="md:hidden absolute inset-x-0 bottom-0 z-30 flex flex-col min-h-0 bg-white border-t border-gray-200/60 overflow-hidden h-(--panel-h) shadow-[0_-8px_32px_rgba(0,0,0,0.08)]">
 						<button
 							type="button"
 							onPointerDown={onHandlePointerDown}
@@ -136,8 +146,7 @@ function App() {
 							onPointerCancel={onHandlePointerCancel}
 							className="flex flex-col items-center justify-start pt-2 shrink-0 w-full cursor-grab active:cursor-grabbing relative touch-none select-none"
 							aria-label={mobileSnap === 0 ? "Expand panel" : "Collapse panel"}
-							style={{ height: mobileHandleHeight }}
-						>
+							style={{ height: mobileHandleHeight }}>
 							<div className="w-9 h-1 rounded-full bg-gray-200 mb-1 shrink-0" />
 
 							{mobileSnap === 0 && selectedItem && (
@@ -152,34 +161,41 @@ function App() {
 							)}
 
 							<ChevronDownIcon
-								className={`w-4 h-4 text-gray-300 absolute right-4 top-2.5 transition-transform duration-300 ${mobileSnap === 0 ? "rotate-180" : ""
-									}`}
+								className={`w-4 h-4 text-gray-300 absolute right-4 top-2.5 transition-transform duration-300 ${
+									mobileSnap === 0 ? "rotate-180" : ""
+								}`}
 							/>
 						</button>
 
-						<div className={`relative flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${mobileContentVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+						<div
+							className={`relative flex-1 overflow-hidden flex flex-col transition-opacity duration-200 ${
+								mobileContentVisible
+									? "opacity-100"
+									: "opacity-0 pointer-events-none"
 							}`}>
-						{activeNav ? (
-							<div
-								className={`flex-1 min-h-0 flex flex-col overflow-hidden ${selectedItem ? "invisible absolute inset-0 pointer-events-none" : ""}`}
-								aria-hidden={!!selectedItem}
-							>
-								<SidebarContent onSelectItem={handleSelectItem} selectedItem={selectedItem} activeNav={activeNav} />
-							</div>
-						) : null}
-						{selectedItem ? (
-							<DetailContent
-								item={selectedItem}
-								section={selectedSection}
-								onClose={handleCloseDetail}
-								onSelectItem={handleSelectItem}
-							/>
-						) : null}
+							{activeNav ? (
+								<div
+									className={`flex-1 min-h-0 flex flex-col overflow-hidden ${selectedItem ? "invisible absolute inset-0 pointer-events-none" : ""}`}
+									aria-hidden={!!selectedItem}>
+									<SidebarContent
+										onSelectItem={handleSelectItem}
+										selectedItem={selectedItem}
+										activeNav={activeNav}
+									/>
+								</div>
+							) : null}
+							{selectedItem ? (
+								<DetailContent
+									item={selectedItem}
+									section={selectedSection}
+									onClose={handleCloseDetail}
+									onSelectItem={handleSelectItem}
+								/>
+							) : null}
 						</div>
 					</div>
 				</div>
 			</div>
-			{/* Footer hidden on mobile — no space for it */}
 			<div className="hidden md:block">
 				<Footer />
 			</div>

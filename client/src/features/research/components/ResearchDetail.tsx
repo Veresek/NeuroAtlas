@@ -96,8 +96,8 @@ export function ResearchDetail({ item, section, onClose }: ResearchDetailProps) 
 						</div>
 						<div>
 							<p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Journal</p>
-							<p className="text-sm font-medium text-gray-600 truncate" title={`${paper.journal} ${paper.volume || ""}`}>
-								{paper.journal} {paper.volume ? `(${paper.volume})` : ""}
+							<p className="text-sm font-medium text-gray-600 truncate" title={paper.journal}>
+								{paper.journal}
 							</p>
 						</div>
 					</div>

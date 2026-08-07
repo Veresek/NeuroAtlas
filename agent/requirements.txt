@@ -1,0 +1,8 @@
+pydantic
+langchain
+langchain-community
+langchain-openai
+httpx
+python-dotenv
+typer
+openai

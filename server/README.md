@@ -16,8 +16,6 @@ uvicorn app.main:app --reload --port 8000
 
 Health check: `GET /health`
 
-MyBrain analysis: `POST /api/my-brain/analyze`
-
 ## Env
 
 Create `server/.env`:

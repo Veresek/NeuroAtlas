@@ -4,6 +4,9 @@ services:
       context: ./client
     ports:
       - "127.0.0.1:3000:3000"
+    volumes:
+      - ./client/src/data/atlas.json:/app/src/data/atlas.json
+      - ./client/src/data/research.json:/app/src/data/research.json
 
   server:
     build:
