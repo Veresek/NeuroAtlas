@@ -12,7 +12,9 @@ export interface AffectedBrainArea {
 
 export interface NeurotransmitterEffect {
 	name: string;
-	effect: "increase" | "decrease" | "modulate";
+	mechanism?: string;
+	description?: string;
+	effect?: "increase" | "decrease" | "modulate" | string;
 }
 
 export interface TemporalPhase {

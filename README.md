@@ -1,6 +1,6 @@
 # NeuroAtlas
 
-The project aims to create an innovative and interactive platform that, based on 3D visualizations, conversational AI, and a "Digital Twin" module, will allow users to monitor and understand the biochemistry of their brain based on daily habits and events.
+The project aims to create an innovative and interactive platform that, based on 3D visualizations and a "Digital Twin" module, will allow users to monitor and understand the biochemistry of their brain based on daily habits and events.
 
 ## Core Features (MVP)
 

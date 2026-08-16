@@ -1,1 +1,1408 @@
-[]
+[
+  {
+    "id": "byram-2026-emotion",
+    "title": "Effects of alcohol on emotion recognition: An alcohol-administration trial.",
+    "authors": [
+      "Byram A",
+      "Murgia S",
+      "Boland A",
+      "Fairbairn CE"
+    ],
+    "year": 2026,
+    "journal": "Psychology of addictive behaviors : journal of the Society of Psychologists in Addictive Behaviors",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1037/adb0001178",
+    "abstract": "Alcohol consumption influences emotion recognition accuracy, with notable sex differences observed in its effects on social behavior.",
+    "tags": [
+      "emotion",
+      "social behavior"
+    ],
+    "relatedAtlasItems": [
+      "alcohol"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "pistone-2026-workplace",
+    "title": "Alcohol in the Workplace: A Qualitative Study of Employees' Experiences With Employer-Supported Alcohol Treatment",
+    "authors": [
+      "Pistone I",
+      "Martinez M",
+      "Sager M",
+      "Berglund K"
+    ],
+    "year": 2026,
+    "journal": "Drug and alcohol review",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1111/dar.70194",
+    "abstract": "Explores employees' experiences with employer-supported alcohol treatment in Sweden, highlighting its impact on health and work performance.",
+    "tags": [
+      "treatment",
+      "workplace"
+    ],
+    "relatedAtlasItems": [
+      "alcohol"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "bai-2026-expectancies",
+    "title": "Alcohol Expectancies, Emotional States, and Alcohol-Related Consequences among Junior College Students in China: A Full Mediation Model of Alcohol Consumption",
+    "authors": [
+      "Bai M",
+      "Li P",
+      "Ren G"
+    ],
+    "year": 2026,
+    "journal": "Alcohol (Fayetteville, N.Y.)",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.alcohol.2026.08.001",
+    "abstract": "Examines the interplay between emotional states, alcohol expectancies, and alcohol-related consequences among Chinese junior college students.",
+    "tags": [
+      "expectancies",
+      "emotional states"
+    ],
+    "relatedAtlasItems": [
+      "alcohol"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "azagba-2026-exclusion",
+    "title": "Impact of alcohol exclusion law repeal on inpatient alcohol-related diagnoses",
+    "authors": [
+      "Azagba S",
+      "Roy B",
+      "Ebling T"
+    ],
+    "year": 2026,
+    "journal": "The International journal on drug policy",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.drugpo.2026.105435",
+    "abstract": "Investigates the effect of alcohol exclusion law repeal on the documentation of inpatient alcohol-related diagnoses in the US.",
+    "tags": [
+      "policy",
+      "diagnoses"
+    ],
+    "relatedAtlasItems": [
+      "alcohol"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "bauer-2026-cues",
+    "title": "Alcohol Cues Invigorate Aversion-Resistant Alcohol Drinking",
+    "authors": [
+      "Bauer MR",
+      "Richard JM"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.64898/2026.07.14.738545",
+    "abstract": "Explores how alcohol-related cues exacerbate aversion-resistant drinking, a hallmark of alcohol use disorder.",
+    "tags": [
+      "cues",
+      "aversion-resistant"
+    ],
+    "relatedAtlasItems": [
+      "alcohol"
+    ],
+    "relatedBrainAreas": [
+      "Nucleus Accumbens",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "toyoshima-2026-adolescent-nicotine",
+    "title": "Adolescent Exposure to Nicotine and Ethanol Attenuates Adult Nicotine Reward Sensitivity in Rats",
+    "authors": [
+      "Toyoshima M",
+      "Toyofuku R",
+      "Shimoda S",
+      "Tsuchida L",
+      "Tachihara R",
+      "Yamada K"
+    ],
+    "year": 2026,
+    "journal": "Neuropsychopharmacology reports",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1002/npr2.70132",
+    "abstract": "Exposure to nicotine and alcohol during adolescence can alter the brain's reward system, reducing sensitivity to nicotine's pleasurable effects in adulthood.",
+    "tags": [
+      "dopamine",
+      "adolescence"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Nucleus Accumbens"
+    ]
+  },
+  {
+    "id": "wang-2026-e-liquid-nicotine",
+    "title": "Effects of E-Liquid Formulations on Nicotine Vapor Pressure and Implications for Nicotine Delivery and Toxicity",
+    "authors": [
+      "Wang K",
+      "Gong X"
+    ],
+    "year": 2026,
+    "journal": "Toxics",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3390/toxics14050433",
+    "abstract": "Different e-liquid formulations affect how nicotine is delivered and absorbed, influencing its potency and potential health risks.",
+    "tags": [
+      "nicotine delivery",
+      "toxicity"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "dowd-2026-cannabis-nicotine-substitution",
+    "title": "Evaluating cannabis-nicotine substitution and demand during nicotine cessation treatment in young adults: protocol for a prospective, remote 12-week nicotine cessation trial in the USA",
+    "authors": [
+      "Dowd AN",
+      "Baker NL",
+      "Koffarnus MN",
+      "Raiff BR",
+      "Tomko RL",
+      "Gray KM",
+      "McClure EA"
+    ],
+    "year": 2026,
+    "journal": "BMJ open",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1136/bmjopen-2025-110992",
+    "abstract": "This study explores how cannabis use affects nicotine cessation in young adults, focusing on patterns of dual substance use.",
+    "tags": [
+      "cannabis",
+      "cessation"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "mitchell-2026-pregnancy-nicotine",
+    "title": "The Case for a Pregnancy-Specific Nicotine Policy",
+    "authors": [
+      "Mitchell EA",
+      "Cowan S",
+      "Taylor BJ"
+    ],
+    "year": 2026,
+    "journal": "Acta paediatrica (Oslo, Norway : 1992)",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1111/apa.70687",
+    "abstract": "This paper argues for stricter policies on nicotine use during pregnancy due to its harmful effects on fetal development.",
+    "tags": [
+      "pregnancy",
+      "policy"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "tran-2026-tobacco-free-nicotine",
+    "title": "Total and unprotonated (freebase) nicotine content in new types of oral 'tobacco-free' nicotine products",
+    "authors": [
+      "Tran H",
+      "Tyx RE",
+      "Valentin L",
+      "Mahoney M",
+      "Stanfill S",
+      "Watson CH"
+    ],
+    "year": 2026,
+    "journal": "Tobacco control",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1136/tc-2024-058914",
+    "abstract": "Emerging tobacco-free nicotine products vary widely in nicotine content and pH, raising concerns about their safety and regulation.",
+    "tags": [
+      "nicotine delivery",
+      "tobacco-free"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "maynez-anchondo-2026-nicotine-vapor-seeking",
+    "title": "Early life nicotine vapor exposure increases nicotine vapor seeking in adult male rats",
+    "authors": [
+      "Maynez-Anchondo L",
+      "Rohrer O",
+      "Urbina M",
+      "Aguilar Armenta J",
+      "Gonzalez-Gutierrez T",
+      "O'Dell LE",
+      "Mendez IA"
+    ],
+    "year": 2026,
+    "journal": "Psychopharmacology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1007/s00213-026-07122-8",
+    "abstract": "Exposure to nicotine vapor during adolescence increases the likelihood of seeking nicotine later in adulthood.",
+    "tags": [
+      "adolescence",
+      "vaping"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Nucleus Accumbens"
+    ]
+  },
+  {
+    "id": "porto-2026-nicotine-pregnancy-guideline",
+    "title": "Guideline No. 470: Nicotine and Pregnancy",
+    "authors": [
+      "Porto L",
+      "Ordean A",
+      "Morin C",
+      "Cook J",
+      "Smith B",
+      "Graves L"
+    ],
+    "year": 2026,
+    "journal": "Journal of obstetrics and gynaecology Canada : JOGC = Journal d'obstetrique et gynecologie du Canada : JOGC",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.jogc.2026.103464",
+    "abstract": "This guideline provides recommendations for managing nicotine use during pregnancy, emphasizing cessation and harm reduction.",
+    "tags": [
+      "pregnancy",
+      "cessation"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "zhang-2026-nicotine-biosynthesis",
+    "title": "A metabolon channels nicotine biosynthesis",
+    "authors": [
+      "Zhang H",
+      "Hong B"
+    ],
+    "year": 2026,
+    "journal": "Trends in biochemical sciences",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.tibs.2026.06.003",
+    "abstract": "Researchers uncover the complex biochemical pathway that plants use to produce nicotine, revealing new enzymes and intermediates.",
+    "tags": [
+      "biosynthesis",
+      "metabolism"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "knopp-2026-nicotine-pouches",
+    "title": "Development of a model to predict nicotine pharmacokinetics from oral nicotine pouches",
+    "authors": [
+      "Knopp MM",
+      "Jørgensen JR",
+      "Li XS",
+      "Zhuang SM",
+      "Rensch J",
+      "Edmiston J",
+      "Aldeek F"
+    ],
+    "year": 2026,
+    "journal": "Scientific reports",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1038/s41598-026-53537-w",
+    "abstract": "A new model predicts how nicotine is absorbed from oral nicotine pouches, aiding regulatory approval and safety assessments.",
+    "tags": [
+      "nicotine delivery",
+      "pharmacokinetics"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "satybaldiyeva-2026-nicotine-pouches-price",
+    "title": "Price comparisons for the leading brands of oral nicotine pouches and cigarettes",
+    "authors": [
+      "Satybaldiyeva N",
+      "Schleicher NC",
+      "Prochaska JJ",
+      "Alam A",
+      "Johnson TO",
+      "Henriksen L"
+    ],
+    "year": 2026,
+    "journal": "Addiction (Abingdon, England)",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1111/add.70569",
+    "abstract": "This study compares the cost of nicotine pouches to cigarettes, highlighting affordability as a factor in their growing popularity.",
+    "tags": [
+      "nicotine delivery",
+      "economics"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "kahlhofen-2026-nicotine-vestibular",
+    "title": "Nicotine Effects on Vestibular Function in Pilot Selection",
+    "authors": [
+      "Kahlhofen N",
+      "Lindgaard K"
+    ],
+    "year": 2026,
+    "journal": "Aerospace medicine and human performance",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3357/amhp.6902.2026",
+    "abstract": "Nicotine's impact on spatial orientation and vestibular function is evaluated in the context of pilot selection.",
+    "tags": [
+      "vestibular",
+      "performance"
+    ],
+    "relatedAtlasItems": [
+      "nicotine"
+    ],
+    "relatedBrainAreas": [
+      "Brainstem"
+    ]
+  },
+  {
+    "id": "42437560",
+    "title": "Psilocybin-induced behavioral and cellular effects",
+    "authors": [
+      "Dong AM",
+      "Han Y",
+      "Xu Z",
+      "Schlüter OM",
+      "Huang X"
+    ],
+    "year": 2026,
+    "journal": "Journal of neurogenetics",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1080/01677063.2026.2695462",
+    "abstract": "Psilocybin affects the nucleus accumbens, a brain region involved in reward and emotion, suggesting potential therapeutic benefits for psychiatric disorders.",
+    "tags": [
+      "serotonin",
+      "neuroplasticity"
+    ],
+    "relatedAtlasItems": [
+      "psilocybin"
+    ],
+    "relatedBrainAreas": [
+      "Nucleus Accumbens"
+    ]
+  },
+  {
+    "id": "42567236",
+    "title": "Feasibility and Tolerability of Psilocybin for Phantom Limb Pain",
+    "authors": [
+      "Dean JG",
+      "Hurwitz E",
+      "Furnish T",
+      "Castellanos J",
+      "McKinty A",
+      "Farrell B",
+      "Barrows D",
+      "Peck SK",
+      "Trim J",
+      "Samadhi E",
+      "Renwick G",
+      "Mudge R",
+      "Vieten C",
+      "Cuccurazzu B",
+      "Coleman P",
+      "Lin A",
+      "Geyer MA",
+      "Zeidan F",
+      "Halberstadt AL"
+    ],
+    "year": 2026,
+    "journal": "The journal of pain",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.jpain.2026.106404",
+    "abstract": "Psilocybin shows promise in alleviating phantom limb pain, a condition resistant to conventional treatments, by modulating brain pathways involved in pain perception.",
+    "tags": [
+      "pain",
+      "serotonin"
+    ],
+    "relatedAtlasItems": [
+      "psilocybin"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "42288041",
+    "title": "Balancing safety and access in Oregon's psilocybin services",
+    "authors": [
+      "Cheung K",
+      "Propes C",
+      "Yaden DB"
+    ],
+    "year": 2026,
+    "journal": "The International journal on drug policy",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.drugpo.2026.105384",
+    "abstract": "Oregon's psilocybin services program provides insights into balancing access to psychedelics with safety measures, offering a model for other jurisdictions.",
+    "tags": [
+      "policy",
+      "safety"
+    ],
+    "relatedAtlasItems": [
+      "psilocybin"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "ppr1284365",
+    "title": "The “dark magic mushroom” co-produces amatoxins and psilocybin",
+    "authors": [
+      "Kunik AR",
+      "Christopher MW",
+      "Lemmond B",
+      "Dentinger BT",
+      "Slot J",
+      "Garrett TJ",
+      "Smith ME"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.64898/2026.07.17.739257",
+    "abstract": "A rare mushroom species produces both psilocybin and amatoxins, highlighting the complexity of fungal chemistry and the risks of misidentification.",
+    "tags": [
+      "toxicity",
+      "chemistry"
+    ],
+    "relatedAtlasItems": [
+      "psilocybin"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "ppr1293252",
+    "title": "Mapping excitatory synaptic plasticity evoked by single-dose psilocybin in mice",
+    "authors": [
+      "Li Z",
+      "Weber C",
+      "Sellitti F",
+      "Simmler LD"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.64898/2026.07.31.741703",
+    "abstract": "A single dose of psilocybin induces long-lasting changes in synaptic plasticity, potentially explaining its antidepressant effects.",
+    "tags": [
+      "neuroplasticity",
+      "antidepressant"
+    ],
+    "relatedAtlasItems": [
+      "psilocybin"
+    ],
+    "relatedBrainAreas": [
+      "Hippocampus"
+    ]
+  },
+  {
+    "id": "ppr1289339",
+    "title": "Beyond psilocybin: Do magic mushroom preparations contain other compounds with pharmacological effects?",
+    "authors": [
+      "Lasham S",
+      "P B",
+      "W E",
+      "C P",
+      "A S",
+      "R P"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.22541/authorea.15006829/v1",
+    "abstract": "Psilocybin mushrooms may contain additional compounds that influence their pharmacological effects, suggesting complexity beyond psilocybin alone.",
+    "tags": [
+      "chemistry",
+      "pharmacology"
+    ],
+    "relatedAtlasItems": [
+      "psilocybin"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "dolast-2026-caffeine-sleep-depression",
+    "title": "From caffeine use motives to sleep disturbance: network and structural equation modeling of caffeine use disorder and depression among caffeine consumers",
+    "authors": [
+      "Islam Dola ST",
+      "Najnin F",
+      "Amin MB",
+      "Sikder MS",
+      "Vangi MJ",
+      "Naeem J",
+      "Rony MJI",
+      "Takia MMR",
+      "Kamruzzaman M",
+      "Sayeed A",
+      "Islam MS",
+      "Ether ST"
+    ],
+    "year": 2026,
+    "journal": "Addictive behaviors reports",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.abrep.2026.100729",
+    "abstract": "This study explores how caffeine use motives, such as staying awake or improving focus, are linked to sleep disturbances and depressive symptoms among university students. It highlights the complex relationship between caffeine consumption and mental health.",
+    "tags": [
+      "sleep",
+      "depression",
+      "caffeine use disorder"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "abbasi-2026-caffeine-skin-absorption",
+    "title": "Effect of Transcutol P on Percutaneous Absorption of Gel Containing Pure Synthetic Caffeine or Plant-Extracted Natural Caffeine",
+    "authors": [
+      "Seyyed Abbasi N",
+      "Soltanmohammadi F",
+      "Charkhpour M",
+      "Shokri J"
+    ],
+    "year": 2026,
+    "journal": "Dermatology research and practice",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1155/drp/3538935",
+    "abstract": "This research compares the skin absorption of synthetic and natural caffeine gels, finding that Transcutol P enhances caffeine penetration, which could improve its effectiveness in treating skin conditions like cellulite and hair loss.",
+    "tags": [
+      "skin absorption",
+      "caffeine gel",
+      "Transcutol P"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "hussein-2026-caffeine-headache",
+    "title": "Caffeine and Headache: Exploring the Multifaceted Relationship",
+    "authors": [
+      "Hussein M",
+      "Hassan A",
+      "Al-Azayem SA",
+      "Thuraiaiyah J",
+      "Schytz HW",
+      "Nasser AMA",
+      "Magdy R"
+    ],
+    "year": 2026,
+    "journal": "Brain and behavior",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1002/brb3.71527",
+    "abstract": "This review examines caffeine's dual role in headache relief and its potential to trigger headaches, focusing on its effects on adenosine receptors and its use in treating migraines.",
+    "tags": [
+      "headache",
+      "migraine",
+      "adenosine receptors"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "green-2026-caffeine-rhinologic-symptoms",
+    "title": "Caffeine Consumption and Rhinologic Symptom Severity",
+    "authors": [
+      "Green DGJ",
+      "Wang SX",
+      "DeBakey MS",
+      "Kattar N",
+      "McCoul ED"
+    ],
+    "year": 2026,
+    "journal": "Otolaryngology--head and neck surgery : official journal of American Academy of Otolaryngology-Head and Neck Surgery",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1002/ohn.70329",
+    "abstract": "This study investigates whether caffeine consumption worsens rhinologic symptoms like nasal congestion and sinus pressure, finding mixed effects depending on individual sensitivity.",
+    "tags": [
+      "rhinologic symptoms",
+      "nasal congestion",
+      "caffeine"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "ogunruku-2026-caffeine-parkinsonism",
+    "title": "Neuroprotective potential of caffeine in a rotenone-induced Drosophila model of Parkinsonism.",
+    "authors": [
+      "Ogunruku OO",
+      "Joshua AR",
+      "Agboola JB"
+    ],
+    "year": 2026,
+    "journal": "Naunyn-Schmiedeberg's archives of pharmacology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1007/s00210-026-05834-4",
+    "abstract": "This research explores caffeine's potential to protect against Parkinson's disease by reducing neurotoxicity in fruit flies, suggesting a possible role in mitigating neurodegenerative conditions.",
+    "tags": [
+      "Parkinson's disease",
+      "neuroprotection",
+      "caffeine"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Basal Ganglia"
+    ]
+  },
+  {
+    "id": "gigl-2026-caffeine-bitter-taste",
+    "title": "Impact of Interactions between Melanoidins and Caffeine on the Bitter Taste of Coffee Beverages",
+    "authors": [
+      "Gigl M",
+      "Kreissl J",
+      "Frank O"
+    ],
+    "year": 2026,
+    "journal": "Journal of agricultural and food chemistry",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1021/acs.jafc.5c17022",
+    "abstract": "This study investigates how caffeine interacts with other compounds in coffee to influence its bitter taste, finding that melanoidins play a key role in modulating flavor perception.",
+    "tags": [
+      "bitter taste",
+      "coffee",
+      "caffeine"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "masters-2026-caffeine-exercise-performance",
+    "title": "The Effect of CYP1A2 Gene Polymorphisms on Caffeine Pharmacokinetics and Exercise Performance in Male Recreational Athletes",
+    "authors": [
+      "Masters C",
+      "Ali A",
+      "Badenhorst C",
+      "Dickens M",
+      "Rutherfurd-Markwick K"
+    ],
+    "year": 2026,
+    "journal": "European journal of sport science",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1002/ejsc.70203",
+    "abstract": "This research examines how genetic differences in caffeine metabolism affect its ability to enhance exercise performance, showing that fast metabolizers benefit more from caffeine's stimulant effects.",
+    "tags": [
+      "exercise performance",
+      "CYP1A2",
+      "caffeine"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "marcus-2026-caffeine-cardiovascular",
+    "title": "Caffeine and Cardiovascular Disease: A Scientific Statement From the American Heart Association",
+    "authors": [
+      "Marcus GM",
+      "Hu FB",
+      "van Dam RM",
+      "Cornelis MC",
+      "Dewland TA",
+      "Kang J",
+      "Larsson SC",
+      "Page RL 2nd",
+      "Parekh N"
+    ],
+    "year": 2026,
+    "journal": "Circulation",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1161/cir.0000000000001454",
+    "abstract": "This statement reviews the evidence on caffeine's effects on cardiovascular health, concluding that moderate consumption is generally safe but may pose risks for individuals with certain heart conditions.",
+    "tags": [
+      "cardiovascular disease",
+      "caffeine",
+      "heart health"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "yamamoto-2026-caffeine-poisoning",
+    "title": "Rapid bedside assessment of serum caffeine concentrations using an immunochromatographic screening kit: evaluation of analytical and diagnostic performance in acute caffeine poisoning",
+    "authors": [
+      "Yamamoto R",
+      "Saito T",
+      "Tsuji T",
+      "Morita S"
+    ],
+    "year": 2026,
+    "journal": "Clinical toxicology (Philadelphia, Pa.)",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1080/15563650.2026.2675035",
+    "abstract": "This study evaluates a rapid test kit for detecting caffeine poisoning, showing its effectiveness in emergency settings for identifying potentially lethal caffeine levels.",
+    "tags": [
+      "caffeine poisoning",
+      "emergency medicine",
+      "rapid testing"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "syahputra-2026-caffeine-electrochemical-sensor",
+    "title": "Paper-based electrochemical sensor for direct detection of caffeine in commercial beverage samples",
+    "authors": [
+      "Syahputra MY",
+      "Shinchi E",
+      "Shida K",
+      "Tominaga M"
+    ],
+    "year": 2026,
+    "journal": "RSC advances",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1039/d6ra01066k",
+    "abstract": "This research develops a portable, biodegradable sensor for detecting caffeine in beverages, offering a simple and eco-friendly method for caffeine analysis.",
+    "tags": [
+      "electrochemical sensor",
+      "caffeine detection",
+      "beverages"
+    ],
+    "relatedAtlasItems": [
+      "caffeine"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "soni-2026-epilepsy",
+    "title": "Mindfulness meditation increases interictal epileptiform discharges in meditation-naïve surgical epilepsy patients",
+    "authors": [
+      "Soni S",
+      "Brochu K",
+      "Federico P",
+      "Hader W",
+      "Kam JWY",
+      "Girgis F"
+    ],
+    "year": 2026,
+    "journal": "Epilepsia",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1002/epi.70332",
+    "abstract": "Novice meditation temporarily increased abnormal brain waves in epilepsy patients, suggesting meditation affects neural excitability differently in sensitive brains.",
+    "tags": [
+      "epilepsy",
+      "neurophysiology"
+    ],
+    "relatedAtlasItems": [
+      "meditation"
+    ],
+    "relatedBrainAreas": [
+      "Temporal Lobe",
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "singh-2026-autonomic",
+    "title": "Multiscale cardiorespiratory complexity reveals autonomic signatures of Rajyoga meditation",
+    "authors": [
+      "Singh R",
+      "Panda R",
+      "Tarvainen MP",
+      "Ranjan V",
+      "Ganguly A",
+      "Halder S"
+    ],
+    "year": 2026,
+    "journal": "Frontiers in psychology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3389/fpsyg.2026.1792917",
+    "abstract": "Advanced meditators showed unique heart rate patterns suggesting improved nervous system balance during practice.",
+    "tags": [
+      "autonomic nervous system",
+      "biofeedback"
+    ],
+    "relatedAtlasItems": [
+      "meditation"
+    ],
+    "relatedBrainAreas": [
+      "Brainstem",
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "simonsson-2026-personalized",
+    "title": "Personalized prediction of response to three meditation practices: A randomized controlled trial",
+    "authors": [
+      "Simonsson O",
+      "Webb CA",
+      "Ruiz M",
+      "Osika W",
+      "Narayanan J",
+      "Dahlén M",
+      "Lutz W",
+      "Schwartz B",
+      "Ren B",
+      "Dahl CJ",
+      "Davidson RJ",
+      "Hirshberg MJ",
+      "Goldberg SB"
+    ],
+    "year": 2026,
+    "journal": "Behaviour research and therapy",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.brat.2026.105141",
+    "abstract": "Different people benefit from different meditation styles - matching practice type to individual traits improved wellbeing outcomes.",
+    "tags": [
+      "personalized medicine",
+      "wellbeing"
+    ],
+    "relatedAtlasItems": [
+      "meditation"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "sparby-2026-advanced",
+    "title": "Defining Advanced Meditation: A Conceptual Foundation for a Comprehensive Contemplative Science beyond Mindfulness Meditation, Basic Meditation, and Other Non-Meditative Consciousness-Altering Practices",
+    "authors": [
+      "Sparby T",
+      "Toomey B",
+      "Wright M",
+      "Ben-Joseph JE",
+      "Sacchet M"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.31234/osf.io/cgurt_v1",
+    "abstract": "Researchers proposed criteria to distinguish beginner from advanced meditation, including lasting changes in self-awareness and attention control.",
+    "tags": [
+      "consciousness",
+      "expertise"
+    ],
+    "relatedAtlasItems": [
+      "meditation"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "naito-2026-eeg",
+    "title": "EEG dynamics during prolonged Samatha meditation: A case study across levels of meditation expertise",
+    "authors": [
+      "Naito Y",
+      "Asai T",
+      "Katayama A",
+      "Wakabayashi M",
+      "Imamizu H",
+      "Minowa K"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.31234/osf.io/xahqf_v1",
+    "abstract": "Brain wave patterns differed significantly between novice and expert meditators, with experts showing more stable alpha rhythms linked to focused attention.",
+    "tags": [
+      "neurofeedback",
+      "attention"
+    ],
+    "relatedAtlasItems": [
+      "meditation"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Parietal Lobe"
+    ]
+  },
+  {
+    "id": "chowdhury-2026-neurodynamic",
+    "title": "The Neurodynamic Core of Meditation: Dissociating Meditation from Rest and Task in a Reliability-based EEG study",
+    "authors": [
+      "Chowdhury P",
+      "Govindaraj R",
+      "Sasidharan A",
+      "Saoji AA",
+      "N RP",
+      "Northoff G",
+      "Kutty BM"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.64898/2026.05.27.728082",
+    "abstract": "Meditation creates a unique brain state distinct from both resting and focused tasks, characterized by balanced frontal and parietal lobe activity.",
+    "tags": [
+      "brain states",
+      "EEG"
+    ],
+    "relatedAtlasItems": [
+      "meditation"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Parietal Lobe"
+    ]
+  },
+  {
+    "id": "coats-love-2026-joy",
+    "title": "Sources of joy among older African American women: A qualitative analysis",
+    "authors": [
+      "Coats JV",
+      "Love S"
+    ],
+    "year": 2026,
+    "journal": "Journal of women & aging",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1080/08952841.2026.2703635",
+    "abstract": "This study explores how older African American women define, experience, and sustain joy in their everyday lives, highlighting its role in health and well-being.",
+    "tags": [
+      "well-being",
+      "resilience"
+    ],
+    "relatedAtlasItems": [
+      "joy"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "holt-et-al-2026-joy",
+    "title": "Moments That Matter: Exploring Autistic Adolescents' and Their Families' Joy Through Family Journals",
+    "authors": [
+      "Holt JM",
+      "Siekman K",
+      "Fairbanks M",
+      "Fairbanks M",
+      "Juzenas M",
+      "Stern N"
+    ],
+    "year": 2026,
+    "journal": "Autism : the international journal of research and practice",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1177/13623613261455919",
+    "abstract": "This qualitative study examines how autistic adolescents and their families experience and co-create joy, providing insights into the role of joy in family life.",
+    "tags": [
+      "family dynamics",
+      "emotional well-being"
+    ],
+    "relatedAtlasItems": [
+      "joy"
+    ],
+    "relatedBrainAreas": [
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "zhang-li-2026-joy",
+    "title": "The impact of virtual reality on curiosity, joy, and engagement",
+    "authors": [
+      "Zhang M",
+      "Li B"
+    ],
+    "year": 2026,
+    "journal": "Frontiers in psychology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3389/fpsyg.2026.1809238",
+    "abstract": "This study investigates how virtual reality influences curiosity, joy, and engagement, exploring the relationships among these factors in an educational context.",
+    "tags": [
+      "engagement",
+      "technology"
+    ],
+    "relatedAtlasItems": [
+      "joy"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "miller-et-al-2026-joy",
+    "title": "Defining joy after a genetic diagnosis: A narrative inquiry",
+    "authors": [
+      "Miller JC",
+      "Mills R",
+      "Swanson DP",
+      "Doyle LE",
+      "Washington C"
+    ],
+    "year": 2026,
+    "journal": "Journal of genetic counseling",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1002/jgc4.70191",
+    "abstract": "This study explores how patients and families experience joy after receiving a genetic diagnosis, highlighting positive aspects of the diagnostic journey.",
+    "tags": [
+      "resilience",
+      "emotional health"
+    ],
+    "relatedAtlasItems": [
+      "joy"
+    ],
+    "relatedBrainAreas": [
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "shay-2026-joy",
+    "title": "Partnering with AI to create joy-centered personalized learning in a post-pandemic world",
+    "authors": [
+      "Shay JE"
+    ],
+    "year": 2026,
+    "journal": "Journal of microbiology & biology education",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1128/jmbe.00107-26",
+    "abstract": "This paper discusses how AI can be used to create personalized learning experiences that foster joy and engagement in STEM education.",
+    "tags": [
+      "education",
+      "technology"
+    ],
+    "relatedAtlasItems": [
+      "joy"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "chen-et-al-2026-joy",
+    "title": "Can joy and compassion buffer against hostility following provocation? An experimental study",
+    "authors": [
+      "Chen L",
+      "Lobbestael J",
+      "Hilgefort S",
+      "Sánchez SG",
+      "Geschwind N"
+    ],
+    "year": 2026,
+    "journal": "Acta psychologica",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.actpsy.2026.107540",
+    "abstract": "This study examines how joy and compassion can reduce hostility and improve emotional well-being following provocation.",
+    "tags": [
+      "emotional regulation",
+      "well-being"
+    ],
+    "relatedAtlasItems": [
+      "joy"
+    ],
+    "relatedBrainAreas": [
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "decates-2026-cognition",
+    "title": "Cognition and future depression: associations with risk in those with and without a history of depression",
+    "authors": [
+      "de Cates AN",
+      "Lee A",
+      "Winchester L",
+      "Ebmeier KP",
+      "Lalousis P",
+      "Upthegrove R",
+      "Murphy SE",
+      "Harmer CJ",
+      "Nichols T",
+      "Topiwala A"
+    ],
+    "year": 2026,
+    "journal": "BMJ mental health",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1136/bmjment-2025-302332",
+    "abstract": "Cognitive impairments predict both first-onset and recurrent depression, suggesting cognitive screening could help identify at-risk individuals before mood symptoms appear.",
+    "tags": [
+      "cognition",
+      "prevention"
+    ],
+    "relatedAtlasItems": [
+      "depression"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Hippocampus"
+    ]
+  },
+  {
+    "id": "foley-2026-interleukin",
+    "title": "Interleukin 6 as a Treatment Target for Depression: A Proof-of-Concept Randomized Clinical Trial",
+    "authors": [
+      "Foley ÉM",
+      "Turner N",
+      "Margelyte R",
+      "Jones HJ",
+      "Kaser M",
+      "Lewis G",
+      "Jones PB",
+      "Khandaker GM"
+    ],
+    "year": 2026,
+    "journal": "JAMA psychiatry",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1001/jamapsychiatry.2026.1053",
+    "abstract": "Blocking the inflammatory cytokine IL-6 shows promise for reducing depressive symptoms in treatment-resistant cases, supporting the inflammation-depression link.",
+    "tags": [
+      "inflammation",
+      "immunology"
+    ],
+    "relatedAtlasItems": [
+      "depression"
+    ],
+    "relatedBrainAreas": [
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "calentino-2026-stress",
+    "title": "Stressful life events and depression onset: A longitudinal investigation of depression course subtypes",
+    "authors": [
+      "Calentino AE",
+      "Harrison TJ",
+      "Feltman SM",
+      "Perlman G",
+      "Monroe SM",
+      "Kotov R",
+      "Klein DN"
+    ],
+    "year": 2026,
+    "journal": "Journal of psychopathology and clinical science",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1037/abn0001151",
+    "abstract": "Stressful life events trigger different depression trajectories, with some individuals recovering quickly while others develop chronic patterns influenced by early risk factors.",
+    "tags": [
+      "stress",
+      "longitudinal"
+    ],
+    "relatedAtlasItems": [
+      "depression"
+    ],
+    "relatedBrainAreas": [
+      "Amygdala",
+      "Hypothalamus"
+    ]
+  },
+  {
+    "id": "yeo-2026-metabolic",
+    "title": "Combined effect of metabolic syndrome and cancer on depression",
+    "authors": [
+      "Yeo M",
+      "Lee MJ",
+      "Lee W"
+    ],
+    "year": 2026,
+    "journal": "PloS one",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1371/journal.pone.0351399",
+    "abstract": "Metabolic dysfunction and cancer history combine to significantly increase depression risk, highlighting the body-brain connection in mood disorders.",
+    "tags": [
+      "metabolism",
+      "comorbidity"
+    ],
+    "relatedAtlasItems": [
+      "depression"
+    ],
+    "relatedBrainAreas": [
+      "Hypothalamus"
+    ]
+  },
+  {
+    "id": "liu-2026-sleep",
+    "title": "Socioeconomic and lifestyle factors predict the association between sleep health and depression",
+    "authors": [
+      "Liu W",
+      "Küppers V",
+      "Bi H",
+      "Mahdipour M",
+      "Wu J",
+      "Samea F",
+      "Hoffstaedter F",
+      "Wolf K",
+      "Gall Cv",
+      "Ibanez A",
+      "Eickhoff SB",
+      "Genon S",
+      "Balajoo SM",
+      "Tahmasian M"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.64898/2026.06.26.26356679",
+    "abstract": "Poor sleep quality strongly predicts depression, particularly in individuals with lower socioeconomic status, suggesting sleep interventions could help prevent depression.",
+    "tags": [
+      "sleep",
+      "lifestyle"
+    ],
+    "relatedAtlasItems": [
+      "depression"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Thalamus"
+    ]
+  },
+  {
+    "id": "yap-2026-bipolar",
+    "title": "Transition time from manic and mixed episodes to depression: a retrospective cohort study",
+    "authors": [
+      "Yap CX",
+      "Upthegrove R",
+      "Berk M",
+      "McGuire P",
+      "Taquet M"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.64898/2026.06.29.26356830",
+    "abstract": "Bipolar patients frequently transition from manic to depressive phases within weeks, with this pattern potentially representing a distinct subtype requiring specific treatments.",
+    "tags": [
+      "bipolar",
+      "transitions"
+    ],
+    "relatedAtlasItems": [
+      "depression"
+    ],
+    "relatedBrainAreas": [
+      "Limbic System",
+      "Frontal Lobe"
+    ]
+  }
+]

@@ -1,1 +1,619 @@
-[]
+[
+  {
+    "title": "Psychoactive Substances",
+    "items": [
+      {
+        "id": "alcohol",
+        "name": "Alcohol",
+        "category": "Psychoactive Substances",
+        "shortDescription": "Alcohol is a central nervous system depressant that slows down communication between brain cells, promoting relaxation while temporarily altering coordination, reaction time, and decision-making.",
+        "phases": {
+          "acute": {
+            "brainImpact": "In the short term, alcohol boosts calming chemical messengers and dampens stimulating signals. This creates a general slowdown in neural activity, leading to feelings of relaxation, lowered inhibitions, slower reflexes, and temporary impairment in motor coordination.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "depresses"
+              },
+              {
+                "areaId": "nucleus_accumbens",
+                "name": "Nucleus Accumbens",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "GABA",
+                "mechanism": "Acts as a positive allosteric modulator at GABA-A receptors, amplifying the brain's natural calming signals and making neurons less likely to fire — similar to turning down the volume on the brain's activity."
+              },
+              {
+                "name": "Glutamate",
+                "mechanism": "Blocks NMDA glutamate receptors, the brain's main 'accelerator' for excitatory communication. This slows down cognitive processing, reaction time, and memory formation."
+              },
+              {
+                "name": "Dopamine",
+                "mechanism": "Triggers dopamine release in the nucleus accumbens — the brain's reward hub — which contributes to the pleasurable, euphoric feeling in the early stages of drinking."
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "With regular, prolonged consumption, the brain adapts by reducing its sensitivity to calming signals and increasing its baseline excitatory pathways. Over time, this adaptation builds tolerance, and sustained heavy exposure can impact regions responsible for memory formation and executive planning.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "GABA",
+                "mechanism": "The brain downregulates GABA-A receptor sensitivity over time to compensate for alcohol's constant calming pressure, meaning more alcohol is needed to achieve the same effect — the hallmark of tolerance."
+              },
+              {
+                "name": "Glutamate",
+                "mechanism": "Excitatory glutamate receptors become upregulated (more numerous and sensitive) as the brain tries to counteract constant suppression, which raises the baseline level of neural excitability."
+              },
+              {
+                "name": "Dopamine",
+                "mechanism": "The reward pathway's dopamine response gradually blunts with chronic use, contributing to anhedonia (difficulty feeling pleasure without alcohol) and compulsive drinking behavior."
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "When alcohol is suddenly stopped after chronic use, the brain experiences a temporary rebound surge in excitatory signaling without alcohol's calming counterweight. This state of nervous system overactivity commonly manifests as restlessness, heightened anxiety, sleep disruption, and physical tremors.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Glutamate",
+                "mechanism": "The upregulated, now-overactive glutamate receptors fire without alcohol's suppression, causing a rebound excitatory surge that drives tremors, seizures, and severe anxiety in serious withdrawal cases."
+              },
+              {
+                "name": "GABA",
+                "mechanism": "With GABA receptors still downregulated, the brain's natural calming capacity is temporarily reduced, making it much harder to regulate anxiety and sleep without alcohol present."
+              },
+              {
+                "name": "Norepinephrine",
+                "mechanism": "The stress-signaling system (norepinephrine / noradrenaline) becomes overactive, driving rapid heartbeat, sweating, heightened anxiety, and hyperarousal during withdrawal."
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "nicotine",
+        "name": "Nicotine",
+        "category": "Psychoactive Substances",
+        "shortDescription": "Nicotine is a stimulant found in tobacco that activates the brain's reward system, boosting alertness and focus while creating a sense of relaxation.",
+        "phases": {
+          "acute": {
+            "brainImpact": "When nicotine enters the brain, it binds directly to nicotinic acetylcholine receptors, triggering a surge of dopamine in the reward pathway. This creates short-lived feelings of pleasure, alertness, and mild relaxation — which are responsible for nicotine's addictive pull.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "nucleus_accumbens",
+                "name": "Nucleus Accumbens",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Acetylcholine",
+                "mechanism": "Nicotine directly mimics acetylcholine by binding to and activating nicotinic acetylcholine receptors (nAChRs) throughout the brain — hijacking a system normally used for attention, muscle control, and memory."
+              },
+              {
+                "name": "Dopamine",
+                "mechanism": "Activation of nicotinic receptors on dopamine neurons in the mesolimbic pathway triggers a dopamine surge in the nucleus accumbens, producing the reward signal responsible for the pleasurable 'hit' sensation."
+              },
+              {
+                "name": "GABA",
+                "mechanism": "Nicotine also activates receptors on GABA interneurons (inhibitory neurons), which initially modulates anxiety and stress responses — contributing to the paradoxical relaxation users often feel alongside stimulation."
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "With regular use, the brain adapts by reducing its natural dopamine production and increasing the number of nicotine receptors. This leads to tolerance — requiring more nicotine to achieve the same effects — and can impair memory and focus over time.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Dopamine",
+                "mechanism": "The brain's dopamine reward system adapts to constant nicotinic stimulation by reducing its own baseline dopamine output, meaning normal activities feel less rewarding and nicotine becomes needed just to feel 'normal'."
+              },
+              {
+                "name": "Acetylcholine",
+                "mechanism": "The brain responds to chronic nicotine by increasing the total number of nicotinic acetylcholine receptors (receptor upregulation) — one reason why cravings intensify as the brain 'expects' continuous stimulation."
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "When nicotine use stops, the brain struggles to rebalance its chemistry, leading to irritability, anxiety, and cravings. This happens because dopamine levels drop sharply, and the brain's stress and anxiety circuits temporarily become more reactive.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Dopamine",
+                "mechanism": "Without nicotine driving dopamine release, the reward system enters a low-dopamine state, causing anhedonia (difficulty feeling pleasure), low mood, and persistent cravings — the core of nicotine withdrawal."
+              },
+              {
+                "name": "Glutamate",
+                "mechanism": "Excitatory glutamate signaling becomes dysregulated as nicotinic receptor activity drops, contributing to heightened irritability, restlessness, and difficulty concentrating."
+              },
+              {
+                "name": "GABA",
+                "mechanism": "GABAergic inhibitory tone decreases when nicotinic receptor activation stops, reducing the brain's ability to suppress anxiety and stress responses, worsening the withdrawal experience."
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "psilocybin",
+        "name": "Psilocybin",
+        "category": "Psychoactive Substances",
+        "shortDescription": "Psilocybin is a naturally occurring psychedelic compound found in 'magic mushrooms' that alters perception, mood, and thought patterns by directly activating serotonin receptors in the brain.",
+        "phases": {
+          "acute": {
+            "brainImpact": "When ingested, psilocybin is converted into psilocin, which directly activates serotonin 5-HT2A receptors throughout the cortex. This disrupts the brain's normal 'filtering' of sensory information and loosens the usual sense of self, leading to altered perception, vivid visuals, and a feeling of expanded consciousness.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "nucleus_accumbens",
+                "name": "Nucleus Accumbens",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Serotonin",
+                "mechanism": "Psilocin acts as a direct partial agonist at 5-HT2A serotonin receptors — it binds to and activates these receptors rather than increasing serotonin levels. This disrupts the cortex's normal sensory gating, altering how the brain filters and interprets reality."
+              },
+              {
+                "name": "Dopamine",
+                "mechanism": "Secondary dopamine activity in the reward and salience circuits may contribute to the emotional intensity and sense of wonder experienced during the acute phase — though this effect is less central than the serotonin action."
+              },
+              {
+                "name": "Glutamate",
+                "mechanism": "Activation of 5-HT2A receptors on cortical glutamate neurons increases glutamatergic excitation in the prefrontal cortex, contributing to the 'loosening' of rigid thought patterns and enhanced associative thinking."
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "With repeated use, the brain rapidly develops tolerance to psilocybin as 5-HT2A receptors downregulate. Research suggests even occasional use may promote neuroplasticity — the formation of new neural connections — potentially linked to lasting improvements in mood and cognitive flexibility observed in clinical studies.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Serotonin",
+                "mechanism": "Repeated 5-HT2A receptor activation leads to receptor downregulation, rapidly building tolerance. This is why psilocybin cannot be used daily to sustain effects — the brain's own self-regulation prevents it."
+              },
+              {
+                "name": "BDNF",
+                "mechanism": "Emerging evidence suggests psilocybin promotes the release of Brain-Derived Neurotrophic Factor (BDNF), a protein that supports the growth and maintenance of neurons, potentially underlying observed changes in mood, anxiety, and neuroplasticity."
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "Psilocybin does not produce physical dependence and is not associated with a classic withdrawal syndrome. After use stops, the brain rebalances serotonin receptor sensitivity over days. Some users may experience temporary shifts in mood or perception as 5-HT2A receptor density returns to baseline.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Serotonin",
+                "mechanism": "As 5-HT2A receptors gradually return to their normal sensitivity and density, serotonin signaling re-normalizes. No rebound deficiency occurs, which is why psilocybin is not considered physically addictive."
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "caffeine",
+        "name": "Caffeine",
+        "category": "Psychoactive Substances",
+        "shortDescription": "Caffeine is a natural stimulant found in coffee, tea, and energy drinks that boosts alertness and reduces fatigue by blocking adenosine receptors — the brain's sleep-pressure signals.",
+        "phases": {
+          "acute": {
+            "brainImpact": "When consumed, caffeine competitively blocks adenosine receptors, which normally build up during wakefulness and signal the brain that it's time to rest. By preventing this 'tiredness signal', caffeine promotes sustained alertness, faster reaction times, and improved focus.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "nucleus_accumbens",
+                "name": "Nucleus Accumbens",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Adenosine",
+                "mechanism": "Caffeine works by competitively blocking A1 and A2A adenosine receptors — it physically occupies the 'parking spots' normally used by adenosine, the brain's tiredness chemical, without triggering the sleep signal. The result is sustained wakefulness."
+              },
+              {
+                "name": "Dopamine",
+                "mechanism": "By blocking adenosine receptors that normally suppress dopamine neurons, caffeine indirectly allows dopamine to flow more freely in the reward and motivation pathways, contributing to the improved mood and motivation many people feel after their morning coffee."
+              },
+              {
+                "name": "Norepinephrine",
+                "mechanism": "Caffeine also promotes norepinephrine (adrenaline-like) release, which increases heart rate, sharpens focus, and raises overall arousal — the underlying reason caffeine feels energizing rather than simply 'less tired'."
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "With regular use, the brain adapts by growing more adenosine receptors to compensate for the constant blockade. This reduces caffeine's effectiveness over time and means stopping abruptly leaves an excess of un-blocked adenosine receptors — causing heightened drowsiness and headaches.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Adenosine",
+                "mechanism": "The brain compensates for chronic adenosine receptor blockade by upregulating receptor density — producing more adenosine receptors. This is the biological basis of caffeine tolerance: more receptors means more adenosine signaling capacity, requiring more caffeine to achieve the same blockade."
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "When caffeine use stops, the accumulated adenosine receptors are suddenly fully accessible to adenosine without competition, causing a pronounced sleep-pressure surge. This leads to the classic withdrawal headache, fatigue, and irritability that typically resolve within 2–5 days.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Adenosine",
+                "mechanism": "With caffeine gone, the now-abundant adenosine receptors are flooded by adenosine, causing an intense tiredness and sleep-pressure signal far greater than normal — producing headaches, fatigue, and brain fog until receptor levels normalize."
+              },
+              {
+                "name": "Dopamine",
+                "mechanism": "Dopamine signaling in motivation and reward circuits temporarily drops when adenosine receptors are no longer blocked, contributing to the low mood, difficulty concentrating, and general 'flatness' of caffeine withdrawal."
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Lifestyle",
+    "items": [
+      {
+        "id": "meditation",
+        "name": "Meditation",
+        "category": "Lifestyle",
+        "shortDescription": "Meditation is a mental practice that trains attention and awareness, leading to a calm and focused state. Regular practice can reshape brain networks involved in stress, attention, and emotional regulation.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During meditation, the brain shifts into a relaxed yet alert state. The frontal lobe (responsible for focus and self-regulation) becomes more engaged, while the amygdala — the brain's alarm system — quiets down. The default mode network (mental 'wandering' activity) is also reduced.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "GABA",
+                "mechanism": "Focused meditative attention is associated with increased GABAergic (calming) activity in the cortex, particularly in regions responsible for introspective focus. This is not from a drug but from the brain's own self-regulation — the mental equivalent of turning down background noise."
+              },
+              {
+                "name": "Serotonin",
+                "mechanism": "Meditation activates the prefrontal cortex's top-down regulation of serotonin pathways, supporting the sense of equanimity, contentment, and reduced reactivity that meditators often report — though effects are modulatory rather than direct chemical flooding."
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "With regular practice, meditation strengthens connections in attention networks and emotional regulation centers. It may also increase gray matter volume in memory areas and has been associated with measurable reductions in the brain's baseline stress response over months of practice.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "limbic_system",
+                "name": "Limbic System",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "BDNF",
+                "mechanism": "Regular meditation has been associated with increases in Brain-Derived Neurotrophic Factor (BDNF) — a protein that acts like fertilizer for brain cells, supporting neural growth, maintenance of existing connections, and adaptability. This may underlie structural brain changes seen in long-term meditators."
+              },
+              {
+                "name": "Cortisol",
+                "mechanism": "Chronic meditation practice downregulates the HPA axis (the body's stress-response system), leading to measurably lower baseline cortisol levels. This means the brain and body are less likely to activate a 'fight or flight' alarm in response to everyday stressors."
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "Stopping meditation doesn't cause classic withdrawal, but regular practitioners may notice reduced stress resilience or focus when they stop. The brain retains some structural benefits gained through practice, but the acute regulatory benefits gradually fade without continued practice.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Cortisol",
+                "mechanism": "Without regular meditative practice, the previously trained downregulation of the stress axis gradually fades. Baseline cortisol levels may rise back toward pre-practice levels, and stress reactivity may increase over weeks to months."
+              },
+              {
+                "name": "GABA",
+                "mechanism": "The enhanced cortical GABAergic tone associated with meditation sessions diminishes without continued practice, potentially reducing the brain's resting 'calming capacity' and making it slightly easier for background mental chatter and anxiety to resurface."
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Emotions",
+    "items": [
+      {
+        "id": "joy",
+        "name": "Joy",
+        "category": "Emotions",
+        "shortDescription": "Joy is a positive emotional state characterized by feelings of happiness, contentment, and pleasure, which enhance brain connectivity and promote mental well-being.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During acute joy, the brain experiences heightened activity in reward circuits, leading to feelings of euphoria and satisfaction. This state is marked by increased dopamine release, which reinforces positive experiences.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Dopamine",
+                "mechanism": "Dopamine is released in response to rewarding stimuli, enhancing feelings of pleasure and reinforcing behaviors that lead to joy.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "Chronic joy leads to long-term neuroplastic changes, such as increased connectivity in brain regions associated with positive emotions and resilience. These adaptations can improve overall mental health and emotional stability.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "BDNF",
+                "mechanism": "Brain-derived neurotrophic factor (BDNF) promotes the growth and maintenance of neurons, supporting long-term emotional resilience and cognitive function.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "After the cessation of joyful experiences, the brain may experience a temporary increase in stress-related activity, particularly in the amygdala, as it adjusts to the absence of positive stimuli.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Cortisol",
+                "mechanism": "Cortisol levels may rise during the withdrawal phase, reflecting the brain's stress response to the absence of joy-inducing stimuli.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Diseases",
+    "items": [
+      {
+        "id": "depression",
+        "name": "Depression",
+        "category": "Diseases",
+        "shortDescription": "A mood disorder characterized by persistent sadness, loss of interest, and impaired cognitive function, primarily affecting emotional regulation and reward processing in the brain.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During acute depressive episodes, brain activity shows reduced connectivity in mood-regulating circuits and heightened emotional reactivity. The frontal lobe's ability to regulate emotions becomes impaired while the amygdala becomes hyperactive to negative stimuli.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "depresses"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "nucleus_accumbens",
+                "name": "Nucleus Accumbens",
+                "effectType": "depresses"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Serotonin",
+                "mechanism": "Reduced serotonin signaling impairs mood stability and increases negative emotional processing.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Dopamine",
+                "mechanism": "Diminished dopamine activity reduces motivation and pleasure responses in reward pathways.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "Long-term depression leads to structural changes including shrinkage of the hippocampus and reduced neuroplasticity. Chronic stress hormones impair the growth of new neurons while inflammation further disrupts neural networks.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "limbic_system",
+                "name": "Limbic System",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "BDNF",
+                "mechanism": "Reduced brain-derived neurotrophic factor limits the brain's ability to form new connections and adapt.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Glutamate",
+                "mechanism": "Altered glutamate signaling contributes to excitotoxicity and impaired synaptic plasticity.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "During recovery or treatment withdrawal, the brain gradually rebalances neurotransmitter systems but remains vulnerable to relapse. The amygdala may remain hypersensitive to stress while frontal regulation slowly improves.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Cortisol",
+                "mechanism": "Stress hormone dysregulation normalizes slowly, affecting emotional resilience during recovery.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "GABA",
+                "mechanism": "GABAergic inhibition gradually restores to help calm overactive emotional circuits.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+]

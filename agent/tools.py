@@ -4,6 +4,8 @@ Tools for fetching research paper metadata and chemical/pharmacological informat
 - PubMed (NCBI E-utilities) API
 - PubChem REST API & PUG View
 - PsychonautWiki GraphQL API
+
+Wrapped as LangChain Tools and Python helper functions.
 """
 
 import json
@@ -11,7 +13,8 @@ import re
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
+from langchain_core.tools import tool
 
 
 # ---------------------------------------------------------------------------
@@ -29,20 +32,20 @@ def _query_tokens(query: str) -> List[str]:
 
 def is_relevant_paper(paper: Dict[str, Any], query: str) -> bool:
     """
-    A paper is relevant when the substance name appears in its title or abstract.
-    Multi-word names must match as a whole phrase OR all significant tokens.
-    This filters out results that merely co-occur with the query (e.g. a
-    tuberculosis paper that mentions alcohol once).
+    A paper is relevant when the substance name or key tokens appear in its title or abstract.
+    This filters out results that merely co-occur with the query or are off-topic.
     """
     q = _normalize(query)
     tokens = _query_tokens(q)
     if not tokens:
-        return True  # nothing meaningful to match against
+        return True
 
     title = _normalize(paper.get("title", ""))
     abstract = _normalize(paper.get("abstract", ""))
 
     def matches(text: str) -> bool:
+        if not text:
+            return False
         if q in text:
             return True
         if len(tokens) > 1:
@@ -52,19 +55,58 @@ def is_relevant_paper(paper: Dict[str, Any], query: str) -> bool:
     return matches(title) or matches(abstract)
 
 
-def has_minimum_metadata(paper: Dict[str, Any]) -> bool:
+def has_minimum_metadata(paper: Dict[str, Any], query: str = "") -> bool:
     """
-    Keep only real, citable entries (title, abstract, publication year, journal).
-    Drops stubs such as entries with no journal and no DOI that are just named
-    after the substance.
+    Keep only valid, citable peer-reviewed entries.
+    Filters out database stubs, LactMed monographs, and book records that lack
+    authors, journals, DOIs, or have bare single-word titles.
     """
-    if not paper.get("title") or not paper.get("abstract"):
+    title = (paper.get("title") or "").strip()
+    abstract = (paper.get("abstract") or "").strip()
+
+    if not title or not abstract or len(title) < 15 or len(abstract) < 50:
         return False
+
+    # Filter out entries where the title is just the bare substance name
+    title_lower = title.lower()
+    q_lower = _normalize(query)
+    if title_lower == q_lower or title_lower in [
+        "alcohol",
+        "caffeine",
+        "mdma",
+        "nicotine",
+        "cannabis",
+        "cocaine",
+        "morphine",
+        "heroin",
+        "methamphetamine",
+        "psilocybin",
+        "ketamine",
+        "lsd",
+    ]:
+        return False
+
+    # Must have at least one author
+    authors = paper.get("authors") or []
+    if not authors or len(authors) == 0:
+        return False
+
+    # Must have a publication journal OR a DOI
+    journal = (paper.get("journal") or "").strip()
+    doi = (paper.get("doi") or "").strip()
+    if not journal and not doi:
+        return False
+
+    # Must have a plausible publication year
     try:
         year = int(paper.get("year") or 0)
     except (TypeError, ValueError):
         year = 0
-    return year > 0 and bool(paper.get("journal"))
+
+    if year < 1950 or year > 2035:
+        return False
+
+    return True
 
 
 def paper_quality_score(paper: Dict[str, Any]) -> int:
@@ -74,15 +116,17 @@ def paper_quality_score(paper: Dict[str, Any]) -> int:
         score += 3
     if paper.get("doi"):
         score += 3
-    if paper.get("authors"):
+    if paper.get("authors") and len(paper["authors"]) > 0:
         score += 2
-    if paper.get("year"):
+    if paper.get("year") and int(paper["year"]) > 1990:
+        score += 2
+    if len(paper.get("abstract", "")) > 100:
         score += 2
     return score
 
 
 def truncate_abstract(abstract: str, max_chars: int = 500, max_sentences: int = 3) -> str:
-    """Keep abstracts SHORT: at most `max_sentences` sentences / `max_chars` characters."""
+    """Keep abstracts concise: at most `max_sentences` sentences / `max_chars` characters."""
     if not abstract:
         return ""
     text = re.sub(r"\s+", " ", abstract).strip()
@@ -105,9 +149,9 @@ def truncate_abstract(abstract: str, max_chars: int = 500, max_sentences: int = 
 # Academic Paper Tools (Europe PMC & PubMed)
 # ---------------------------------------------------------------------------
 
-def fetch_europe_pmc_papers(query: str, max_results: int = 5) -> List[Dict[str, Any]]:
+def fetch_europe_pmc_papers(query: str, max_results: int = 10) -> List[Dict[str, Any]]:
     """
-    Search Europe PMC API for research papers by substance query (e.g. 'alcohol', 'cannabis', 'caffeine').
+    Search Europe PMC API for research papers by substance query.
     Retrieves titles, abstracts, DOIs, authors, publication year, and journal name.
     """
     base_url = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
@@ -127,24 +171,30 @@ def fetch_europe_pmc_papers(query: str, max_results: int = 5) -> List[Dict[str, 
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=10) as response:
+        with urllib.request.urlopen(req, timeout=12) as response:
             data = json.loads(response.read().decode("utf-8"))
             results = data.get("resultList", {}).get("result", [])
     except Exception as e:
-        print(f"Error querying Europe PMC API: {e}")
+        print(f"   ⚠️ Europe PMC search error: {e}")
         return []
 
     papers: List[Dict[str, Any]] = []
     for item in results:
         title = (item.get("title") or "").rstrip(".")
+        if not title:
+            continue
 
-        # Extract authors
+        # Extract authors safely
         author_list: List[str] = []
-        if "authorList" in item and "author" in item["authorList"]:
-            for a in item["authorList"]["author"]:
-                full_name = a.get("fullName") or f"{a.get('lastName', '')} {a.get('initials', '')}".strip()
-                if full_name:
-                    author_list.append(full_name)
+        author_list_raw = item.get("authorList")
+        if isinstance(author_list_raw, dict) and "author" in author_list_raw:
+            authors_data = author_list_raw["author"]
+            if isinstance(authors_data, list):
+                for a in authors_data:
+                    if isinstance(a, dict):
+                        full_name = a.get("fullName") or f"{a.get('lastName', '')} {a.get('initials', '')}".strip()
+                        if full_name:
+                            author_list.append(full_name)
         elif item.get("authorString"):
             author_list = [a.strip() for a in item["authorString"].split(",") if a.strip()]
 
@@ -152,19 +202,23 @@ def fetch_europe_pmc_papers(query: str, max_results: int = 5) -> List[Dict[str, 
         pub_year = item.get("pubYear")
         try:
             year = int(pub_year) if pub_year else 0
-        except ValueError:
+        except (ValueError, TypeError):
             year = 0
 
-        # Extract journal
-        journal_info = item.get("journalInfo", {})
-        journal = item.get("journalTitle") or journal_info.get("journal", {}).get("title") or ""
+        # Extract journal safely
+        journal_info = item.get("journalInfo")
+        journal = item.get("journalTitle") or ""
+        if not journal and isinstance(journal_info, dict):
+            journal_obj = journal_info.get("journal")
+            if isinstance(journal_obj, dict):
+                journal = journal_obj.get("title") or journal_obj.get("medlineAbbreviation") or ""
 
         # Extract DOI
-        doi_raw = item.get("doi", "")
+        doi_raw = item.get("doi", "") or ""
         doi = f"https://doi.org/{doi_raw}" if doi_raw and not doi_raw.startswith("http") else doi_raw
 
         # Extract & clean abstract text
-        abstract_raw = item.get("abstractText", "")
+        abstract_raw = item.get("abstractText", "") or ""
         abstract = re.sub(r"<[^>]+>", "", abstract_raw).strip()
 
         paper_id = item.get("id", item.get("pmid", ""))
@@ -178,13 +232,13 @@ def fetch_europe_pmc_papers(query: str, max_results: int = 5) -> List[Dict[str, 
             "doi": doi,
             "abstract": truncate_abstract(abstract),
         }
-        if is_relevant_paper(paper, query) and has_minimum_metadata(paper):
+        if is_relevant_paper(paper, query) and has_minimum_metadata(paper, query=query):
             papers.append(paper)
 
     return papers
 
 
-def fetch_pubmed_papers(query: str, max_results: int = 5) -> List[Dict[str, Any]]:
+def fetch_pubmed_papers(query: str, max_results: int = 10) -> List[Dict[str, Any]]:
     """
     Search NCBI PubMed via E-utilities (esearch + efetch) for research papers by substance query.
     Retrieves titles, abstracts, DOIs, authors, publication year, and journal name.
@@ -205,11 +259,11 @@ def fetch_pubmed_papers(query: str, max_results: int = 5) -> List[Dict[str, Any]
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=10) as response:
+        with urllib.request.urlopen(req, timeout=12) as response:
             search_data = json.loads(response.read().decode("utf-8"))
             pmids = search_data.get("esearchresult", {}).get("idlist", [])
     except Exception as e:
-        print(f"Error executing PubMed esearch: {e}")
+        print(f"   ⚠️ PubMed esearch error: {e}")
         return []
 
     if not pmids:
@@ -230,11 +284,11 @@ def fetch_pubmed_papers(query: str, max_results: int = 5) -> List[Dict[str, Any]
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=10) as response:
+        with urllib.request.urlopen(req, timeout=15) as response:
             xml_bytes = response.read()
             root = ET.fromstring(xml_bytes)
     except Exception as e:
-        print(f"Error executing PubMed efetch: {e}")
+        print(f"   ⚠️ PubMed efetch error: {e}")
         return []
 
     papers: List[Dict[str, Any]] = []
@@ -244,6 +298,8 @@ def fetch_pubmed_papers(query: str, max_results: int = 5) -> List[Dict[str, Any]
         # Title
         title_el = article.find(".//ArticleTitle")
         title = "".join(title_el.itertext()).strip().rstrip(".") if title_el is not None else ""
+        if not title:
+            continue
 
         # Abstract
         abstract_elements = article.findall(".//AbstractText")
@@ -297,89 +353,81 @@ def fetch_pubmed_papers(query: str, max_results: int = 5) -> List[Dict[str, Any]
             "doi": doi,
             "abstract": truncate_abstract(abstract),
         }
-        if is_relevant_paper(paper, query) and has_minimum_metadata(paper):
+        if is_relevant_paper(paper, query) and has_minimum_metadata(paper, query=query):
             papers.append(paper)
 
     return papers
-
-
-def search_research_papers(query: str, max_results: int = 5, source: str = "europe_pmc") -> List[Dict[str, Any]]:
-    """
-    Search research papers by substance query.
-    Attempts primary source ('europe_pmc' or 'pubmed') and falls back to the other if no results are returned.
-    """
-    if source.lower() == "pubmed":
-        results = fetch_pubmed_papers(query, max_results=max_results)
-        if not results:
-            results = fetch_europe_pmc_papers(query, max_results=max_results)
-    else:
-        results = fetch_europe_pmc_papers(query, max_results=max_results)
-        if not results:
-            results = fetch_pubmed_papers(query, max_results=max_results)
-
-    return results
 
 
 def search_research_papers_iterative(
     query: str,
     target_count: int = 5,
     max_attempts: int = 6,
+    alternate_names: Optional[List[str]] = None,
 ) -> List[Dict[str, Any]]:
     """
-    Keep searching until we have `target_count` relevant, well-formed papers.
-
-    Instead of a single one-shot fetch, this iterates over Europe PMC and PubMed
-    with a growing candidate pool, keeps only papers that pass the relevance and
-    metadata-quality filters, deduplicates by DOI/id, and ranks the results
-    (title matches first, then metadata quality, then newest). It never pads the
-    output with off-topic or stub entries.
+    Search Europe PMC and PubMed until `target_count` relevant, well-formed papers are gathered.
+    Deduplicates by DOI, PMID, and title, and ranks results by quality and recency.
     """
     collected: List[Dict[str, Any]] = []
-    seen = set()
+    seen_keys: Set[str] = set()
     attempts = 0
 
-    sources = ["europe_pmc", "pubmed"]
-    # Grow the candidate pool each attempt so we can find enough relevant papers.
-    sizes = [max(target_count, 6), max(target_count * 2, 12), 30, 50]
+    search_queries = [query]
+    if alternate_names:
+        for alt in alternate_names[:2]:
+            if alt and alt.lower() != query.lower() and len(alt) > 2:
+                search_queries.append(alt)
 
-    for source in sources:
-        for size in sizes:
-            if len(collected) >= target_count:
-                break
-            attempts += 1
-            if attempts > max_attempts:
-                break
-            print(f"   · searching {source} (up to {size} candidates)...")
-            results = search_research_papers(query, max_results=size, source=source)
-            for paper in results:
-                if not is_relevant_paper(paper, query) or not has_minimum_metadata(paper):
-                    continue
-                pid = paper.get("doi") or paper.get("id")
-                if not pid or pid in seen:
-                    continue
-                seen.add(pid)
-                collected.append(paper)
+    sources = ["europe_pmc", "pubmed"]
+    candidate_sizes = [max(target_count, 6), max(target_count * 2, 12), 25, 40]
+
+    for q in search_queries:
+        for source in sources:
+            for size in candidate_sizes:
+                if len(collected) >= target_count:
+                    break
+                attempts += 1
+                if attempts > max_attempts:
+                    break
+
+                if source == "europe_pmc":
+                    results = fetch_europe_pmc_papers(q, max_results=size)
+                else:
+                    results = fetch_pubmed_papers(q, max_results=size)
+
+                for paper in results:
+                    if not is_relevant_paper(paper, query) or not has_minimum_metadata(paper, query=query):
+                        continue
+
+                    # Deduplication key: DOI or normalized title
+                    norm_title = _normalize(paper.get("title", ""))[:60]
+                    doi_key = paper.get("doi") or norm_title
+                    if doi_key in seen_keys or norm_title in seen_keys:
+                        continue
+
+                    seen_keys.add(doi_key)
+                    seen_keys.add(norm_title)
+                    collected.append(paper)
+
+                if len(collected) >= target_count:
+                    break
             if len(collected) >= target_count:
                 break
         if len(collected) >= target_count:
             break
 
-    # Rank: title matches first, then metadata quality, then publication year.
-    q = _normalize(query)
+    # Sort results: title exact matches first, then quality score, then year
+    q_norm = _normalize(query)
     collected.sort(
         key=lambda p: (
-            q not in _normalize(p.get("title", "")),
+            q_norm not in _normalize(p.get("title", "")),
             -paper_quality_score(p),
             -(int(p.get("year") or 0)),
         )
     )
 
-    if len(collected) < target_count:
-        print(
-            f"   ⚠️ Only found {len(collected)} relevant paper(s) after {attempts} attempt(s) "
-            f"(target was {target_count}). Using what we have."
-        )
-    return collected
+    return collected[: max(target_count, len(collected))]
 
 
 # ---------------------------------------------------------------------------
@@ -390,7 +438,7 @@ def fetch_pubchem_compound(substance_name: str) -> Dict[str, Any]:
     """
     Fetch chemical metadata and pharmacology / mechanism of action from PubChem REST API.
     Retrieves CID, IUPAC Name, Molecular Formula, Molecular Weight, Canonical SMILES, Description,
-    and Mechanism of Action text detailing neurotransmitter & receptor interactions.
+    synonyms, and Mechanism of Action text detailing neurotransmitter & receptor interactions.
     """
     encoded_name = urllib.parse.quote(substance_name)
     result: Dict[str, Any] = {
@@ -402,6 +450,7 @@ def fetch_pubchem_compound(substance_name: str) -> Dict[str, Any]:
         "canonicalSmiles": None,
         "description": None,
         "mechanismOfAction": None,
+        "synonyms": [],
     }
 
     # 1. Properties
@@ -419,8 +468,8 @@ def fetch_pubchem_compound(substance_name: str) -> Dict[str, Any]:
                 result["molecularFormula"] = props.get("MolecularFormula")
                 result["molecularWeight"] = props.get("MolecularWeight")
                 result["canonicalSmiles"] = props.get("CanonicalSMILES")
-    except Exception as e:
-        print(f"PubChem Properties error for '{substance_name}': {e}")
+    except Exception:
+        pass
 
     # 2. Description
     desc_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{encoded_name}/description/JSON"
@@ -433,8 +482,8 @@ def fetch_pubchem_compound(substance_name: str) -> Dict[str, Any]:
                 if "Description" in info:
                     result["description"] = info["Description"]
                     break
-    except Exception as e:
-        print(f"PubChem Description error for '{substance_name}': {e}")
+    except Exception:
+        pass
 
     # 3. Pharmacology / Mechanism of Action via PUG View if CID exists
     if result["cid"]:
@@ -538,9 +587,9 @@ def fetch_psychonautwiki_substance(substance_name: str) -> Dict[str, Any]:
                 result["toxicity"] = sub.get("toxicity") or []
 
                 effects_raw = sub.get("effects") or []
-                result["effects"] = [e["name"] for e in effects_raw if "name" in e]
-    except Exception as e:
-        print(f"Error querying PsychonautWiki API for '{substance_name}': {e}")
+                result["effects"] = [e["name"] for e in effects_raw if isinstance(e, dict) and "name" in e]
+    except Exception:
+        pass
 
     return result
 
@@ -558,3 +607,22 @@ def fetch_substance_chemical_metadata(substance_name: str) -> Dict[str, Any]:
         "pubchem": pubchem_data,
         "psychonautWiki": psychonaut_data,
     }
+
+
+# ---------------------------------------------------------------------------
+# LangChain Tool Decorators
+# ---------------------------------------------------------------------------
+
+@tool
+def search_research_papers(query: str, target_count: int = 5) -> List[Dict[str, Any]]:
+    """Search Europe PMC and PubMed for peer-reviewed research papers about a substance."""
+    return search_research_papers_iterative(query, target_count=target_count)
+
+
+@tool
+def fetch_chemical_and_pharmacology_metadata(substance_name: str) -> Dict[str, Any]:
+    """Fetch chemical properties and pharmacological mechanism of action from PubChem and PsychonautWiki."""
+    return fetch_substance_chemical_metadata(substance_name)
+
+
+RESEARCH_TOOLS = [search_research_papers, fetch_chemical_and_pharmacology_metadata]

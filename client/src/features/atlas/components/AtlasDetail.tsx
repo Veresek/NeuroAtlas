@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import CloseIcon from "@/assets/close.svg?react";
 import ChevronDownIcon from "@/assets/chevron-down.svg?react";
 import ExternalLinkIcon from "@/assets/external-link.svg?react";
@@ -6,6 +6,8 @@ import atlasData from "@/data/atlas.json";
 import researchData from "@/data/research.json";
 import type { BrainItemData } from "@/types/brain";
 import { BrainSectionList } from "@/components/shared/BrainSectionList";
+
+import { useActiveNeurotransmitter } from "@/hooks/useActiveNeurotransmitter";
 
 interface AtlasDetailProps {
 	item: string;
@@ -33,11 +35,14 @@ export function AtlasDetail({ item, section, onClose, onSelectItem }: AtlasDetai
 	const availablePhases = itemData?.phases ? (Object.keys(itemData.phases) as PhaseType[]) : [];
 
 	const [selectedPhase, setSelectedPhase] = useState<PhaseType | null>(null);
+	const { activeNt, setActiveNeurotransmitter, clearActiveNeurotransmitter } = useActiveNeurotransmitter();
 	const [prevItem, setPrevItem] = useState<string | null>(item);
+	const hoverTimeoutRef = useRef<number | null>(null);
 
 	if (item !== prevItem) {
 		setPrevItem(item);
 		setSelectedPhase(null);
+		clearActiveNeurotransmitter();
 	}
 
 	let activePhase: PhaseType = "acute";
@@ -49,6 +54,7 @@ export function AtlasDetail({ item, section, onClose, onSelectItem }: AtlasDetai
 
 	const setActivePhase = (phase: PhaseType) => {
 		setSelectedPhase(phase);
+		clearActiveNeurotransmitter();
 	};
 
 	const currentPhaseData = itemData?.phases ? itemData.phases[activePhase] : null;
@@ -138,24 +144,70 @@ export function AtlasDetail({ item, section, onClose, onSelectItem }: AtlasDetai
 						resetKey={`${item}-${activePhase}`}
 					/>
 				)}
-
 				{/* Neurotransmitters for specific phase */}
 				{currentPhaseData?.neurotransmitters && currentPhaseData.neurotransmitters.length > 0 && (
 					<div>
-						<h3 className="font-semibold text-gray-800 mb-1">Neurotransmitters</h3>
-						<div className="flex flex-wrap gap-1.5 mt-1">
-							{currentPhaseData.neurotransmitters.map((nt, idx) => (
-								<span
-									key={`${nt.name}-${idx}`}
-									className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${nt.effect === "increase" ? "bg-emerald-50 text-emerald-600 border border-emerald-200/50" :
-										nt.effect === "decrease" ? "bg-rose-50 text-rose-600 border border-rose-200/50" :
-											"bg-gray-100 text-gray-600 border border-gray-200"
+						<h3 className="font-semibold text-gray-800 mb-1.5">Neurotransmitters & Modulators</h3>
+						<div className="flex flex-wrap gap-1.5">
+							{currentPhaseData.neurotransmitters.map((nt, idx) => {
+								const tip = nt.mechanism || nt.description;
+								const isActive = activeNt?.name === nt.name;
+								return (
+									<button
+										key={`${nt.name}-${idx}`}
+										type="button"
+										onMouseEnter={() => {
+											if (hoverTimeoutRef.current) {
+												clearTimeout(hoverTimeoutRef.current);
+											}
+											if (!activeNt?.isLocked) {
+												hoverTimeoutRef.current = window.setTimeout(() => {
+													setActiveNeurotransmitter({
+														name: nt.name,
+														mechanism: tip,
+														substanceName: item,
+														phaseName: formatPhaseName(activePhase),
+														isLocked: false,
+													});
+												}, 80);
+											}
+										}}
+										onMouseLeave={() => {
+											if (hoverTimeoutRef.current) {
+												clearTimeout(hoverTimeoutRef.current);
+											}
+											if (!activeNt?.isLocked) {
+												hoverTimeoutRef.current = window.setTimeout(() => {
+													clearActiveNeurotransmitter();
+												}, 100);
+											}
+										}}
+										onClick={() => {
+											if (hoverTimeoutRef.current) {
+												clearTimeout(hoverTimeoutRef.current);
+											}
+											if (activeNt?.name === nt.name && activeNt.isLocked) {
+												clearActiveNeurotransmitter();
+											} else {
+												setActiveNeurotransmitter({
+													name: nt.name,
+													mechanism: tip,
+													substanceName: item,
+													phaseName: formatPhaseName(activePhase),
+													isLocked: true,
+												});
+											}
+										}}
+										className={`inline-flex items-center justify-center px-2.5 py-[5px] text-xs rounded-full font-medium transition-colors duration-150 cursor-pointer select-none leading-none ${
+											isActive
+												? "bg-[#00aaff] text-white shadow-xs"
+												: "bg-[#00aaff]/10 text-[#00aaff] hover:bg-[#00aaff]/20"
 										}`}
-								>
-									{nt.effect === "increase" ? "↑ " : nt.effect === "decrease" ? "↓ " : "∼ "}
-									{nt.name}
-								</span>
-							))}
+									>
+										{nt.name}
+									</button>
+								);
+							})}
 						</div>
 					</div>
 				)}

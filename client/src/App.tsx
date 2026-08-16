@@ -10,6 +10,7 @@ import { meshMapping } from "@/data/meshMapping";
 import { brainSections } from "@/data/brainSections";
 import { useBrainHighlight } from "@/hooks/useBrainHighlight";
 import { useMobilePanelSnap } from "@/hooks/useMobilePanelSnap";
+import { useActiveNeurotransmitter } from "@/hooks/useActiveNeurotransmitter";
 
 const groupedAreas: Record<string, string[]> = {};
 for (const [section, ids] of Object.entries(brainSections)) {
@@ -29,6 +30,7 @@ function App() {
 	const [selectedSection, setSelectedSection] = useState<string | null>(null);
 	const [activeNav, setActiveNav] = useState<string>("atlas");
 	const { highlightedArea, setBrainHighlight } = useBrainHighlight();
+	const { activeNt, clearActiveNeurotransmitter } = useActiveNeurotransmitter();
 	const {
 		snap: mobileSnap,
 		layoutRef: mobileLayoutRef,
@@ -106,13 +108,13 @@ function App() {
 						} as CSSProperties
 					}>
 					<div className="flex-1 min-h-0 flex items-center justify-center bg-gray-100/60 relative overflow-hidden md:min-h-[30vh] max-md:absolute max-md:top-0 max-md:left-0 max-md:right-0 max-md:h-(--brain-h)">
-						<div className="absolute top-4 right-4 z-10">
+						<div className="absolute top-4 right-4 z-10 flex flex-col items-end pointer-events-none max-w-[calc(100%-2rem)]">
 							<select
 								value={
 									typeof highlightedArea === "string" ? highlightedArea : ""
 								}
 								onChange={e => setBrainHighlight(e.target.value || null)}
-								className="px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-gray-200/60 bg-white/80 backdrop-blur-md text-xs md:text-sm text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00aaff]/50 transition-all cursor-pointer max-w-37.5 md:max-w-none">
+								className="pointer-events-auto px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-gray-200/60 bg-white/80 backdrop-blur-md text-xs md:text-sm text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00aaff]/50 transition-all cursor-pointer max-w-37.5 md:max-w-none">
 								<option value="">Select brain area...</option>
 								{Object.entries(groupedAreas)
 									.sort()
@@ -134,6 +136,42 @@ function App() {
 										</Fragment>
 									))}
 							</select>
+
+							{/* Floating contextual mechanism card in light theme */}
+							{activeNt && (activeNt.mechanism || activeNt.description) && (
+								<div className="pointer-events-auto mt-2.5 w-72 md:w-80 p-3.5 bg-white/95 backdrop-blur-md border border-gray-200/80 rounded-xl shadow-xl shadow-gray-900/5 transition-all animate-in fade-in slide-in-from-top-2 duration-200 text-left">
+									<div className="flex items-center justify-between gap-2 mb-1.5">
+										<div className="flex items-center gap-1.5 min-w-0">
+											<span className="font-semibold text-gray-900 text-xs md:text-sm truncate">
+												{activeNt.name}
+											</span>
+											{activeNt.phaseName && (
+												<span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-medium shrink-0">
+													{activeNt.phaseName}
+												</span>
+											)}
+										</div>
+										<button
+											type="button"
+											onClick={() => clearActiveNeurotransmitter()}
+											className="text-gray-400 hover:text-gray-600 p-0.5 rounded hover:bg-gray-100 transition-colors text-xs cursor-pointer"
+											aria-label="Close">
+											✕
+										</button>
+									</div>
+									<p className="text-xs text-gray-600 leading-relaxed font-normal">
+										{activeNt.mechanism || activeNt.description}
+									</p>
+									{activeNt.substanceName && (
+										<div className="mt-2.5 pt-2 border-t border-gray-100 flex items-center justify-between text-[10px] text-gray-400">
+											<span>Mechanism</span>
+											<span className="text-[#00aaff] font-medium truncate max-w-40">
+												{activeNt.substanceName}
+											</span>
+										</div>
+									)}
+								</div>
+							)}
 						</div>
 						<BrainModel />
 					</div>
