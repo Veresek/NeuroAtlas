@@ -431,6 +431,245 @@
             ]
           }
         }
+      },
+      {
+        "id": "sleep_deprivation",
+        "name": "Sleep Deprivation",
+        "category": "Lifestyle",
+        "shortDescription": "Sleep deprivation disrupts the brain's ability to function optimally, impairing cognition, emotional regulation, and memory consolidation. It leads to reduced mental clarity, heightened stress responses, and slower reaction times.",
+        "phases": {
+          "acute": {
+            "brainImpact": "Immediately after sleep loss, the brain struggles with attention, decision-making, and emotional control. The frontal lobe's executive functions are dampened, while the amygdala becomes hyperactive, amplifying emotional reactions.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "depresses"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Dopamine",
+                "mechanism": "Acute sleep deprivation can cause erratic dopamine release, leading to temporary boosts in alertness but also emotional instability and impulsivity.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "Prolonged sleep deprivation leads to structural changes, including reduced synaptic pruning and impaired memory formation. The hippocampus, crucial for learning, shows decreased activity and connectivity.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "depresses"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "depresses"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "BDNF",
+                "mechanism": "Chronic sleep loss reduces brain-derived neurotrophic factor (BDNF), impairing neuroplasticity and the brain's ability to adapt and form new connections.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "Recovery from sleep deprivation involves gradual restoration of cognitive function, though emotional regulation may remain unstable initially. The amygdala remains sensitive, leading to lingering irritability.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Cortisol",
+                "mechanism": "Sleep recovery normalizes cortisol levels, reducing stress responses, but prolonged deprivation can lead to lasting dysregulation of the hypothalamic-pituitary-adrenal (HPA) axis.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "cognitive_overload",
+        "name": "Cognitive Overload",
+        "category": "Lifestyle",
+        "shortDescription": "A state where the brain's working memory capacity is overwhelmed by excessive information or demands, leading to impaired decision-making and mental fatigue.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During acute cognitive overload, the brain struggles to filter and prioritize information, causing temporary lapses in attention and executive function. This creates a 'traffic jam' in neural processing.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "depresses"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Dopamine",
+                "mechanism": "Dopamine signaling becomes dysregulated, impairing the brain's reward and motivation systems needed for sustained focus.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Glutamate",
+                "mechanism": "Excessive glutamate release leads to overstimulation of neural circuits, contributing to mental exhaustion.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "Prolonged cognitive overload can lead to structural changes in memory and emotional regulation circuits, reducing the brain's resilience to stress.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "prefrontal_cortex",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "BDNF",
+                "mechanism": "Chronic overload decreases BDNF production, slowing neuroplasticity and making learning new information harder.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Serotonin",
+                "mechanism": "Sustained overload depletes serotonin, contributing to mood disturbances and reduced cognitive flexibility.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "After prolonged overload, the brain enters a recovery phase where it gradually regains balance, though temporary hypersensitivity to stress may persist.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "default_mode_network",
+                "name": "Other",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Cortisol",
+                "mechanism": "Cortisol levels remain elevated initially before slowly returning to baseline as the stress response normalizes.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "GABA",
+                "mechanism": "GABAergic activity increases during recovery to help calm overexcited neural circuits.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "physical_activity",
+        "name": "Physical Activity",
+        "category": "Lifestyle",
+        "shortDescription": "Physical activity enhances brain function by boosting mood, focus, and memory through neurochemical and structural changes.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During physical activity, the brain experiences increased blood flow and oxygenation, leading to heightened alertness and improved mood. This immediate effect is driven by the release of neurotransmitters that enhance focus and reduce stress.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Dopamine",
+                "mechanism": "Physical activity triggers dopamine release, enhancing motivation and reward processing, which contributes to feelings of pleasure and focus.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "Regular physical activity promotes long-term neuroplasticity, improving memory and cognitive function. It also increases the volume of brain regions involved in learning and emotional regulation.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "BDNF",
+                "mechanism": "Chronic exercise boosts Brain-Derived Neurotrophic Factor (BDNF), supporting neuron growth, synaptic plasticity, and overall brain health.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "Cessation of physical activity can lead to increased stress and reduced cognitive function, as the brain loses the neurochemical and structural benefits gained from regular exercise.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Cortisol",
+                "mechanism": "Reduced physical activity can elevate cortisol levels, leading to heightened stress and impaired emotional regulation.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
       }
     ]
   },
@@ -497,6 +736,226 @@
               {
                 "name": "Cortisol",
                 "mechanism": "Cortisol levels may rise during the withdrawal phase, reflecting the brain's stress response to the absence of joy-inducing stimuli.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "fear",
+        "name": "Fear",
+        "category": "Emotions",
+        "shortDescription": "Fear is an intense emotional response to perceived threats, triggering a cascade of physiological and neurological changes designed to protect us from danger. It primarily activates the brain's survival circuits, sharpening focus and preparing the body for fight or flight.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During acute fear, the brain enters a hyper-alert state, prioritizing threat detection over rational thought. The amygdala becomes highly active, while the frontal lobe's decision-making capacity is temporarily suppressed to enable rapid reactions.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "hypothalamus",
+                "name": "Hypothalamus",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Norepinephrine",
+                "mechanism": "Floods the system to increase alertness and physical readiness, speeding up heart rate and focusing attention on the threat.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Glutamate",
+                "mechanism": "Rapidly excites neurons in the amygdala to enhance threat detection and memory formation of the fearful event.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "Prolonged fear leads to structural changes where the amygdala becomes hypersensitive to threats while the hippocampus shrinks, impairing context-based fear regulation. The brain remains in a heightened state of vigilance.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "prefrontal_cortex",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Cortisol",
+                "mechanism": "Chronic elevation disrupts neural plasticity, particularly in memory and emotion regulation circuits, making fear responses more automatic.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "GABA",
+                "mechanism": "Reduced inhibitory signaling fails to counterbalance fear circuits, leading to sustained hyperarousal and anxiety.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "As fear subsides, the prefrontal cortex regains control to contextualize the threat, while the amygdala's activity gradually normalizes. Recovery involves recalibrating the brain's threat detection system to baseline.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Serotonin",
+                "mechanism": "Restores emotional balance by dampening overactive fear circuits and promoting a sense of safety.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Endocannabinoids",
+                "mechanism": "Help extinguish fear memories by modulating synaptic plasticity in the amygdala and prefrontal cortex.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "sadness",
+        "name": "Sadness",
+        "category": "Emotions",
+        "shortDescription": "A natural emotional state characterized by low mood and withdrawal, serving important social and reflective functions while temporarily reducing activity in reward circuits.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During acute sadness, the brain shows reduced activity in frontal regions involved in decision-making while increasing activity in emotional processing centers. This creates a reflective state that prioritizes internal focus over external rewards.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "stimulates"
+              },
+              {
+                "areaId": "nucleus_accumbens",
+                "name": "Nucleus Accumbens",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Dopamine",
+                "mechanism": "Temporarily reduced in reward pathways, decreasing motivation for pleasurable activities while enhancing sensitivity to emotional stimuli.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Serotonin",
+                "mechanism": "Moderate reductions contribute to rumination and heightened emotional awareness during sad states.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "Prolonged sadness can lead to structural changes in emotional regulation networks, including reduced hippocampal volume from chronic stress hormones and altered connectivity between emotion centers.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "limbic_system",
+                "name": "Limbic System",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "BDNF",
+                "mechanism": "Reduced neurotrophic support in prefrontal and hippocampal regions impairs neuroplasticity during extended sad states.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Glutamate",
+                "mechanism": "Altered excitatory signaling creates hyperactive emotional circuits and hypoactive cognitive control networks.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "As sadness resolves, the brain gradually rebalances emotional processing while restoring normal reward sensitivity, though temporary emotional volatility may occur during transition periods.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "amygdala",
+                "name": "Amygdala",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "ventral_tegmental_area",
+                "name": "Ventral Tegmental Area",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Cortisol",
+                "mechanism": "Stress hormone levels decrease as emotional regulation returns to baseline, allowing recovery of cognitive functions.",
+                "description": null,
+                "effect": null
+              },
+              {
+                "name": "Endorphins",
+                "mechanism": "Natural opioid systems reactivate to restore emotional resilience and social bonding capacity.",
                 "description": null,
                 "effect": null
               }
@@ -607,6 +1066,160 @@
               {
                 "name": "GABA",
                 "mechanism": "GABAergic inhibition gradually restores to help calm overactive emotional circuits.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "alzheimer_s",
+        "name": "Alzheimer's",
+        "category": "Diseases",
+        "shortDescription": "A progressive neurodegenerative disorder that primarily affects memory and cognitive function, characterized by the accumulation of amyloid plaques and tau tangles in the brain.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During early stages, Alzheimer's disrupts communication between neurons, leading to memory lapses and difficulty with complex tasks. The brain struggles to form new memories while retaining older ones.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "hippocampus",
+                "name": "Hippocampus",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Acetylcholine",
+                "mechanism": "Early Alzheimer's shows reduced acetylcholine levels, impairing learning and memory as this neurotransmitter is crucial for communication between neurons in memory circuits.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "As Alzheimer's progresses, widespread neuronal death occurs, leading to significant brain shrinkage. The disease spreads to affect language, reasoning, and eventually basic bodily functions.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "temporal_lobe",
+                "name": "Temporal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "parietal_lobe",
+                "name": "Parietal Lobe",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Glutamate",
+                "mechanism": "Chronic overactivation of glutamate receptors leads to excitotoxicity, causing progressive neuronal damage and contributing to cognitive decline.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "In treatment withdrawal or advanced stages, the brain loses its ability to compensate for damage, leading to complete dependence on caregivers and loss of basic functions.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "brainstem",
+                "name": "Brainstem",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "limbic_system",
+                "name": "Limbic System",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Serotonin",
+                "mechanism": "Severe depletion of serotonin contributes to mood disturbances, sleep problems, and behavioral changes in late-stage Alzheimer's.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "parkinson_s",
+        "name": "Parkinson's",
+        "category": "Diseases",
+        "shortDescription": "A progressive neurodegenerative disorder primarily affecting movement, caused by the gradual loss of dopamine-producing neurons in the brain. It leads to symptoms like tremors, stiffness, and slowed movement due to disrupted communication between brain regions.",
+        "phases": {
+          "acute": {
+            "brainImpact": "During acute episodes, Parkinson's causes immediate motor dysfunction due to insufficient dopamine signaling in movement-control circuits. This leads to visible symptoms like tremors, muscle rigidity, and slowed movement (bradykinesia) as the brain struggles to coordinate smooth motions.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "basal_ganglia",
+                "name": "Basal Ganglia",
+                "effectType": "depresses"
+              },
+              {
+                "areaId": "substantia_nigra",
+                "name": "Substantia Nigra",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Dopamine",
+                "mechanism": "Dopamine deficiency in the substantia nigra disrupts the basal ganglia's ability to regulate movement, causing the characteristic motor symptoms of Parkinson's.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "chronic": {
+            "brainImpact": "Over time, Parkinson's leads to widespread neurodegeneration beyond just motor areas, affecting cognition and mood. The brain compensates by rewiring circuits, but this often leads to non-motor symptoms like depression, sleep disturbances, and cognitive decline.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "frontal_lobe",
+                "name": "Frontal Lobe",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "limbic_system",
+                "name": "Limbic System",
+                "effectType": "modulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Acetylcholine",
+                "mechanism": "As Parkinson's progresses, acetylcholine-producing neurons also degenerate, contributing to cognitive impairment and dementia in later stages.",
+                "description": null,
+                "effect": null
+              }
+            ]
+          },
+          "withdrawal": {
+            "brainImpact": "When Parkinson's medications are suddenly stopped, symptoms can dramatically worsen as the brain struggles to compensate without pharmaceutical support. This 'off' state reveals the underlying severity of neurodegeneration.",
+            "affectedBrainAreas": [
+              {
+                "areaId": "basal_ganglia",
+                "name": "Basal Ganglia",
+                "effectType": "modulates"
+              },
+              {
+                "areaId": "thalamus",
+                "name": "Thalamus",
+                "effectType": "stimulates"
+              }
+            ],
+            "neurotransmitters": [
+              {
+                "name": "Glutamate",
+                "mechanism": "Medication withdrawal leads to excessive glutamate activity, causing overexcitation in motor circuits and worsening symptoms.",
                 "description": null,
                 "effect": null
               }

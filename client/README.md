@@ -5,6 +5,7 @@ Frontend for NeuroAtlas. React + TypeScript + Tailwind CSS + React Three Fiber.
 ## Getting Started
 
 ```bash
+cd client
 npm install
 npm run dev        # dev server at localhost:5173
 npm run build      # production build (tsc + vite build)

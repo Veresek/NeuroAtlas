@@ -1404,5 +1404,1115 @@
       "Limbic System",
       "Frontal Lobe"
     ]
+  },
+  {
+    "id": "demirci-2026-sleep-social-media",
+    "title": "Sleep Deprivation, Social Media Addiction, and Associated Factors in Children After Natural Disasters",
+    "authors": [
+      "Demirci Ş",
+      "Ergün S"
+    ],
+    "year": 2026,
+    "journal": "Comprehensive child and adolescent nursing",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1080/24694193.2026.2724184",
+    "abstract": "This study examines sleep deprivation and social media addiction in children indirectly exposed to earthquakes, revealing significant disruptions in sleep patterns and emotional regulation.",
+    "tags": [
+      "emotional regulation",
+      "stress"
+    ],
+    "relatedAtlasItems": [
+      "sleep_deprivation"
+    ],
+    "relatedBrainAreas": [
+      "Amygdala",
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "barley-2026-remote-sleep-deprivation",
+    "title": "Fidelity of remote, video-monitored experimental total sleep deprivation",
+    "authors": [
+      "Barley BK",
+      "Tran D",
+      "Scullin MK"
+    ],
+    "year": 2026,
+    "journal": "Sleep",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1093/sleep/zsag082",
+    "abstract": "This study validates at-home sleep deprivation protocols, showing significant impacts on learning, stress responses, and cognitive performance.",
+    "tags": [
+      "cognitive function",
+      "stress"
+    ],
+    "relatedAtlasItems": [
+      "sleep_deprivation"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Hippocampus"
+    ]
+  },
+  {
+    "id": "jain-2026-sleep-thyroid",
+    "title": "Sleep deprivation as a modulator of thyroid function: a systematic review and meta-analysis",
+    "authors": [
+      "Jain SP",
+      "Setia Santoso LFA",
+      "Ikkurthy N",
+      "Jain SP",
+      "Silven G"
+    ],
+    "year": 2026,
+    "journal": "Journal of endocrinological investigation",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1007/s40618-026-03029-5",
+    "abstract": "This meta-analysis links sleep deprivation to thyroid dysfunction, highlighting its broader endocrine disruptions beyond just brain function.",
+    "tags": [
+      "endocrine",
+      "hormonal imbalance"
+    ],
+    "relatedAtlasItems": [
+      "sleep_deprivation"
+    ],
+    "relatedBrainAreas": [
+      "Hypothalamus"
+    ]
+  },
+  {
+    "id": "elmenhorst-2026-synaptic-density",
+    "title": "Sleep deprivation increases levels of the synaptic density marker SV2A in the human brain",
+    "authors": [
+      "Elmenhorst D",
+      "Foerges AL",
+      "Gordji-Nejad A",
+      "Elmenhorst EM",
+      "Kroll T",
+      "Matusch A",
+      "Beer S",
+      "Neumaier B",
+      "Krapf P",
+      "Lerche C",
+      "Drzezga A",
+      "Bauer A"
+    ],
+    "year": 2026,
+    "journal": "PLoS biology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1371/journal.pbio.3003816",
+    "abstract": "Using PET imaging, this study shows that sleep deprivation disrupts synaptic homeostasis, leading to excessive synaptic potentiation and impaired neural efficiency.",
+    "tags": [
+      "neuroplasticity",
+      "synaptic density"
+    ],
+    "relatedAtlasItems": [
+      "sleep_deprivation"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Hippocampus"
+    ]
+  },
+  {
+    "id": "sarma-2026-social-memory",
+    "title": "Restoring access to long-term social recognition memories disrupted by sleep deprivation",
+    "authors": [
+      "Sarma A",
+      "Paraciani C",
+      "Cao J",
+      "Tyumeneva E",
+      "Stacchiola C",
+      "Meijer EL",
+      "de Vries N",
+      "Smit S",
+      "Meijer F",
+      "Bonne M",
+      "Billeter JC",
+      "Meerlo P",
+      "Havekes R"
+    ],
+    "year": 2026,
+    "journal": "Science advances",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1126/sciadv.adu9805",
+    "abstract": "This study demonstrates that sleep deprivation disrupts social memory consolidation in mice, leading to 'social amnesia' that can be reversed with recovery sleep.",
+    "tags": [
+      "memory",
+      "hippocampus"
+    ],
+    "relatedAtlasItems": [
+      "sleep_deprivation"
+    ],
+    "relatedBrainAreas": [
+      "Hippocampus",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "chmiel-2026-erp-sleep-deprivation",
+    "title": "Neurophysiology of Sleep-Deprivation Part 1: Effects of Sleep-Deprivation on Event-Related Potentials (ERPs)-Systematic and Mechanistic Review",
+    "authors": [
+      "Chmiel J",
+      "Nadobnik J"
+    ],
+    "year": 2026,
+    "journal": "Journal of clinical medicine",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3390/jcm15124576",
+    "abstract": "This review examines how sleep deprivation alters event-related potentials (ERPs), revealing disruptions in early sensory processing and later cognitive control stages.",
+    "tags": [
+      "cognitive processing",
+      "attention"
+    ],
+    "relatedAtlasItems": [
+      "sleep_deprivation"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Temporal Lobe"
+    ]
+  },
+  {
+    "id": "lachowicz-2026-esports",
+    "title": "Beyond Performance: Cognitive Overload and Related Cognitive, Psychophysiological, and Performance States in Competitive Esports-A Scoping Review",
+    "authors": [
+      "Lachowicz M",
+      "Jamro D",
+      "Zawadka A",
+      "Tomala Z",
+      "Żurek G"
+    ],
+    "year": 2026,
+    "journal": "Medical sciences (Basel, Switzerland)",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3390/medsci14030395",
+    "abstract": "Examines how esports players manage cognitive demands during high-stakes competition, revealing overload patterns similar to traditional athletes.",
+    "tags": [
+      "attention regulation",
+      "psychophysiology"
+    ],
+    "relatedAtlasItems": [
+      "cognitive_overload"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "chen-2026-procrastination",
+    "title": "Procrastination and online social anxiety: the mediating role of cognitive overload and the moderating influence of mindfulness",
+    "authors": [
+      "Chen S",
+      "Xie Z",
+      "Wu H",
+      "Song Z"
+    ],
+    "year": 2026,
+    "journal": "Frontiers in public health",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3389/fpubh.2026.1710399",
+    "abstract": "Shows how digital procrastination creates cognitive overload, which then amplifies social anxiety in online environments.",
+    "tags": [
+      "digital wellbeing",
+      "mindfulness"
+    ],
+    "relatedAtlasItems": [
+      "cognitive_overload"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "bai-2026-ai-libraries",
+    "title": "Algorithmic academic framing in AI-driven smart libraries: a moderated mediation model of personalized learning and cognitive overload in academic decision-making",
+    "authors": [
+      "Bai Y"
+    ],
+    "year": 2026,
+    "journal": "Frontiers in psychology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3389/fpsyg.2026.1864163",
+    "abstract": "Investigates how AI educational tools can paradoxically increase cognitive load despite their intention to personalize learning.",
+    "tags": [
+      "AI education",
+      "decision-making"
+    ],
+    "relatedAtlasItems": [
+      "cognitive_overload"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Hippocampus"
+    ]
+  },
+  {
+    "id": "brown-2026-nursing",
+    "title": "Mitigating Cognitive Overload in Nursing Education: An Integrative Review",
+    "authors": [
+      "Brown J",
+      "Meza C",
+      "Sandiford D"
+    ],
+    "year": 2026,
+    "journal": "Nurse educator",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1097/nne.0000000000002126",
+    "abstract": "Identifies strategies to prevent cognitive overload in nursing students balancing academic and clinical demands.",
+    "tags": [
+      "medical education",
+      "working memory"
+    ],
+    "relatedAtlasItems": [
+      "cognitive_overload"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Hippocampus"
+    ]
+  },
+  {
+    "id": "qi-2026-language-learning",
+    "title": "Cognitive overload in multimedia language learning: a review of attention limits and instructional design strategies",
+    "authors": [
+      "Qi Y"
+    ],
+    "year": 2026,
+    "journal": "Frontiers in psychology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3389/fpsyg.2026.1850074",
+    "abstract": "Analyzes how multimedia language tools can exceed learners' cognitive capacity without proper design considerations.",
+    "tags": [
+      "second language acquisition",
+      "attention"
+    ],
+    "relatedAtlasItems": [
+      "cognitive_overload"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Temporal Lobe"
+    ]
+  },
+  {
+    "id": "pang-2025-student-fatigue",
+    "title": "Deciphering the underlying repercussions of cognitive overload on university students' fatigue, frustration and academic productivity: Implementation of stimulus-organism-response model",
+    "authors": [
+      "Pang H",
+      "Jin X",
+      "Zhang W"
+    ],
+    "year": 2025,
+    "journal": "Acta psychologica",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.actpsy.2025.105469",
+    "abstract": "Documents how sustained cognitive overload leads to academic burnout through measurable fatigue and frustration pathways.",
+    "tags": [
+      "academic burnout",
+      "stress response"
+    ],
+    "relatedAtlasItems": [
+      "cognitive_overload"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Amygdala",
+      "Hippocampus"
+    ]
+  },
+  {
+    "id": "yang-2026-community",
+    "title": "Community physical activity environments and physical activity levels among older adults: a hierarchical analysis of environmental dimensions",
+    "authors": [
+      "Yang H",
+      "Zhou X",
+      "Sun Q",
+      "Li X",
+      "Chen Q"
+    ],
+    "year": 2026,
+    "journal": "Frontiers in public health",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3389/fpubh.2026.1820476",
+    "abstract": "This study explores how community environments influence physical activity levels in older adults, highlighting the importance of accessible and supportive spaces for active aging.",
+    "tags": [
+      "aging",
+      "community"
+    ],
+    "relatedAtlasItems": [
+      "physical_activity"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "paiva-2026-motivation",
+    "title": "Self-Determined Motivation and Physical Activity in Chronic Obstructive Pulmonary Disease",
+    "authors": [
+      "Paiva LG",
+      "de Souza NB",
+      "de Lima VA",
+      "de Oliveira Lima VL",
+      "Karloh M",
+      "Dos Santos JAA",
+      "Oliveira CC",
+      "Alberto KC",
+      "Almeida DP",
+      "José A",
+      "Malaguti C"
+    ],
+    "year": 2026,
+    "journal": "The clinical respiratory journal",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1111/crj.70209",
+    "abstract": "This research examines how intrinsic motivation influences physical activity in COPD patients, emphasizing the role of self-determination in sustaining active behavior.",
+    "tags": [
+      "motivation",
+      "COPD"
+    ],
+    "relatedAtlasItems": [
+      "physical_activity"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "quinn-2026-hypertension",
+    "title": "Occupational Physical Activity and Hypertension: A Narrative Review.",
+    "authors": [
+      "Quinn TD",
+      "Love M",
+      "Jagadeesan V",
+      "Boyer WR"
+    ],
+    "year": 2026,
+    "journal": "Current hypertension reports",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1007/s11906-026-01384-5",
+    "abstract": "This review summarizes evidence on the relationship between occupational physical activity and hypertension, highlighting inconsistent findings and potential mechanisms.",
+    "tags": [
+      "hypertension",
+      "occupational"
+    ],
+    "relatedAtlasItems": [
+      "physical_activity"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "bhuiyan-2026-students",
+    "title": "Physical activity levels, perceived barriers, and stages of behaviour change for physical activity among urban university students in Bangladesh",
+    "authors": [
+      "Bhuiyan R",
+      "Akhter T",
+      "Banik PC",
+      "Ahmed KR",
+      "Hakim F"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.21203/rs.3.rs-10243213/v1",
+    "abstract": "This study investigates physical activity levels and barriers among university students, emphasizing the impact of urbanization and technology on inactivity.",
+    "tags": [
+      "students",
+      "barriers"
+    ],
+    "relatedAtlasItems": [
+      "physical_activity"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "mcnally-2026-healthcare",
+    "title": "Bridging Healthcare and Community Physical Activity: The Emerging Role of Physical Activity for Health in Ireland",
+    "authors": [
+      "McNally S"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.20944/preprints202606.1134.v1",
+    "abstract": "This paper explores the integration of community-based exercise programs into healthcare systems for chronic disease management and prevention.",
+    "tags": [
+      "community",
+      "healthcare"
+    ],
+    "relatedAtlasItems": [
+      "physical_activity"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "souza-lima-2026-youth",
+    "title": "Mapping the behavioural and motivational network of youth physical activity",
+    "authors": [
+      "Souza-Lima J",
+      "Ortiz-Marholz P",
+      "Parra-Saldías M",
+      "Godoy-Cumillaf A",
+      "Merellano-Navarro E",
+      "Peris-Delcampo D",
+      "Farias-Valenzuela C",
+      "Valdivia-Moral P"
+    ],
+    "year": 2026,
+    "journal": "",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.21203/rs.3.rs-10553226/v1",
+    "abstract": "This study maps the behavioral and motivational factors influencing physical activity in youth, highlighting the interconnected nature of these factors.",
+    "tags": [
+      "youth",
+      "motivation"
+    ],
+    "relatedAtlasItems": [
+      "physical_activity"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "vanschie-2026-fear-memory",
+    "title": "Beyond fear: dual task interventions are effective for fear and non-fear memories",
+    "authors": [
+      "van Schie K",
+      "van Veen SC"
+    ],
+    "year": 2026,
+    "journal": "Cognition & Emotion",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1080/02699931.2026.2717608",
+    "abstract": "Shows that trauma memories involve multiple emotions beyond fear, and dual-task interventions (like EMDR) can help process these complex emotional memories.",
+    "tags": [
+      "trauma",
+      "memory",
+      "intervention"
+    ],
+    "relatedAtlasItems": [
+      "fear"
+    ],
+    "relatedBrainAreas": [
+      "Amygdala",
+      "Hippocampus"
+    ]
+  },
+  {
+    "id": "demirba--2026-fear-resilience",
+    "title": "Self-compassion and earthquake fear: the mediating roles of resilience and fear of happiness",
+    "authors": [
+      "Demirbağ T",
+      "Kara A",
+      "Sarı T"
+    ],
+    "year": 2026,
+    "journal": "Scientific Reports",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1038/s41598-026-58734-1",
+    "abstract": "Demonstrates how self-compassion builds resilience against chronic fear by reducing avoidance of positive emotions that often follows trauma.",
+    "tags": [
+      "resilience",
+      "trauma",
+      "emotion regulation"
+    ],
+    "relatedAtlasItems": [
+      "fear"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "mas-s-calvo-2026-social-fear",
+    "title": "Innate anxiety in rats determines vulnerability to social fear conditioning and social fear memory",
+    "authors": [
+      "Masís-Calvo M",
+      "Rappeneau V",
+      "Neumann ID"
+    ],
+    "year": 2026,
+    "journal": "Psychoneuroendocrinology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.psyneuen.2026.107981",
+    "abstract": "Reveals genetic predisposition influences how social trauma forms lasting fear memories, with high-anxiety individuals showing stronger fear conditioning.",
+    "tags": [
+      "social anxiety",
+      "neurobiology",
+      "individual differences"
+    ],
+    "relatedAtlasItems": [
+      "fear"
+    ],
+    "relatedBrainAreas": [
+      "Amygdala",
+      "Ventral Tegmental Area"
+    ]
+  },
+  {
+    "id": "nishimura-2026-stress-sensitization",
+    "title": "Paraventricular thalamus hyperactivity mediates stress-induced sensitization of unlearned fear but not stress-enhanced fear learning (SEFL)",
+    "authors": [
+      "Nishimura KJ",
+      "Paredes D",
+      "Nocera NA",
+      "Aggarwal D",
+      "Drew MR"
+    ],
+    "year": 2026,
+    "journal": "eLife",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.7554/elife.107670",
+    "abstract": "Identifies a key brain region that amplifies generalized fear after stress, separate from circuits involved in learning specific fear associations.",
+    "tags": [
+      "stress",
+      "neural circuits",
+      "trauma"
+    ],
+    "relatedAtlasItems": [
+      "fear"
+    ],
+    "relatedBrainAreas": [
+      "Thalamus",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "riesel-2026-surgeon-fear",
+    "title": "Facing Fear in the Operating Room: A Qualitative Investigation Into the Causes of and Management Strategies for Surgeon Fear in the Operating Room",
+    "authors": [
+      "Riesel JN",
+      "Hammond M",
+      "Moulton CA"
+    ],
+    "year": 2026,
+    "journal": "Annals of Surgery Open",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1097/as9.0000000000000678",
+    "abstract": "Explores how high-stakes professionals experience and regulate acute fear, highlighting cognitive strategies to maintain performance under threat.",
+    "tags": [
+      "performance",
+      "cognition",
+      "emotion regulation"
+    ],
+    "relatedAtlasItems": [
+      "fear"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "ross-2026-fear-extinction",
+    "title": "PMAT enhances sexual dimorphism of fear behaviors and facilitates female mice's generalized contextual fear extinction",
+    "authors": [
+      "Ross AJ",
+      "Scrimshaw LR",
+      "Stoner LN",
+      "Beaver JN",
+      "Sonick GA",
+      "Gilman LM"
+    ],
+    "year": 2026,
+    "journal": "Frontiers in Neuroscience",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.3389/fnins.2026.1693593",
+    "abstract": "Shows sex differences in fear extinction, with females benefiting more from monoamine transporter modulation during fear memory updating.",
+    "tags": [
+      "sex differences",
+      "extinction",
+      "dopamine"
+    ],
+    "relatedAtlasItems": [
+      "fear"
+    ],
+    "relatedBrainAreas": [
+      "Amygdala",
+      "Nucleus Accumbens"
+    ]
+  },
+  {
+    "id": "na-k-2026",
+    "title": "Sadness, Risk Direction, and Correction of Health Misinformation: Effects on Beliefs and Sharing Intentions",
+    "authors": [
+      "Na K"
+    ],
+    "year": 2026,
+    "journal": "Journal of Health Communication",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1080/10810730.2026.2716163",
+    "abstract": "Shows how sadness alters information processing, making people more cautious about sharing health claims but also more susceptible to risk-focused messaging.",
+    "tags": [
+      "decision-making",
+      "risk perception"
+    ],
+    "relatedAtlasItems": [
+      "sadness"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "alvarez-2026",
+    "title": "Brain correlates of sadness in music: An exploratory ALE meta-analysis",
+    "authors": [
+      "Alvarez VY"
+    ],
+    "year": 2026,
+    "journal": "Brain and Cognition",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.bandc.2026.106477",
+    "abstract": "Identifies consistent activation in emotional memory networks during music-induced sadness, revealing how aesthetic experiences engage ancient reward-emotion pathways.",
+    "tags": [
+      "music",
+      "meta-analysis"
+    ],
+    "relatedAtlasItems": [
+      "sadness"
+    ],
+    "relatedBrainAreas": [
+      "Temporal Lobe",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "jayakumar-2026",
+    "title": "Sadness regulation in daily life in remitted depression: Regulatory repertoire composition and affect-dependent effectiveness",
+    "authors": [
+      "Jayakumar S",
+      "Xu EP",
+      "Minns SA",
+      "Zapetis SL",
+      "Turnamian MR",
+      "Li J",
+      "Wei M",
+      "Leonards CA",
+      "Tharanipathy A",
+      "Webb DE",
+      "Stange JP"
+    ],
+    "year": 2026,
+    "journal": "Journal of Affective Disorders",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.jad.2026.122258",
+    "abstract": "Demonstrates how recovered individuals use diverse emotion regulation strategies flexibly to manage sadness, highlighting the importance of contextual adaptation.",
+    "tags": [
+      "emotion regulation",
+      "depression"
+    ],
+    "relatedAtlasItems": [
+      "sadness"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "saija-2026a",
+    "title": "Emotion Dynamic During Sad Events: The Relation Among Attachment Security, Loneliness and Sadness-Related Emotional Profiles",
+    "authors": [
+      "Saija E",
+      "Pallini S"
+    ],
+    "year": 2026,
+    "journal": "Clinical Child Psychology and Psychiatry",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1177/13591045261465596",
+    "abstract": "Reveals distinct patterns of sadness expression in children tied to attachment styles, showing how early relationships shape emotional development.",
+    "tags": [
+      "development",
+      "attachment"
+    ],
+    "relatedAtlasItems": [
+      "sadness"
+    ],
+    "relatedBrainAreas": [
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "saija-2026b",
+    "title": "The Social Value of Sadness: A Pathway to Sympathy and Prosocial Behavior in Middle-Childhood",
+    "authors": [
+      "Saija E",
+      "Vecchio GM",
+      "Baiocco R",
+      "Pallini S"
+    ],
+    "year": 2026,
+    "journal": "The Journal of Genetic Psychology",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1080/00221325.2026.2640502",
+    "abstract": "Documents sadness's adaptive role in fostering empathy and helping behaviors, challenging cultural biases against negative emotions.",
+    "tags": [
+      "prosocial behavior",
+      "empathy"
+    ],
+    "relatedAtlasItems": [
+      "sadness"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Amygdala"
+    ]
+  },
+  {
+    "id": "saija-2026c",
+    "title": "Deconstructing 'Negative Emotions': A Paradigm Shift in Understanding Sadness",
+    "authors": [
+      "Saija E",
+      "Pallini S"
+    ],
+    "year": 2026,
+    "journal": "PsyArXiv Preprints",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.31234/osf.io/d9wxm_v1",
+    "abstract": "Proposes a cultural reevaluation of sadness as an essential adaptive emotion rather than a pathology to be eliminated.",
+    "tags": [
+      "cultural psychology",
+      "emotion theory"
+    ],
+    "relatedAtlasItems": [
+      "sadness"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe",
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "trudel-2026-pca",
+    "title": "Posterior cortical atrophy and logopenic variant primary progressive aphasia are more specific for Alzheimer's disease pathology than probable Alzheimer's disease",
+    "authors": [
+      "Trudel L",
+      "Therriault J",
+      "Macedo AC",
+      "Rahmouni N",
+      "Soucy JP",
+      "Gauthier S",
+      "Vitali P",
+      "Guiot MC",
+      "Hazrati LN",
+      "Rosa-Neto P"
+    ],
+    "year": 2026,
+    "journal": "Brain communications",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1093/braincomms/fcag304",
+    "abstract": "Research shows that atypical Alzheimer's presentations like posterior cortical atrophy (vision problems) and logopenic aphasia (language difficulties) may be more reliable indicators of Alzheimer's pathology than typical memory symptoms.",
+    "tags": [
+      "diagnosis",
+      "atypical presentation"
+    ],
+    "relatedAtlasItems": [
+      "alzheimer_s"
+    ],
+    "relatedBrainAreas": [
+      "Parietal Lobe",
+      "Temporal Lobe"
+    ]
+  },
+  {
+    "id": "amouyel-2026-global",
+    "title": "Provider and patient perspectives on the diagnosis and treatment of Alzheimer's disease: A global perspective from the Global Alzheimer's Leadership Series (GoALS)",
+    "authors": [
+      "Amouyel P",
+      "Andrieu S",
+      "Bradshaw A",
+      "Carmona RC",
+      "Dumont M",
+      "Grinberg LT",
+      "Iwatsubo T",
+      "Hansson O",
+      "Jack CR Jr",
+      "Jicha GA",
+      "Mahinrad S",
+      "McDade E",
+      "Mummery CJ",
+      "Petersen RC",
+      "Robinson S",
+      "Schneider JA",
+      "Shellcross L",
+      "Smith AG",
+      "Snyder HM",
+      "Tapply B",
+      "Teunissen C",
+      "van der Flier WM",
+      "Vellas B",
+      "Wallon D",
+      "Williamson JD",
+      "Wilcock D",
+      "Carrillo MC"
+    ],
+    "year": 2026,
+    "journal": "Alzheimer's & dementia : the journal of the Alzheimer's Association",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1002/alz.71536",
+    "abstract": "Global experts discuss the relationship between biological changes and clinical symptoms in Alzheimer's, highlighting the need for personalized approaches in diagnosis and treatment.",
+    "tags": [
+      "global health",
+      "diagnosis"
+    ],
+    "relatedAtlasItems": [
+      "alzheimer_s"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "just-2026-women",
+    "title": "Considerations in Alzheimer's Disease in Women",
+    "authors": [
+      "Just C",
+      "Seibert K",
+      "Chan C",
+      "Maldonado-Correa C",
+      "Jones D"
+    ],
+    "year": 2026,
+    "journal": "Current neurology and neuroscience reports",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1007/s11910-026-01504-3",
+    "abstract": "Examines why women are disproportionately affected by Alzheimer's, exploring hormonal factors, biomarker differences, and implications for diagnosis and treatment.",
+    "tags": [
+      "sex differences",
+      "hormones"
+    ],
+    "relatedAtlasItems": [
+      "alzheimer_s"
+    ],
+    "relatedBrainAreas": [
+      "Limbic System",
+      "Hypothalamus"
+    ]
+  },
+  {
+    "id": "deriggi-2026-bradykinesia",
+    "title": "Analyzing the 'bradykinesia complex' in GBA1-associated Parkinson's disease: A series of three cases",
+    "authors": [
+      "De Riggi M",
+      "Birreci D",
+      "Martini A",
+      "Aloisio S",
+      "Angelini L",
+      "Grandolfo AS",
+      "Bologna M"
+    ],
+    "year": 2026,
+    "journal": "Clinical parkinsonism & related disorders",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.prdoa.2026.100462",
+    "abstract": "This study examined movement patterns in Parkinson's patients with genetic variants, finding that different genetic backgrounds lead to distinct types of movement impairment and responses to medication.",
+    "tags": [
+      "genetics",
+      "bradykinesia",
+      "motor control"
+    ],
+    "relatedAtlasItems": [
+      "parkinson_s"
+    ],
+    "relatedBrainAreas": [
+      "Basal Ganglia"
+    ]
+  },
+  {
+    "id": "li-2026-nonpharmacological",
+    "title": "Non-pharmacological interventions for anxiety and depression in Parkinson's disease",
+    "authors": [
+      "Li T",
+      "Shi J",
+      "Zheng Q",
+      "Xu JG",
+      "Zhang M",
+      "Ren Y",
+      "Zhang B",
+      "Li Z"
+    ],
+    "year": 2026,
+    "journal": "The Cochrane database of systematic reviews",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1002/14651858.cd016360",
+    "abstract": "This review protocol examines how non-drug treatments like therapy and exercise might help manage the emotional symptoms that often accompany Parkinson's disease.",
+    "tags": [
+      "mental health",
+      "therapy",
+      "exercise"
+    ],
+    "relatedAtlasItems": [
+      "parkinson_s"
+    ],
+    "relatedBrainAreas": [
+      "Limbic System"
+    ]
+  },
+  {
+    "id": "morrin-2026-depression-link",
+    "title": "Psychomotor retardation and risk of Parkinson's disease in unipolar depression: A retrospective cohort study",
+    "authors": [
+      "Morrin H",
+      "Badenoch JB",
+      "Burchill E",
+      "Fayosse A",
+      "Singh-Manoux A",
+      "Shotbolt P",
+      "Zandi MS",
+      "David AS",
+      "Lewis G",
+      "Rogers JP"
+    ],
+    "year": 2026,
+    "journal": "Journal of affective disorders",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1016/j.jad.2026.122339",
+    "abstract": "Research found that people with depression who experience slowed movement (psychomotor retardation) may have a higher risk of developing Parkinson's later in life.",
+    "tags": [
+      "depression",
+      "risk factors",
+      "early detection"
+    ],
+    "relatedAtlasItems": [
+      "parkinson_s"
+    ],
+    "relatedBrainAreas": [
+      "Basal Ganglia",
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "matospina-2026-public-knowledge",
+    "title": "Mapping public knowledge of Parkinson's disease in Portugal: a cross-sectional survey of knowledge, perceptions and attitudes",
+    "authors": [
+      "Matos-Pina I",
+      "Moura-Ramos M",
+      "Ferreira C"
+    ],
+    "year": 2026,
+    "journal": "Neurodegenerative disease management",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1080/17582024.2026.2723528",
+    "abstract": "A survey revealed gaps in public understanding about Parkinson's symptoms and treatments, highlighting the need for better education about this growing neurological condition.",
+    "tags": [
+      "public health",
+      "awareness",
+      "education"
+    ],
+    "relatedAtlasItems": [
+      "parkinson_s"
+    ],
+    "relatedBrainAreas": [
+      "Other"
+    ]
+  },
+  {
+    "id": "clay-2026-communication",
+    "title": "Better Conversations With Parkinson's: Feasibility and Acceptability of a Novel Communication Partner Training Telehealth Intervention",
+    "authors": [
+      "Clay P",
+      "Beeke S",
+      "Hogger L",
+      "Brix I",
+      "Massé E",
+      "Hunt H",
+      "Dangerfield L",
+      "Bloch S"
+    ],
+    "year": 2026,
+    "journal": "International journal of language & communication disorders",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1111/1460-6984.70308",
+    "abstract": "A training program helped caregivers communicate more effectively with Parkinson's patients, addressing the speech and facial expression difficulties common in the disease.",
+    "tags": [
+      "communication",
+      "caregiving",
+      "quality of life"
+    ],
+    "relatedAtlasItems": [
+      "parkinson_s"
+    ],
+    "relatedBrainAreas": [
+      "Frontal Lobe"
+    ]
+  },
+  {
+    "id": "baumgart-2026-biofeedback",
+    "title": "Biofeedback in Parkinson's disease: A systematic review with meta-analysis",
+    "authors": [
+      "Baumgart A",
+      "Preston E",
+      "Ada L",
+      "Alvarenga MTM",
+      "de Mondença JF",
+      "Flynn A"
+    ],
+    "year": 2026,
+    "journal": "Clinical rehabilitation",
+    "volume": null,
+    "pages": null,
+    "doi": "https://doi.org/10.1177/02692155261474067",
+    "abstract": "Biofeedback techniques that provide real-time information about movement helped Parkinson's patients improve their walking and balance more than standard therapy alone.",
+    "tags": [
+      "rehabilitation",
+      "motor learning",
+      "neuroplasticity"
+    ],
+    "relatedAtlasItems": [
+      "parkinson_s"
+    ],
+    "relatedBrainAreas": [
+      "Basal Ganglia",
+      "Cerebellum"
+    ]
   }
 ]
