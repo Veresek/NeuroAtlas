@@ -18,6 +18,52 @@ interface ChangelogEntry {
 // ── Data ─────────────────────────────────────────────────────
 const entries: ChangelogEntry[] = [
 	{
+		version: '0.5.0',
+		date: '2026-08-27',
+		tag: 'minor',
+		summary:
+			'Expanded the atlas and research library with lifestyle, emotion, and disease entries backed by 2026 papers.',
+		added: [
+			'Lifestyle atlas entries for meditation, sleep deprivation, cognitive overload, and physical activity.',
+			'Emotion atlas entries for joy, fear, and sadness.',
+			"Disease atlas entries for depression, Alzheimer's, and Parkinson's.",
+			'New 2026 research papers on sleep deprivation, cognitive overload, emotional regulation, and related topics.',
+		],
+	},
+	{
+		version: '0.4.0',
+		date: '2026-08-17',
+		tag: 'major',
+		summary:
+			'Automated research pipeline and interactive neurotransmitter highlighting for psychoactive substances.',
+		added: [
+			'LangChain multi-agent pipeline (Researcher, Synthesizer, Validator) that collects papers from Europe PMC, PubMed, PubChem, and PsychonautWiki into atlas and research data.',
+			'Interactive neurotransmitter badges in Atlas detail panels, with a floating mechanism card on the 3D view.',
+			'Phase-based neurodynamics (acute, chronic, withdrawal) for alcohol, nicotine, psilocybin, and caffeine.',
+		],
+		modified: [
+			'Atlas detail panels now highlight neurotransmitter mechanisms on hover or click.',
+			'Research detail view shows journal names more clearly.',
+			'Refactored App layout for readability, and mapped Docker volumes so the agent can write atlas data into the stack.',
+		],
+	},
+	{
+		version: '0.3.1',
+		date: '2026-05-28',
+		tag: 'patch',
+		summary:
+			'Dockerized VPS deployment, mobile panel snapping, and more accurate brain-section names.',
+		added: [
+			'Dockerfiles and Compose stack for client and server, with GitHub Actions building a static frontend.',
+			'Mobile detail-panel snapping and smoother layout transitions.',
+		],
+		modified: [
+			'Corrected brain area names in the atlas and expanded the Gemini allowed-section list.',
+			'Improved mobile content visibility and sidebar rendering.',
+			'Hardened the VPS deployment workflow with health checks, Node version pinning, and more reliable backend restarts.',
+		],
+	},
+	{
 		version: '0.3.0',
 		date: '2026-05-26',
 		tag: 'major',
@@ -30,8 +76,7 @@ const entries: ChangelogEntry[] = [
 			"Changed hosting from github pages to VPS",
 			"Modified size of brain model at the start of the app",
 			"Detail panel doesn't open automatically at the start of the app",
-		]
-
+		],
 	},
 	{
 		version: '0.2.1',
