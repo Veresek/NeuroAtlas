@@ -26,3 +26,6 @@ __pycache__
 *.njsproj
 *.sln
 *.sw?
+
+# Superpowers scratch workspace (ledgers, briefs, review packages)
+.superpowers/
