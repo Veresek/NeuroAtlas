@@ -14,5 +14,16 @@ services:
     env_file:
       - ./.env
     restart: unless-stopped
+    depends_on:
+      - mongo
     ports:
       - "127.0.0.1:8000:8000"
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
