@@ -1,6 +1,6 @@
 # Lifestyle integrations (sleep, activity, nutrition)
 
-> **Status:** Plan / Phase 2+
+> **Status:** Phases A–C implemented (2026-10) for **Strava** (exercise) + **FatSecret** (nutrition) — see `docs/superpowers/specs/2026-10-04-lifestyle-integrations-strava-fatsecret-design.md`. Oura/Garmin/Fitbit/Google Fit, Open Food Facts, and webhooks remain deferred; new providers plug into `server/app/services/connectors/` via the `Connector` interface.
 > **Related:** [01_MVP_SCOPE.md](01_MVP_SCOPE.md), [02_AI_AND_FUTURE.md](02_AI_AND_FUTURE.md)
 
 Pull objective lifestyle data from third-party APIs so Digital Twin and Gemini analysis are not limited to the three-field Daily Log (`sleep`, `coffee`, `mood`).
@@ -155,11 +155,11 @@ Heuristics need a literature pass against `research.json` before shipping. They 
 
 ## Phases
 
-**A — Plumbing:** `DailyHealthSummary` + `oauth_vaults`; Strava connector; connect/disconnect UI; `GET /api/me/health?from=&to=` (cookie-scoped).
+**A — Plumbing:** ✅ Done (2026-10). `DailyHealthSummary` + `oauth_vaults` in MongoDB; Strava + FatSecret connectors; connect/disconnect UI (Connected Apps panel); `GET /api/me/health?from=&to=` (cookie-scoped); `POST /api/integrations/sync`.
 
-**B — Insight:** heuristic map; richer Gemini prompt; show data source next to each metric on the Twin.
+**B — Insight:** ✅ Done (2026-10). Heuristic map (`server/app/services/insights.py`, anchored to atlas entries); richer Gemini prompt (today's summary + 7-day trend, numbers cited); source labels in the Twin's "Today's data" panel.
 
-**C — More connectors:** Oura, Garmin, one nutrition source, Open Food Facts scan. Chat (`02_AI_AND_FUTURE.md` §A) using the same summary, still via server Gemini, never `agent/`.
+**C — More connectors:** ⏸ Deferred. Oura, Garmin, one more nutrition source, Open Food Facts scan. Chat (`02_AI_AND_FUTURE.md` §A) using the same summary, still via server Gemini, never `agent/`.
 
 **D — Optional:** Health Connect / HealthKit via a native wrapper; accounts only if multi-device demand appears.
 
