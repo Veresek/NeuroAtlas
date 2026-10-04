@@ -10,6 +10,7 @@ from .settings import settings
 DB_NAME = "neuroatlas"
 VAULTS_COLLECTION = "oauth_vaults"
 SUMMARIES_COLLECTION = "daily_health_summaries"
+STATES_COLLECTION = "oauth_states"
 
 _client: Optional[Any] = None
 
@@ -35,3 +36,7 @@ def get_vaults():
 
 def get_summaries():
 	return get_db()[SUMMARIES_COLLECTION]
+
+
+def get_states():
+	return get_db()[STATES_COLLECTION]

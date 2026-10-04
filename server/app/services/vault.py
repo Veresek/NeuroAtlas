@@ -56,8 +56,7 @@ def get_vault_id(request: Request) -> Optional[str]:
 		return None
 
 
-def issue_vault_cookie(response: Response) -> str:
-	vault_id = str(uuid.uuid4())
+def set_vault_cookie(response: Response, vault_id: str) -> None:
 	response.set_cookie(
 		VAULT_COOKIE,
 		vault_id,
@@ -66,6 +65,11 @@ def issue_vault_cookie(response: Response) -> str:
 		samesite="lax",
 		secure=(settings.app_env == "production"),
 	)
+
+
+def issue_vault_cookie(response: Response) -> str:
+	vault_id = str(uuid.uuid4())
+	set_vault_cookie(response, vault_id)
 	return vault_id
 
 
