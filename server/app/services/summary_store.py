@@ -61,6 +61,9 @@ async def merge_fragments(vault_id: str, fragments: list[HealthFragment]) -> int
 	for date, day_fragments in by_date.items():
 		doc = await collection.find_one({"vault_id": vault_id, "date": date})
 		existing_ids: dict[str, list[str]] = dict((doc or {}).get("external_ids", {}))
+		source_groups: dict[str, list[str]] = dict(
+			(doc or {}).get("source_groups", {})
+		)
 		sources = set((doc or {}).get("sources", []))
 		activity = (doc or {}).get("activity")
 		nutrition = (doc or {}).get("nutrition")
@@ -70,11 +73,15 @@ async def merge_fragments(vault_id: str, fragments: list[HealthFragment]) -> int
 			known = set(existing_ids.get(fragment.source, []))
 			if fragment.external_ids and known.issuperset(fragment.external_ids):
 				continue
+			groups = []
 			if fragment.activity is not None:
 				activity = fragment.activity.model_dump()
+				groups.append("activity")
 			if fragment.nutrition is not None:
 				nutrition = fragment.nutrition.model_dump()
+				groups.append("nutrition")
 			sources.add(fragment.source)
+			source_groups[fragment.source] = groups
 			known.update(fragment.external_ids)
 			existing_ids[fragment.source] = sorted(known)
 			doc_changed = True
@@ -82,7 +89,11 @@ async def merge_fragments(vault_id: str, fragments: list[HealthFragment]) -> int
 		if not doc_changed:
 			continue
 
-		update: dict = {"sources": sorted(sources), "external_ids": existing_ids}
+		update: dict = {
+			"sources": sorted(sources),
+			"external_ids": existing_ids,
+			"source_groups": source_groups,
+		}
 		if activity is not None:
 			update["activity"] = activity
 		if nutrition is not None:
@@ -101,12 +112,44 @@ async def load_summaries(
 		get_summaries()
 		.find(
 			{"vault_id": vault_id, "date": {"$gte": date_from, "$lte": date_to}},
-			{"vault_id": 0, "external_ids": 0, "_id": 0},
+			{"vault_id": 0, "external_ids": 0, "source_groups": 0, "_id": 0},
 		)
 		.sort("date", 1)
 	)
 	docs = [doc async for doc in cursor]
 	return [DailyHealthSummary.model_validate(doc) for doc in docs]
+
+
+async def remove_source(vault_id: str, source: str) -> None:
+	"""Strips one source's data from every day doc of a vault.
+
+	Used on disconnect so pulled provider data does not outlive the
+	connection. Day docs whose only source is removed are deleted; otherwise
+	the source's groups are unset unless another remaining source claims them.
+	"""
+	collection = get_summaries()
+	cursor = collection.find({"vault_id": vault_id, "sources": source})
+	docs = [doc async for doc in cursor]
+	for doc in docs:
+		source_groups: dict = doc.get("source_groups") or {}
+		removed_groups = set(source_groups.get(source, []))
+		remaining_sources = [s for s in doc.get("sources", []) if s != source]
+		if not remaining_sources:
+			await collection.delete_one({"_id": doc["_id"]})
+			continue
+		remaining_groups: set[str] = set()
+		for other in remaining_sources:
+			remaining_groups.update(source_groups.get(other, []))
+		unset: dict = {
+			f"external_ids.{source}": "",
+			f"source_groups.{source}": "",
+		}
+		for group in removed_groups - remaining_groups:
+			unset[group] = ""
+		await collection.update_one(
+			{"_id": doc["_id"]},
+			{"$pull": {"sources": source}, "$unset": unset},
+		)
 
 
 async def delete_vault_summaries(vault_id: str) -> None:

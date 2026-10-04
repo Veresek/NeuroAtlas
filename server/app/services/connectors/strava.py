@@ -117,12 +117,16 @@ class StravaConnector(Connector):
 	async def fetch_fragments(
 		self, access_token: str, date_from: date, date_to: date
 	) -> list[HealthFragment]:
+		# Widen the UTC window by one day on each side: Strava filters by UTC
+		# epoch but days are grouped by start_date_local, and a truncated local
+		# day would clobber already-stored workouts on a group-replacing merge.
+		# Dedupe in the summary store makes the extra days harmless.
 		async with httpx.AsyncClient(timeout=30) as client:
 			resp = await client.get(
 				ACTIVITIES_URL,
 				params={
-					"after": _epoch(date_from),
-					"before": _epoch(date_to, end=True),
+					"after": _epoch(date_from - timedelta(days=1)),
+					"before": _epoch(date_to + timedelta(days=2)),
 					"per_page": 200,
 				},
 				headers={"Authorization": f"Bearer {access_token}"},

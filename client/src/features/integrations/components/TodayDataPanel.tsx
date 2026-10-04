@@ -5,7 +5,10 @@ import {
 	PROVIDER_LABELS,
 	type DailyHealthSummary,
 } from '../api/integrations';
-import { useIntegrations } from '../hooks/useIntegrations';
+import {
+	INTEGRATIONS_SYNCED_EVENT,
+	useIntegrations,
+} from '../hooks/useIntegrations';
 
 const MOOD_LABELS = ['Awful', 'Bad', 'Neutral', 'Good', 'Great'];
 
@@ -35,7 +38,8 @@ export function TodayDataPanel({ log }: TodayDataPanelProps) {
 
 	useEffect(() => {
 		let cancelled = false;
-		(async () => {
+
+		const loadToday = async () => {
 			try {
 				const today = new Date().toISOString().slice(0, 10);
 				const data = await fetchHealth(today, today);
@@ -43,9 +47,14 @@ export function TodayDataPanel({ log }: TodayDataPanelProps) {
 			} catch (err) {
 				console.error('[Integrations] Failed to load today data:', err);
 			}
-		})();
+		};
+
+		void loadToday();
+		// refetch when the sidebar's sync-on-open completes
+		window.addEventListener(INTEGRATIONS_SYNCED_EVENT, loadToday);
 		return () => {
 			cancelled = true;
+			window.removeEventListener(INTEGRATIONS_SYNCED_EVENT, loadToday);
 		};
 	}, []);
 

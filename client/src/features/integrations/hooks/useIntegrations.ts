@@ -20,6 +20,10 @@ export interface UseIntegrations {
 	syncToday: () => Promise<void>;
 }
 
+/** Dispatched on window after a sync attempt completes so other components
+ * (e.g. TodayDataPanel) can refetch health data. */
+export const INTEGRATIONS_SYNCED_EVENT = 'na-integrations-synced';
+
 export function useIntegrations(): UseIntegrations {
 	const [providers, setProviders] = useState<ProviderStatus[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -80,6 +84,7 @@ export function useIntegrations(): UseIntegrations {
 			setSyncResult({ synced: [], failed: [] });
 		} finally {
 			setSyncing(false);
+			window.dispatchEvent(new Event(INTEGRATIONS_SYNCED_EVENT));
 			await refresh();
 		}
 	}, [refresh]);

@@ -11,7 +11,12 @@ from fastapi.responses import RedirectResponse
 
 from ..db import get_states
 from ..services.connectors import CONNECTORS
-from ..services.summary_store import compute_trend, load_summaries, merge_fragments
+from ..services.summary_store import (
+	compute_trend,
+	load_summaries,
+	merge_fragments,
+	remove_source,
+)
 from ..services.vault import (
 	delete_provider_token,
 	get_vault_id,
@@ -143,6 +148,7 @@ async def disconnect_provider(provider: str, request: Request):
 		logger.warning("Best-effort revoke failed for %s: %s", provider, e)
 
 	await delete_provider_token(vault_id, provider)
+	await remove_source(vault_id, provider)
 	return {"ok": True}
 
 
@@ -168,7 +174,16 @@ async def sync_integrations(
 			continue
 		try:
 			refresh_token = await load_provider_token(vault_id, provider)
-			token = await connector.refresh(refresh_token)
+			try:
+				token = await connector.refresh(refresh_token)
+			except Exception:
+				# Providers rotate refresh tokens: another tab may have
+				# rotated ours between load and use. Re-read once and retry.
+				reloaded = await load_provider_token(vault_id, provider)
+				if reloaded is None or reloaded == refresh_token:
+					raise
+				token = await connector.refresh(reloaded)
+				refresh_token = reloaded
 			if token.refresh_token and token.refresh_token != refresh_token:
 				record = await load_vault_record(vault_id, provider) or {}
 				await save_provider_token(

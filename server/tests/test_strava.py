@@ -87,12 +87,17 @@ async def test_fetch_fragments_calls_api_with_epoch_window(monkeypatch):
 	)
 	assert len(fragments) == 2
 
+	# Window is widened by one day on each side: Strava filters by UTC epoch
+	# while days are grouped by start_date_local, so a narrow UTC window can
+	# truncate a local day and a group-replacing merge would clobber workouts.
 	expected_after = int(
-		datetime.combine(date(2026, 10, 3), time.min, tzinfo=timezone.utc).timestamp()
+		datetime.combine(
+			date(2026, 10, 3) - timedelta(days=1), time.min, tzinfo=timezone.utc
+		).timestamp()
 	)
 	expected_before = int(
 		datetime.combine(
-			date(2026, 10, 4) + timedelta(days=1), time.min, tzinfo=timezone.utc
+			date(2026, 10, 4) + timedelta(days=2), time.min, tzinfo=timezone.utc
 		).timestamp()
 	)
 	assert captured["url"] == "https://www.strava.com/api/v3/athlete/activities"

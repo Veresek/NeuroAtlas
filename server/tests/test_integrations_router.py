@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 
 from app import db
 from app.main import app
-from app.schemas import ActivitySummary, Workout
+from app.schemas import ActivitySummary, NutritionSummary, Workout
 from app.services.connectors import CONNECTORS
 from app.services.connectors.base import Connector, ProviderToken
 from app.services.summary_store import HealthFragment
@@ -63,13 +63,22 @@ def strava_fragment() -> HealthFragment:
 	)
 
 
+def fatsecret_fragment() -> HealthFragment:
+	return HealthFragment(
+		source="fatsecret",
+		date=TODAY,
+		external_ids=["f1"],
+		nutrition=NutritionSummary(calories=2100.0, protein_g=120.0),
+	)
+
+
 @pytest.fixture()
 def client(monkeypatch):
 	db.set_db_client(AsyncMongoMockClient())
 	settings.server_token_key = "test-key-32-chars-minimum-length!!"
 	settings.client_base_url = "http://localhost:3000"
 	fake_strava = FakeConnector("strava", fragments=[strava_fragment()])
-	fake_fatsecret = FakeConnector("fatsecret")
+	fake_fatsecret = FakeConnector("fatsecret", fragments=[fatsecret_fragment()])
 	monkeypatch.setitem(CONNECTORS, "strava", fake_strava)
 	monkeypatch.setitem(CONNECTORS, "fatsecret", fake_fatsecret)
 	with TestClient(app) as test_client:
@@ -122,7 +131,7 @@ def test_callback_stores_token_and_redirects(client):
 	assert vault_id
 
 
-def test_callback_rejects_bad_state(client):
+async def test_callback_rejects_bad_state(client):
 	connect_and_get_state(client)  # obtain vault cookie
 	resp = client.get(
 		"/api/integrations/strava/callback",
@@ -130,6 +139,8 @@ def test_callback_rejects_bad_state(client):
 		follow_redirects=False,
 	)
 	assert resp.status_code == 400
+	vault_id = client.cookies.get("na_vault")
+	assert await load_vault_record(vault_id, "strava") is None
 
 
 def test_callback_state_single_use(client):
@@ -230,3 +241,58 @@ def test_list_integrations_reflects_connection(client):
 	statuses = {p["provider"]: p for p in client.get("/api/integrations").json()["providers"]}
 	assert statuses["strava"]["connected"] is True
 	assert statuses["strava"]["connected_at"] is not None
+
+
+def test_sync_retries_with_rotated_refresh_token(client, monkeypatch):
+	complete_connection(client)  # vault stores "refresh-1"
+	refresh_calls: list[str] = []
+	original_refresh = client.fake_strava.refresh
+
+	async def flaky_refresh(refresh_token: str) -> ProviderToken:
+		refresh_calls.append(refresh_token)
+		if refresh_token == "stale-token":
+			raise RuntimeError("refresh token rotated")
+		return await original_refresh(refresh_token)
+
+	client.fake_strava.refresh = flaky_refresh
+
+	loads = {"count": 0}
+
+	async def fake_load(vault_id: str, provider: str):
+		loads["count"] += 1
+		# first read returns a stale token (another tab rotated it since);
+		# the re-read after failure returns the current one
+		return "stale-token" if loads["count"] == 1 else "refresh-1"
+
+	monkeypatch.setattr(
+		"app.routers.integrations.load_provider_token", fake_load
+	)
+
+	resp = client.post("/api/integrations/sync")
+	assert resp.status_code == 200
+	assert resp.json()["synced"] == ["strava"]
+	assert refresh_calls == ["stale-token", "refresh-1"]
+
+
+def test_disconnect_strips_provider_data_keeps_other_source(client):
+	complete_connection(client, "strava")
+	complete_connection(client, "fatsecret")
+	client.post("/api/integrations/sync")
+
+	resp = client.post("/api/integrations/strava/disconnect")
+	assert resp.status_code == 200
+
+	body = client.get("/api/me/health").json()
+	assert len(body["summaries"]) == 1
+	summary = body["summaries"][0]
+	assert summary["sources"] == ["fatsecret"]
+	assert summary["activity"] is None
+	assert summary["nutrition"]["calories"] == 2100.0
+
+
+def test_disconnect_removes_sole_source_docs(client):
+	complete_connection(client, "strava")
+	client.post("/api/integrations/sync")
+	client.post("/api/integrations/strava/disconnect")
+	body = client.get("/api/me/health").json()
+	assert body["summaries"] == []
