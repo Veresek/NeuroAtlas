@@ -23,7 +23,9 @@ export default defineConfig({
 		host: "0.0.0.0",
 		allowedHosts: ["neuroatlas.info", "www.neuroatlas.info"],
 		proxy: {
-			"/api": "http://localhost:8000",
+			// Inside docker compose the API lives in the "server" container,
+			// not on localhost; override via API_PROXY_TARGET.
+			"/api": process.env.API_PROXY_TARGET ?? "http://localhost:8000",
 		},
 	},
 	resolve: {
