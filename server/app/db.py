@@ -26,7 +26,9 @@ def get_db() -> AsyncIOMotorDatabase:
 	if _client is None:
 		from motor.motor_asyncio import AsyncIOMotorClient
 
-		_client = AsyncIOMotorClient(settings.mongo_url)
+		_client = AsyncIOMotorClient(
+			settings.mongo_url, serverSelectionTimeoutMS=5000
+		)
 	return _client[DB_NAME]
 
 

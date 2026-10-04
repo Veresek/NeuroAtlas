@@ -13,6 +13,8 @@ services:
       context: ./server
     env_file:
       - ./.env
+    environment:
+      MONGO_URL: ${MONGO_URL:-mongodb://mongo:27017}
     restart: unless-stopped
     depends_on:
       - mongo

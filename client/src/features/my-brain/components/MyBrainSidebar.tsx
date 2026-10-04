@@ -1,6 +1,7 @@
 import MyBrainIcon from '@/assets/my-brain.svg?react';
 import { Slider } from '@/components/ui/Slider';
 import { Button } from '@/components/ui/Button';
+import { ConnectedAppsPanel } from '@/features/integrations/components/ConnectedAppsPanel';
 import { useMyBrain } from '../hooks/useMyBrain';
 
 const MOOD_LABELS = ['Awful', 'Bad', 'Neutral', 'Good', 'Great'];
@@ -107,6 +108,9 @@ export function MyBrainSidebar({ onSelectItem }: MyBrainSidebarProps) {
 					{isGenerating ? 'Generating...' : 'Generate'}
 				</Button>
 			</div>
+
+			{/* Third-party integrations */}
+			<ConnectedAppsPanel />
 		</div>
 	);
 }
