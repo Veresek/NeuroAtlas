@@ -2,13 +2,17 @@ from __future__ import annotations
 
 import logging
 from contextlib import asynccontextmanager
+from datetime import date, timedelta
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 
 from .db import get_states
 from .routers.integrations import router as integrations_router
-from .schemas import DailyLogAnalysis, MyBrainLog
-from .services.gemini import generate_daily_log_analysis
+from .schemas import AffectedBrainSection, DailyLogAnalysis, MyBrainLog
+from .services.gemini import generate_daily_log_analysis, merge_sections
+from .services.insights import heuristic_sections
+from .services.summary_store import compute_trend, load_summaries
+from .services.vault import get_vault_id
 from .settings import settings
 
 
@@ -34,15 +38,39 @@ def health() -> dict:
 
 
 @app.post("/api/my-brain/analyze", response_model=DailyLogAnalysis)
-async def analyze_my_brain(log: MyBrainLog) -> DailyLogAnalysis:
+async def analyze_my_brain(log: MyBrainLog, request: Request) -> DailyLogAnalysis:
 	if not settings.gemini_api_key:
 		raise HTTPException(status_code=500, detail="GEMINI_API_KEY is not configured.")
 	if not settings.gemini_model:
 		raise HTTPException(status_code=500, detail="GEMINI_MODEL is not configured.")
 
+	summary = None
+	trend = None
 	try:
-		return await generate_daily_log_analysis(log)
+		vault_id = get_vault_id(request)
+		if vault_id:
+			today = date.today()
+			summaries = await load_summaries(
+				vault_id,
+				(today - timedelta(days=6)).isoformat(),
+				today.isoformat(),
+			)
+			if summaries and summaries[-1].date == today.isoformat():
+				summary = summaries[-1]
+			trend = compute_trend(summaries)
+	except Exception as e:
+		# enrichment is best-effort: analysis must work with sliders alone
+		logger.warning("My Brain enrichment failed: %s", e)
+		summary = None
+		trend = None
+
+	try:
+		analysis = await generate_daily_log_analysis(log, summary, trend)
 	except HTTPException:
 		raise
 	except Exception as e:
 		raise HTTPException(status_code=502, detail=str(e)) from e
+
+	heuristic: list[AffectedBrainSection] = heuristic_sections(log, summary, trend)
+	analysis.affectedSections = merge_sections(heuristic, analysis.affectedSections)
+	return analysis
