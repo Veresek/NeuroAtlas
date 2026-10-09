@@ -46,6 +46,8 @@ Strava and FatSecret are code-complete, have no credentials, no users, and after
 
 One thing survives and is load-bearing for Track D: the anonymous `na_vault` cookie as identity. Everything else about the integration stack goes.
 
+*(§10 later cut the cookie and the database too — nothing on this branch had a consumer for them.)*
+
 ### 0.1 Removal inventory
 
 | Layer | Delete | Kept instead |
@@ -68,6 +70,8 @@ One thing survives and is load-bearing for Track D: the anonymous `na_vault` coo
 Total: roughly 1.1k lines of server code, ~490 lines of client code, ~890 lines of tests.
 
 ### 0.2 The replacement that must land in the same commit
+
+> **Reversed later the same day by §10.** The reasoning below is kept because Track D has to answer the same question again; the conclusion ("mint it in analyze") was wrong for a branch that ships no storage — nothing read the `vault_id` that was being minted.
 
 The vault cookie is currently minted in exactly one place: `integrations.py:122`, inside `GET /api/integrations/{provider}/connect`. `issue_vault_cookie()` (`vault.py:70`) exists but has **no caller in application code** — it was written for the OAuth path and never used. Deleting the router therefore deletes the only identity mechanism §6 depends on.
 
@@ -110,9 +114,9 @@ Browsers holding an `na_vault` cookie keep it; it now identifies a `daily_logs` 
 ### 0.6 Done when
 
 1. `rg -i "strava|fatsecret|oauth|connector|integrations" server/app client/src` returns nothing.
-2. `server/.venv/Scripts/python.exe -m pytest server/tests` → **8 passed**, no collection errors, no import of `cryptography`.
+2. `server/.venv/Scripts/python.exe -m pytest server/tests` → **8 passed** at step 0 (13 after §10.2), no collection errors, no import of `cryptography`.
 3. `npm run lint && npm run build` in `client` clean — proves no dangling `@/features/integrations` import survived.
-4. `curl -i -X POST http://localhost:8000/api/my-brain/analyze -H 'Content-Type: application/json' -d '{"note":"test"}'` response headers contain `Set-Cookie: na_vault=…; HttpOnly; SameSite=Lax`.
+4. `curl -i -X POST http://localhost:8000/api/my-brain/analyze -H 'Content-Type: application/json' -d '{"note":"test"}'` returns an analysis and sets **no** cookie (§10 — nothing on this branch stores anything yet).
 5. In `docker compose`, My Brain generates an analysis and the browser network tab shows no request to `/api/integrations*`.
 6. `docs/03_LIFESTYLE_INTEGRATION_PLAN.md` reads as a deferred backlog (status line, provider table, the "Phases A–C ✅ Done" claims all corrected) and `README.md:28`'s description no longer implies shipped integrations.
 
@@ -236,7 +240,7 @@ The chips live in `client/src/features/my-brain/` — `TodayDataPanel` is delete
 
 ## 6. Track D — history, baseline, phase promotion
 
-New collection `daily_logs`, one doc per `(vault_id, date)`, written by `POST /api/my-brain/analyze` — which is also where the `na_vault` cookie is now minted when absent (§0.2, since step 0 deleted the OAuth connect endpoint that used to set it). A request that still carries no cookie after the handler runs (cookies blocked) gets a stateless analysis, as today.
+New collection `daily_logs`, one doc per `(vault_id, date)`, written by `POST /api/my-brain/analyze`. The `na_vault` cookie no longer exists on this branch (§10), so Track D lands identity in the same step as the collection that needs it — minted by analyze when the request carries none.
 
 ```
 {vault_id, date, note, signals, provenance: {field: "confirmed"|"extracted"},
@@ -305,7 +309,7 @@ There is no `/api/integrations`, no connector registry, no Connected Apps panel 
 
 ## Rollout
 
-0. **§0 in full**: delete the integration stack, move `na_vault` issuance into analyze, drop the three Mongo collections, rewrite `docs/03`, delete the 2026-10-04 spec and plan. Green with the 5-test residue.
+0. **§0 in full**: delete the integration stack, drop the three Mongo collections, rewrite `docs/03`, delete the 2026-10-04 spec and plan. Green with the 8-test residue (§10 later cut identity and Mongo too, and §10.2 grew the suite to 13).
 1. Data plumbing (§1) + `atlas_index`/`section_resolver` + fake-client seam + golden skeleton (§9) → **A** switched on behind `GROUND_ATLAS=1` so the old prompt stays comparable.
 2. `insights` matcher + `DailySignals` + chips (**B**).
 3. `daily_logs`, baseline, phase promotion, history UI, `DELETE /api/me/data` (**D**) → then remove the flag.
@@ -337,3 +341,37 @@ Each branch ends green with server tests + client lint/build, one commit per num
 | Keep `fragment` in the provenance enum as a free extension point | A tier with no producer has no test, and an untested precedence level in the code that decides what the model is told is exactly the kind of code that rots silently. §8 re-adds it together with its test. |
 | Encrypt `daily_logs` with `SERVER_TOKEN_KEY` anyway | No credential is stored any more; per-vault HKDF derivation would add a key-rotation path that can destroy every user's history while protecting nothing that a Mongo read does not already expose. |
 | Keep `cryptography` "in case we need it" | It is one line in `requirements.txt` and an import in a file that no longer has any crypto in it; leaving it means the next reader has to work out whether it is load-bearing. |
+
+---
+
+## 10. Same-day corrections after step 0
+
+Two things step 0 got wrong, both surfaced by running the app rather than by reading the code.
+
+### 10.1 Identity and the database were cut as well (overrides §0.2 and the Mongo rows of §0.5)
+
+Step 0 kept `vault.py`, `na_vault`, `db.py`, `mongo_url`, `motor`, `mongomock-motor` and a `mongo` compose service **for a consumer that only arrives in Track D** — and had `analyze` mint a two-year HttpOnly cookie that no line of code reads. That is speculative infrastructure with a privacy side effect, so it went: the API is now `note → Gemini → sections`, stateless, no database, no identity.
+
+Rule this leaves for Track D: `daily_logs`, its accessors, the driver, the compose service, the cookie and its issuance point land **together, in the step that first reads a `vault_id`** — never before. §0.2 stays as the option analysis to re-read when that step is planned; §6's doc shape and endpoints are unchanged. The old `mongo_data` volume on the VPS is deliberately left in place (deleting it is a separate, destructive decision).
+
+### 10.2 `Invalid JSON returned by Gemini` — root cause
+
+Symptom: every Generate ended in `Could not generate analysis.`.
+
+Reproduced against the live endpoint, twice:
+
+| Call | Evidence |
+| --- | --- |
+| 1 | `200`, `finishReason: STOP`, **one** part, 1193 chars: a complete JSON object followed by three stray characters. `json.loads` over the whole string raises `Extra data: line 30 column 1 (char 1190)` → the `except Exception` blanket turned it into `502 Invalid JSON returned by Gemini.` |
+| 2 | `503` from upstream (`This model is currently experiencing high demand`) — the same status that filled the container log, and unrelated to our parsing |
+| 3 | `httpx.ReadTimeout` after 40 s escaped `gemini.py` entirely, hit `main.py`'s blanket handler, and became a `502` whose `detail` was **empty** (`str(ReadTimeout())` is `""`), so the UI could only say `API error (502)` |
+
+Fix at the boundary, in `gemini.py::parse_analysis(data)`: join **every** text part instead of trusting `parts[0]`, take the first JSON object with `json.JSONDecoder().raw_decode()` (trailing fences/tokens and leading prose both survive), keep **one entry per region** (the model repeats a region with a contradicting effect type — observed live: `Frontal Lobe` twice, `Amygdala` twice in one six-entry answer), then apply `MAX_AFFECTED_SECTIONS = 6`. Cap and dedupe now live here, which is why `merge_sections` — without a caller since step 0 — is deleted rather than re-plumbed. The three failure modes get three distinct messages instead of one blanket `Invalid JSON`.
+
+Transport is separated too: `httpx.TransportError` becomes a retryable `503 "Gemini did not respond in time."` and the request timeout moved 40 s → 60 s, because this model's latency under load is the dominant term.
+
+Deliberately unchanged: `responseMimeType` + `responseSchema` (the endpoint does honor them — the object came back well-shaped; the trailing token is sampler noise, cheaper to ignore than to fight), `temperature: 0.7`, and the client's retry-on-`502`, which is right precisely because the sampler is nondeterministic: a second attempt can return clean JSON.
+
+Coverage: 15 tests, including the observed `…}\n``` ` shape, fences with leading prose, a response split across parts, the dedupe case, the cap, the timeout mapping, and each rejection branch. The dedupe and timeout cases were written against the pre-fix code, which returned the duplicates and the `502`-with-empty-`detail` respectively.
+
+**Still open at the time of writing:** upstream returned `503 high demand` for every attempt in the last few minutes, so the dedupe path has one live confirmation (the successful call above, before dedupe shipped) and no live call since. The behavior is covered by tests; re-check in the UI once the provider recovers.

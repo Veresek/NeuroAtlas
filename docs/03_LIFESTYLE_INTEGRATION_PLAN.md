@@ -21,10 +21,10 @@ The product question that removed it: **accuracy came from grounding, not from m
 
 | Rule | Detail |
 | --- | --- |
-| **No NeuroAtlas accounts** | No email/password, no social login. Identity is the anonymous HttpOnly `na_vault` cookie (UUID), minted by `POST /api/my-brain/analyze`. |
+| **No NeuroAtlas accounts** | No email/password, no social login. There is **no identity at all today**: the analysis is stateless and nothing is stored. Track D introduces the anonymous HttpOnly `na_vault` cookie at the moment there is a database that needs a key. |
 | **`agent/` is atlas ingestion only** | CLI pipeline that writes `client/src/data/atlas.json` and `research.json`. Runtime AI (`server/app/services/gemini.py`, `/api/my-brain/analyze`, any future chat) must not import, call, or reuse `agent/` code, prompts, or LangChain. |
 | Education, not medical advice | Same as the current Gemini system prompt. |
-| No claims the code cannot keep | UI copy must not promise sync, encryption or coverage that is not implemented. The removed panel said "encrypted on the server"; the notes in `daily_logs` are not encrypted, so copy must say what is stored and where instead. |
+| No claims the code cannot keep | UI copy must not promise sync, encryption or coverage that is not implemented. The removed panel said "encrypted on the server" — nothing is stored or encrypted now, and copy must say so plainly when Track D changes that. |
 
 ---
 
@@ -32,12 +32,11 @@ The product question that removed it: **accuracy came from grounding, not from m
 
 | Piece | Today |
 | --- | --- |
-| User input | `MyBrainLog` = `{ note }` — one free-text field, plus confirm chips planned in Track B |
-| Signals | `DailySignals` (Track B), produced from prose or a tap, with per-field provenance `confirmed > extracted` |
-| Runtime AI | `POST /api/my-brain/analyze` → one grounded Gemini call |
-| Output | `message` + `affectedSections[]` resolved in code from `atlas.json`, never invented by the model |
-| Persistence | MongoDB (`daily_logs` from Track D); no provider collections |
-| Atlas data | Produced offline by `agent/`; consumed as static JSON, baked into the server image at build time |
+| User input | `MyBrainLog` = `{ note }` — one free-text field (Track B adds confirm chips) |
+| Runtime AI | `POST /api/my-brain/analyze` → one Gemini call |
+| Output | `{ message, affectedSections[] }`; the model picks section names from an allowed enum. Track A replaces that with `affectedSections` resolved in code from `atlas.json`, and `DailySignals` (provenance `confirmed > extracted`) becomes the input to deterministic rules |
+| Persistence | **None.** Stateless request, no database, no identity |
+| Atlas data | Produced offline by `agent/`; consumed by the client as static JSON |
 
 ---
 
@@ -76,7 +75,7 @@ A provider does **not** get to define the schema: it maps its payload onto `Dail
 
 ## Identity and OAuth without accounts
 
-Third-party OAuth produces per-user refresh tokens while NeuroAtlas has no users. Compatible if identity is a **browser vault**, not a person — this part of the 2026-10 design still holds:
+Third-party OAuth produces per-user refresh tokens while NeuroAtlas has no users. Compatible if identity is a **browser vault**, not a person — none of this is implemented any more; it is the shape a future provider must bring with it:
 
 1. App credentials live in server env only.
 2. The opaque `vault_id` cookie is a device session, not an account.

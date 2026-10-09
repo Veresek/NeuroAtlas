@@ -16,7 +16,6 @@ The project aims to create an innovative and interactive platform that, based on
 - **Frontend:** React.js, TypeScript, Tailwind CSS, Vite
 - **3D Brain Library:** React Three Fiber (R3F) + Three.js
 - **Backend:** Python (FastAPI)
-- **Database:** MongoDB
 - **Code Quality:** ESLint
 
 ## Documentation and Project Structure
