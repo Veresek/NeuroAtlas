@@ -4,6 +4,7 @@ import {
 	disconnect as disconnectProvider,
 	listProviders,
 	syncNow,
+	setEnabled,
 	type ProviderId,
 	type ProviderStatus,
 	type SyncResult,
@@ -16,6 +17,7 @@ export interface UseIntegrations {
 	syncResult: SyncResult | null;
 	connect: (provider: ProviderId) => void;
 	disconnect: (provider: ProviderId) => Promise<void>;
+	toggle: (provider: ProviderId, enabled: boolean) => Promise<void>;
 	refresh: () => Promise<void>;
 	syncToday: () => Promise<void>;
 }
@@ -74,6 +76,18 @@ export function useIntegrations(): UseIntegrations {
 		[refresh],
 	);
 
+	const toggle = useCallback(
+		async (provider: ProviderId, enabled: boolean) => {
+			try {
+				await setEnabled(provider, enabled);
+			} catch (err) {
+				console.error('[Integrations] Toggle failed:', err);
+			}
+			await refresh();
+		},
+		[refresh],
+	);
+
 	const syncToday = useCallback(async () => {
 		setSyncing(true);
 		try {
@@ -96,6 +110,7 @@ export function useIntegrations(): UseIntegrations {
 		syncResult,
 		connect,
 		disconnect,
+		toggle,
 		refresh,
 		syncToday,
 	};

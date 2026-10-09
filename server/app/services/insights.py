@@ -2,35 +2,26 @@
 
 Every rule is anchored to an existing atlas entry (client/src/data/atlas.json)
 so heuristic output stays consistent with the atlas language Gemini and the
-3D brain model already use. Cross-checked against research.json on 2026-10-04:
+3D brain model already use. Rules fire only from objective app data
+(Strava / FatSecret); the free-text daily note is interpreted by Gemini alone.
 
-- sleep < 6h            → Sleep Deprivation (acute): Frontal depresses, Amygdala stimulates
 - cardio ≥ 30 min       → Physical Activity (acute): Frontal stimulates, Amygdala modulates
 - active trend (≥3 days)→ Physical Activity (chronic): Hippocampus modulates
 - caffeine > 200 mg     → Caffeine (acute): Frontal stimulates, Nucleus Accumbens stimulates
 - alcohol ≥ 20 g        → Alcohol (acute): Frontal depresses
-- mood ≤ 1              → Sadness (acute): Amygdala stimulates
-
-Dropped from the original plan table (no atlas/research.json support):
-Thalamus-for-caffeine, Brainstem-for-alcohol, water-intake rule (water_ml is
-not populated by the in-scope connectors).
 """
 
 from __future__ import annotations
 
 from typing import Optional
 
-from ..schemas import AffectedBrainSection, DailyHealthSummary, MyBrainLog
+from ..schemas import AffectedBrainSection, DailyHealthSummary
 
 
 CARDIO_TYPES = {"run", "ride", "swim", "walk", "hike", "row", "elliptical"}
 CARDIO_MIN_MINUTES = 30
 CAFFEINE_MG_THRESHOLD = 200.0
-CAFFEINE_MG_PER_CUP = 95.0
-COFFEE_CUPS_THRESHOLD = 3
 ALCOHOL_G_THRESHOLD = 20.0
-SLEEP_H_THRESHOLD = 6.0
-MOOD_THRESHOLD = 1
 TREND_MIN_DAYS = 3
 TREND_MIN_ACTIVE_MINUTES_AVG = 30.0
 
@@ -44,15 +35,10 @@ def _add(
 
 
 def heuristic_sections(
-	log: MyBrainLog,
 	summary: Optional[DailyHealthSummary],
 	trend: Optional[dict],
 ) -> list[AffectedBrainSection]:
 	sections: list[AffectedBrainSection] = []
-
-	if log.sleep < SLEEP_H_THRESHOLD:
-		_add(sections, "Frontal Lobe", "depresses")
-		_add(sections, "Amygdala", "stimulates")
 
 	if summary is not None and summary.activity is not None:
 		has_cardio = any(
@@ -76,21 +62,11 @@ def heuristic_sections(
 		caffeine_mg = summary.nutrition.caffeine_mg
 		alcohol_g = summary.nutrition.alcohol_g
 
-	high_caffeine = (
-		(caffeine_mg is not None and caffeine_mg > CAFFEINE_MG_THRESHOLD)
-		or (
-			caffeine_mg is None
-			and log.coffee * CAFFEINE_MG_PER_CUP > CAFFEINE_MG_THRESHOLD
-		)
-	)
-	if high_caffeine:
+	if caffeine_mg is not None and caffeine_mg > CAFFEINE_MG_THRESHOLD:
 		_add(sections, "Frontal Lobe", "stimulates")
 		_add(sections, "Nucleus Accumbens", "stimulates")
 
 	if alcohol_g is not None and alcohol_g >= ALCOHOL_G_THRESHOLD:
 		_add(sections, "Frontal Lobe", "depresses")
-
-	if log.mood <= MOOD_THRESHOLD:
-		_add(sections, "Amygdala", "stimulates")
 
 	return sections

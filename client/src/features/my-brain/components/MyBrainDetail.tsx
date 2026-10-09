@@ -49,8 +49,8 @@ export function MyBrainDetail({ item, onClose }: MyBrainDetailProps) {
 							Analyzing your daily log…
 						</p>
 						<p className='text-xs text-gray-500 mt-1 max-w-xs'>
-							Gemini is interpreting sleep, caffeine, and mood from a
-							neuroscience perspective.
+							Gemini is interpreting your day from a neuroscience
+							perspective.
 						</p>
 					</div>
 				)}
@@ -82,7 +82,7 @@ export function MyBrainDetail({ item, onClose }: MyBrainDetailProps) {
 					<div className='flex flex-col items-center justify-center py-12 text-center'>
 						<MyBrainIcon className='w-8 h-8 text-[#00aaff]/60 mb-3' />
 						<p className='text-xs text-gray-500 max-w-xs'>
-							Adjust your sliders and press <strong>Generate</strong> to get a
+							Describe your day and press <strong>Generate</strong> to get a
 							neurobiological overview for <strong>{item}</strong>.
 						</p>
 					</div>

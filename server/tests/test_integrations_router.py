@@ -11,6 +11,7 @@ from app.main import app
 from app.schemas import ActivitySummary, NutritionSummary, Workout
 from app.services.connectors import CONNECTORS
 from app.services.connectors.base import Connector, ProviderToken
+from app.services.connectors.strava import StravaConnector
 from app.services.summary_store import HealthFragment
 from app.services.vault import load_vault_record
 from app.settings import settings
@@ -116,6 +117,34 @@ def test_connect_redirects_and_sets_cookie(client):
 	assert "na_vault=" in set_cookie
 	assert "HttpOnly" in set_cookie
 	assert "SameSite=lax" in set_cookie.replace("Lax", "lax")
+
+
+def test_connect_without_credentials_returns_clear_error(client, monkeypatch):
+	# the real connector here (instead of the fixture fake): empty env vars
+	# must surface as a readable 500, not a redirect to the provider
+	monkeypatch.setitem(CONNECTORS, "strava", StravaConnector())
+	monkeypatch.setattr(settings, "strava_client_id", "")
+	monkeypatch.setattr(settings, "strava_client_secret", "")
+	resp = client.get("/api/integrations/strava/connect", follow_redirects=False)
+	assert resp.status_code == 500
+	assert "STRAVA_CLIENT_ID" in resp.json()["detail"]
+
+
+def test_connect_with_half_credentials_blocked(client, monkeypatch):
+	monkeypatch.setitem(CONNECTORS, "strava", StravaConnector())
+	monkeypatch.setattr(settings, "strava_client_id", "12345")
+	monkeypatch.setattr(settings, "strava_client_secret", "")
+	resp = client.get("/api/integrations/strava/connect", follow_redirects=False)
+	assert resp.status_code == 500
+
+
+def test_connect_with_credentials_redirects(client, monkeypatch):
+	monkeypatch.setitem(CONNECTORS, "strava", StravaConnector())
+	monkeypatch.setattr(settings, "strava_client_id", "12345")
+	monkeypatch.setattr(settings, "strava_client_secret", "s3cret")
+	resp = client.get("/api/integrations/strava/connect", follow_redirects=False)
+	assert resp.status_code == 302
+	assert "client_id=12345" in resp.headers["location"]
 
 
 def test_callback_stores_token_and_redirects(client):
@@ -296,3 +325,87 @@ def test_disconnect_removes_sole_source_docs(client):
 	client.post("/api/integrations/strava/disconnect")
 	body = client.get("/api/me/health").json()
 	assert body["summaries"] == []
+
+
+def test_toggle_sets_enabled_flag(client):
+	complete_connection(client)
+	resp = client.post(
+		"/api/integrations/strava/toggle", json={"enabled": False}
+	)
+	assert resp.status_code == 200
+	statuses = {p["provider"]: p for p in client.get("/api/integrations").json()["providers"]}
+	assert statuses["strava"]["enabled"] is False
+
+	assert client.post(
+		"/api/integrations/strava/toggle", json={"enabled": True}
+	).status_code == 200
+	statuses = {p["provider"]: p for p in client.get("/api/integrations").json()["providers"]}
+	assert statuses["strava"]["enabled"] is True
+
+
+def test_toggle_defaults_enabled_on_connect(client):
+	complete_connection(client)
+	statuses = {p["provider"]: p for p in client.get("/api/integrations").json()["providers"]}
+	assert statuses["strava"]["enabled"] is True
+
+
+def test_toggle_unknown_provider_404(client):
+	resp = client.post(
+		"/api/integrations/nope/toggle", json={"enabled": False}
+	)
+	assert resp.status_code == 404
+
+
+def test_toggle_disconnected_provider_404(client):
+	connect_and_get_state(client)  # vault cookie, but strava never connected
+	resp = client.post(
+		"/api/integrations/strava/toggle", json={"enabled": False}
+	)
+	assert resp.status_code == 404
+
+
+def test_sync_skips_disabled_provider(client):
+	complete_connection(client, "strava")
+	complete_connection(client, "fatsecret")
+	assert client.post(
+		"/api/integrations/fatsecret/toggle", json={"enabled": False}
+	).status_code == 200
+	body = client.post("/api/integrations/sync").json()
+	assert body["synced"] == ["strava"]
+	assert body["failed"] == []
+
+
+def test_me_health_hides_disabled_provider_data(client):
+	complete_connection(client, "strava")
+	complete_connection(client, "fatsecret")
+	client.post("/api/integrations/sync")
+	client.post("/api/integrations/strava/toggle", json={"enabled": False})
+
+	body = client.get("/api/me/health").json()
+	assert len(body["summaries"]) == 1
+	summary = body["summaries"][0]
+	assert summary["sources"] == ["fatsecret"]
+	assert summary["activity"] is None
+	assert summary["nutrition"]["calories"] == 2100.0
+	assert body["trend"]["active_minutes_avg"] is None
+
+
+def test_me_health_restores_data_on_reenable(client):
+	complete_connection(client, "strava")
+	client.post("/api/integrations/sync")
+	client.post("/api/integrations/strava/toggle", json={"enabled": False})
+	# sole source disabled → no day carries any data, so all summaries drop
+	assert client.get("/api/me/health").json()["summaries"] == []
+	client.post("/api/integrations/strava/toggle", json={"enabled": True})
+	summary = client.get("/api/me/health").json()["summaries"][0]
+	assert summary["activity"]["workouts"][0]["type"] == "run"
+
+
+async def test_sync_skips_disabled_and_preserves_flag(client):
+	complete_connection(client)
+	client.post("/api/integrations/strava/toggle", json={"enabled": False})
+	resp = client.post("/api/integrations/sync")
+	assert resp.json() == {"synced": [], "failed": []}
+	vault_id = client.cookies.get("na_vault")
+	record = await load_vault_record(vault_id, "strava")
+	assert record["enabled"] is False

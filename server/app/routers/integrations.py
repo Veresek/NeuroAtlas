@@ -10,9 +10,11 @@ from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import RedirectResponse
 
 from ..db import get_states
+from ..schemas import ProviderToggle
 from ..services.connectors import CONNECTORS
 from ..services.summary_store import (
 	compute_trend,
+	filter_disabled,
 	load_summaries,
 	merge_fragments,
 	remove_source,
@@ -20,10 +22,12 @@ from ..services.summary_store import (
 from ..services.vault import (
 	delete_provider_token,
 	get_vault_id,
-	list_connected_providers,
+	list_disabled_providers,
+	list_enabled_providers,
 	load_provider_token,
 	load_vault_record,
 	save_provider_token,
+	set_provider_enabled,
 	set_vault_cookie,
 )
 from ..settings import settings
@@ -52,15 +56,36 @@ async def list_integrations(request: Request) -> dict:
 	for name in CONNECTORS:
 		connected = False
 		connected_at = None
+		enabled = False
 		if vault_id:
 			record = await load_vault_record(vault_id, name)
 			if record:
 				connected = True
 				connected_at = record.get("connected_at")
+				enabled = bool(record.get("enabled", True))
 		providers.append(
-			{"provider": name, "connected": connected, "connected_at": connected_at}
+			{
+				"provider": name,
+				"connected": connected,
+				"connected_at": connected_at,
+				"enabled": enabled,
+			}
 		)
 	return {"providers": providers}
+
+
+@router.post("/integrations/{provider}/toggle")
+async def toggle_provider(
+	provider: str, body: ProviderToggle, request: Request
+) -> dict:
+	if provider not in CONNECTORS:
+		raise HTTPException(status_code=404, detail="Unknown provider")
+	vault_id = get_vault_id(request)
+	record = await load_vault_record(vault_id, provider) if vault_id else None
+	if record is None:
+		raise HTTPException(status_code=404, detail="Provider not connected")
+	await set_provider_enabled(vault_id, provider, body.enabled)
+	return {"ok": True, "enabled": body.enabled}
 
 
 @router.get("/integrations/{provider}/connect")
@@ -68,6 +93,14 @@ async def connect_provider(provider: str, request: Request):
 	connector = CONNECTORS.get(provider)
 	if connector is None:
 		raise HTTPException(status_code=404, detail="Unknown provider")
+	if not connector.is_configured:
+		raise HTTPException(
+			status_code=500,
+			detail=(
+				f"Provider '{provider}' is not configured — set "
+				f"{connector.config_hint} in the server environment."
+			),
+		)
 
 	vault_id = get_vault_id(request)
 	is_new_vault = vault_id is None
@@ -168,7 +201,7 @@ async def sync_integrations(
 	if not vault_id:
 		return {"synced": synced, "failed": failed}
 
-	for provider in await list_connected_providers(vault_id):
+	for provider in await list_enabled_providers(vault_id):
 		connector = CONNECTORS.get(provider)
 		if connector is None:
 			continue
@@ -192,6 +225,7 @@ async def sync_integrations(
 					token.refresh_token,
 					token.expires_at,
 					record.get("scopes", []),
+					record.get("enabled", True),
 				)
 			fragments = await connector.fetch_fragments(
 				token.access_token, date_from, date_to
@@ -222,6 +256,7 @@ async def my_health(
 	summaries = await load_summaries(
 		vault_id, date_from.isoformat(), date_to.isoformat()
 	)
+	summaries = filter_disabled(summaries, await list_disabled_providers(vault_id))
 	return {
 		"summaries": [summary.model_dump() for summary in summaries],
 		"trend": compute_trend(summaries),

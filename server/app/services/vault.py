@@ -79,6 +79,7 @@ async def save_provider_token(
 	refresh_token: str,
 	expires_at: Optional[datetime],
 	scopes: list[str],
+	enabled: bool = True,
 ) -> None:
 	ciphertext, nonce = encrypt_token(refresh_token, vault_id)
 	await get_vaults().update_one(
@@ -89,6 +90,7 @@ async def save_provider_token(
 				"nonce": nonce,
 				"expires_at": expires_at,
 				"scopes": scopes,
+				"enabled": enabled,
 				"connected_at": datetime.now(timezone.utc),
 			}
 		},
@@ -113,4 +115,27 @@ async def delete_provider_token(vault_id: str, provider: str) -> None:
 
 async def list_connected_providers(vault_id: str) -> list[str]:
 	cursor = get_vaults().find({"vault_id": vault_id}, {"provider": 1})
+	return [doc["provider"] async for doc in cursor]
+
+
+async def set_provider_enabled(
+	vault_id: str, provider: str, enabled: bool
+) -> None:
+	await get_vaults().update_one(
+		{"vault_id": vault_id, "provider": provider},
+		{"$set": {"enabled": enabled}},
+	)
+
+
+async def list_enabled_providers(vault_id: str) -> list[str]:
+	cursor = get_vaults().find(
+		{"vault_id": vault_id, "enabled": {"$ne": False}}, {"provider": 1}
+	)
+	return [doc["provider"] async for doc in cursor]
+
+
+async def list_disabled_providers(vault_id: str) -> list[str]:
+	cursor = get_vaults().find(
+		{"vault_id": vault_id, "enabled": False}, {"provider": 1}
+	)
 	return [doc["provider"] async for doc in cursor]

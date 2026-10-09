@@ -156,6 +156,39 @@ async def delete_vault_summaries(vault_id: str) -> None:
 	await get_summaries().delete_many({"vault_id": vault_id})
 
 
+# Which summary field group each in-scope provider owns.
+SOURCE_FIELD_BY_PROVIDER = {"strava": "activity", "fatsecret": "nutrition"}
+
+
+def filter_disabled(
+	summaries: list[DailyHealthSummary], disabled: list[str]
+) -> list[DailyHealthSummary]:
+	"""Hide a disabled provider's stored data without deleting it.
+
+	Read-side mask used by /me/health and the My Brain enrichment: a paused
+	provider contributes nothing until it is toggled back on. Summaries left
+	with no data at all are dropped so they do not skew trend averages.
+	"""
+	if not disabled:
+		return summaries
+	disabled_set = set(disabled)
+	filtered: list[DailyHealthSummary] = []
+	for summary in summaries:
+		update: dict = {}
+		for provider, field in SOURCE_FIELD_BY_PROVIDER.items():
+			if provider in disabled_set and getattr(summary, field) is not None:
+				update[field] = None
+		sources = [s for s in summary.sources if s not in disabled_set]
+		if sources != summary.sources:
+			update["sources"] = sources
+		if update:
+			summary = summary.model_copy(update=update)
+		if summary.activity is None and summary.nutrition is None:
+			continue
+		filtered.append(summary)
+	return filtered
+
+
 def compute_trend(summaries: list[DailyHealthSummary]) -> dict:
 	"""7-day averages over the most recent docs that carry data."""
 	recent = summaries[-7:]

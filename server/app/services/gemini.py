@@ -18,8 +18,6 @@ from ..schemas import (
 from ..settings import settings
 
 
-MOOD_LABELS = ["Awful", "Bad", "Neutral", "Good", "Great"]
-
 ALLOWED_SECTION_NAMES = [
 	"Frontal Lobe",
 	"Parietal Lobe",
@@ -127,13 +125,7 @@ def build_user_message(
 	summary: Optional[DailyHealthSummary] = None,
 	trend: Optional[dict] = None,
 ) -> str:
-	mood_label = MOOD_LABELS[log.mood] if 0 <= log.mood < len(MOOD_LABELS) else "Unknown"
-	message = (
-		"Analyze today's log.\n\n"
-		f"sleep_hours={log.sleep}\n"
-		f"coffee_cups={log.coffee}\n"
-		f"mood_label={mood_label}"
-	)
+	message = "Analyze today's log.\n\n" + log.note
 	extra_lines: list[str] = []
 	if summary is not None:
 		if summary.activity is not None:

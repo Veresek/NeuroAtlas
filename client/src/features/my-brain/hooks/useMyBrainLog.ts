@@ -2,16 +2,12 @@ import { useState } from "react";
 import { analyzeDailyLog, type DailyLogAnalysis } from "../api/analyzeDailyLog";
 
 export interface MyBrainLog {
-	sleep: number;
-	coffee: number;
-	mood: number;
+	note: string;
 }
 
 export interface UseMyBrainLog {
 	log: MyBrainLog;
-	setSleep: (v: number) => void;
-	setCoffee: (v: number) => void;
-	setMood: (v: number) => void;
+	setNote: (v: string) => void;
 	isGenerating: boolean;
 	analysis: DailyLogAnalysis | null;
 	error: string | null;
@@ -19,15 +15,13 @@ export interface UseMyBrainLog {
 }
 
 export function useMyBrainLog(): UseMyBrainLog {
-	const [sleep, setSleep] = useState(7);
-	const [coffee, setCoffee] = useState(2);
-	const [mood, setMood] = useState(2);
+	const [note, setNote] = useState("");
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [analysis, setAnalysis] = useState<DailyLogAnalysis | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
 	const generate = async () => {
-		const log = { sleep, coffee, mood };
+		const log = { note };
 		setIsGenerating(true);
 		setError(null);
 		setAnalysis(null);
@@ -44,10 +38,8 @@ export function useMyBrainLog(): UseMyBrainLog {
 	};
 
 	return {
-		log: { sleep, coffee, mood },
-		setSleep,
-		setCoffee,
-		setMood,
+		log: { note },
+		setNote,
 		isGenerating,
 		analysis,
 		error,

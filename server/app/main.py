@@ -11,8 +11,12 @@ from .routers.integrations import router as integrations_router
 from .schemas import AffectedBrainSection, DailyLogAnalysis, MyBrainLog
 from .services.gemini import generate_daily_log_analysis, merge_sections
 from .services.insights import heuristic_sections
-from .services.summary_store import compute_trend, load_summaries
-from .services.vault import get_vault_id
+from .services.summary_store import (
+	compute_trend,
+	filter_disabled,
+	load_summaries,
+)
+from .services.vault import get_vault_id, list_disabled_providers
 from .settings import settings
 
 
@@ -55,11 +59,14 @@ async def analyze_my_brain(log: MyBrainLog, request: Request) -> DailyLogAnalysi
 				(today - timedelta(days=6)).isoformat(),
 				today.isoformat(),
 			)
+			summaries = filter_disabled(
+				summaries, await list_disabled_providers(vault_id)
+			)
 			if summaries and summaries[-1].date == today.isoformat():
 				summary = summaries[-1]
 			trend = compute_trend(summaries)
 	except Exception as e:
-		# enrichment is best-effort: analysis must work with sliders alone
+		# enrichment is best-effort: analysis must work with the note alone
 		logger.warning("My Brain enrichment failed: %s", e)
 		summary = None
 		trend = None
@@ -71,6 +78,6 @@ async def analyze_my_brain(log: MyBrainLog, request: Request) -> DailyLogAnalysi
 	except Exception as e:
 		raise HTTPException(status_code=502, detail=str(e)) from e
 
-	heuristic: list[AffectedBrainSection] = heuristic_sections(log, summary, trend)
+	heuristic: list[AffectedBrainSection] = heuristic_sections(summary, trend)
 	analysis.affectedSections = merge_sections(heuristic, analysis.affectedSections)
 	return analysis

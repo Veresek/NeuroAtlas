@@ -10,8 +10,6 @@ import {
 	useIntegrations,
 } from '../hooks/useIntegrations';
 
-const MOOD_LABELS = ['Awful', 'Bad', 'Neutral', 'Good', 'Great'];
-
 interface TodayDataPanelProps {
 	log: MyBrainLog;
 }
@@ -97,11 +95,6 @@ export function TodayDataPanel({ log }: TodayDataPanelProps) {
 			nutritionChips.push(`${Math.round(nutrition.alcohol_g)}g alcohol`);
 	}
 
-	const moodLabel =
-		log.mood >= 0 && log.mood < MOOD_LABELS.length
-			? MOOD_LABELS[log.mood]
-			: 'Unknown';
-
 	if (!summary && !anyConnected) {
 		return (
 			<div className='rounded-lg border border-gray-200/70 bg-gray-50/60 px-3 py-3'>
@@ -140,16 +133,14 @@ export function TodayDataPanel({ log }: TodayDataPanelProps) {
 				</div>
 			)}
 
-			<div>
-				<SourceTag source='Daily Log' />
-				<div className='flex flex-wrap gap-1.5 mt-1'>
-					<Chip label={`${log.sleep}h sleep`} />
-					<Chip
-						label={log.coffee === 0 ? 'no coffee' : `${log.coffee} coffees`}
-					/>
-					<Chip label={`Mood: ${moodLabel}`} />
+			{log.note && (
+				<div>
+					<SourceTag source='Daily Log' />
+					<p className='text-xs text-gray-600 leading-relaxed whitespace-pre-line mt-1'>
+						{log.note}
+					</p>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 }

@@ -4,6 +4,7 @@ export interface ProviderStatus {
 	provider: ProviderId;
 	connected: boolean;
 	connected_at: string | null;
+	enabled: boolean;
 }
 
 export interface Workout {
@@ -99,6 +100,17 @@ export function listProviders(): Promise<{ providers: ProviderStatus[] }> {
 export function disconnect(provider: ProviderId): Promise<{ ok: boolean }> {
 	return request(`/api/integrations/${provider}/disconnect`, {
 		method: 'POST',
+	});
+}
+
+export function setEnabled(
+	provider: ProviderId,
+	enabled: boolean,
+): Promise<{ ok: boolean; enabled: boolean }> {
+	return request(`/api/integrations/${provider}/toggle`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ enabled }),
 	});
 }
 

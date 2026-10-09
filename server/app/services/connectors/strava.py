@@ -65,6 +65,14 @@ def activities_to_fragments(activities: list[dict]) -> list[HealthFragment]:
 class StravaConnector(Connector):
 	provider = "strava"
 
+	@property
+	def is_configured(self) -> bool:
+		return bool(settings.strava_client_id and settings.strava_client_secret)
+
+	@property
+	def config_hint(self) -> str:
+		return "STRAVA_CLIENT_ID / STRAVA_CLIENT_SECRET"
+
 	def build_authorize_url(self, state: str) -> str:
 		query = urlencode(
 			{

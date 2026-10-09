@@ -59,6 +59,16 @@ def entries_to_fragment(payload: dict, day: str) -> Optional[HealthFragment]:
 class FatSecretConnector(Connector):
 	provider = "fatsecret"
 
+	@property
+	def is_configured(self) -> bool:
+		return bool(
+			settings.fatsecret_client_id and settings.fatsecret_client_secret
+		)
+
+	@property
+	def config_hint(self) -> str:
+		return "FATSECRET_CLIENT_ID / FATSECRET_CLIENT_SECRET"
+
 	def build_authorize_url(self, state: str) -> str:
 		query = urlencode(
 			{

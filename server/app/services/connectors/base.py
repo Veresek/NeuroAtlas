@@ -24,6 +24,16 @@ class ProviderToken(BaseModel):
 class Connector(ABC):
 	provider: str
 
+	@property
+	def is_configured(self) -> bool:
+		"""False when the provider's env credentials are missing or partial."""
+		return True
+
+	@property
+	def config_hint(self) -> str:
+		"""Env var names a deployment must set to enable this provider."""
+		return ""
+
 	@abstractmethod
 	def build_authorize_url(self, state: str) -> str: ...
 
