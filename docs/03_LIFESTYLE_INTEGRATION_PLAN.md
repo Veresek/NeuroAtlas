@@ -1,19 +1,30 @@
-# Lifestyle integrations (sleep, activity, nutrition)
+# Lifestyle data (sleep, activity, nutrition) — deferred providers backlog
 
-> **Status:** Phases A–C implemented (2026-10) for **Strava** (exercise) + **FatSecret** (nutrition) — see `docs/superpowers/specs/2026-10-04-lifestyle-integrations-strava-fatsecret-design.md`. Oura/Garmin/Fitbit/Google Fit, Open Food Facts, and webhooks remain deferred; new providers plug into `server/app/services/connectors/` via the `Connector` interface.
-> **Related:** [01_MVP_SCOPE.md](01_MVP_SCOPE.md), [02_AI_AND_FUTURE.md](02_AI_AND_FUTURE.md)
-
-Pull objective lifestyle data from third-party APIs so Digital Twin and Gemini analysis are not limited to the three-field Daily Log (`sleep`, `coffee`, `mood`).
+> **Status:** **Nothing is integrated.** A Strava + FatSecret implementation was built in 2026-10 (phases A–B) and **removed on 2026-10-09** as rollout step 0 of [the atlas-grounded accuracy design](superpowers/specs/2026-10-09-my-brain-atlas-grounded-accuracy-design.md). Its connectors, OAuth router, encrypted token vault, `daily_health_summaries` store and the Connected Apps panel no longer exist in the codebase. This document is a backlog of provider candidates plus the constraints any of them must respect.
+> **Related:** [01_MVP_SCOPE.md](01_MVP_SCOPE.md), [02_AI_AND_FUTURE.md](02_AI_AND_FUTURE.md), and §8 of the design above for the exact seam a provider plugs into.
 
 ---
 
-## Constraints
+## Why the first attempt was removed
+
+| Finding | Consequence |
+| --- | --- |
+| No provider credentials ever existed in any environment — `server/.env` absent, root `.env` holds `GEMINI_API_KEY` only. | The connect flow worked in dev with fakes and could never work in production. A UI that advertises it is worse than no UI. |
+| Strava requires owning the device/account; FatSecret requires a developer key. Neither is something a visitor of `neuroatlas.info` will register to try the app. | Objective data could not be the foundation of the analysis. |
+| The heuristics fired only from provider fragments, so with no credentials they were dead code. | The accuracy work moved to grounding the analysis in the atlas the app already ships (`atlas.json`, `research.json`), where the input is the user's own note. |
+
+The product question that removed it: **accuracy came from grounding, not from more inputs.** Adding a provider later is still welcome — it must arrive with credentials and a test, not with a panel.
+
+---
+
+## Constraints that survive the removal
 
 | Rule | Detail |
 | --- | --- |
-| **No NeuroAtlas accounts** | No email/password, no social login to this app. |
-| **`agent/` is atlas ingestion only** | CLI pipeline that writes `client/src/data/atlas.json` and `research.json`. Runtime AI (`server/app/services/gemini.py`, `/api/my-brain/analyze`, any future chat) must not import, call, or reuse `agent/` code, prompts, or LangChain. Shared vocabulary (section names, `stimulates/depresses/damages/modulates`) lives in the server copy (`ALLOWED_SECTION_NAMES`), not in `agent/schemas.py`. |
+| **No NeuroAtlas accounts** | No email/password, no social login. Identity is the anonymous HttpOnly `na_vault` cookie (UUID), minted by `POST /api/my-brain/analyze`. |
+| **`agent/` is atlas ingestion only** | CLI pipeline that writes `client/src/data/atlas.json` and `research.json`. Runtime AI (`server/app/services/gemini.py`, `/api/my-brain/analyze`, any future chat) must not import, call, or reuse `agent/` code, prompts, or LangChain. |
 | Education, not medical advice | Same as the current Gemini system prompt. |
+| No claims the code cannot keep | UI copy must not promise sync, encryption or coverage that is not implemented. The removed panel said "encrypted on the server"; the notes in `daily_logs` are not encrypted, so copy must say what is stored and where instead. |
 
 ---
 
@@ -21,146 +32,64 @@ Pull objective lifestyle data from third-party APIs so Digital Twin and Gemini a
 
 | Piece | Today |
 | --- | --- |
-| User input | `MyBrainLog` = `{ sleep: 0–24h, coffee: 0–50, mood: 0–4 }` |
-| Runtime AI | `POST /api/my-brain/analyze` → Gemini via `build_user_message` |
-| Output | `message` + `affectedSections[]` |
-| Persistence | MongoDB planned; Daily Log is currently client-side |
-| Atlas data | Produced offline by `agent/`; consumed as static JSON |
+| User input | `MyBrainLog` = `{ note }` — one free-text field, plus confirm chips planned in Track B |
+| Signals | `DailySignals` (Track B), produced from prose or a tap, with per-field provenance `confirmed > extracted` |
+| Runtime AI | `POST /api/my-brain/analyze` → one grounded Gemini call |
+| Output | `message` + `affectedSections[]` resolved in code from `atlas.json`, never invented by the model |
+| Persistence | MongoDB (`daily_logs` from Track D); no provider collections |
+| Atlas data | Produced offline by `agent/`; consumed as static JSON, baked into the server image at build time |
 
 ---
 
-## Data we actually need
-
-Map to neuro-relevant signals (dopamine, cortisol, serotonin, melatonin, adenosine, BDNF, GABA/glutamate, glucose). Keep Daily Log as the subjective overlay.
-
-| Group | Fields | Why |
-| --- | --- | --- |
-| Sleep | bedtime/wake, duration, REM/deep/light, efficiency, night HRV | melatonin, adenosine, hippocampus, mood |
-| Activity | steps, workouts (type, min, HR zones), calories, resting HR, HRV, readiness | BDNF, dopamine, cortisol |
-| Nutrition | calories, macros, caffeine mg, water ml, alcohol g | glucose, serotonin, adenosine |
-| Stress / vitals | stress score, HRV trend, skin temp if present | cortisol, amygdala vs prefrontal |
-
-Canonical day record (merge all connectors + Daily Log):
-
-```ts
-interface DailyHealthSummary {
-  date: string; // YYYY-MM-DD
-  sources: string[];
-  sleep?: { durationH: number; deepH: number; remH: number; efficiency: number };
-  activity?: {
-    steps: number;
-    activeMinutes: number;
-    caloriesBurned: number;
-    workouts: { type: string; durationMin: number; calories: number; avgHr?: number }[];
-  };
-  nutrition?: {
-    calories: number; proteinG: number; carbsG: number; fatG: number;
-    caffeineMg: number; waterMl: number; alcoholG: number;
-  };
-  vitals?: { restingHr: number; hrvMs: number; stressLevel?: number; bodyBattery?: number };
-  mood?: number; // 0–4 from Daily Log
-}
-```
-
-Deduplicate on `(source, external_id, date)`. Sanity-check (sleep ≤ 24h, etc.). Store one doc per vault per day.
-
----
-
-## Connectors
+## Provider candidates
 
 Start with **web OAuth** providers. Skip Apple HealthKit and Android Health Connect until a native shell exists (neither is reachable from a browser).
 
 | Prio | Provider | Data | Auth | Notes |
 | --- | --- | --- | --- | --- |
-| 1 | Strava | workouts | OAuth2 + PKCE | Easiest web win |
+| 1 | Strava | workouts | OAuth2 + PKCE | Easiest web win — the connector is already designed, see git history up to 2026-10-09 |
 | 1 | Google Fit REST | sleep, activity, HR | OAuth2 | Being replaced by Health Connect; use while the REST API still works |
-| 2 | Oura | sleep, HRV, readiness | OAuth2, webhooks | Best sleep quality |
+| 2 | Oura | sleep, HRV, readiness | OAuth2, webhooks | Best sleep quality; needs an approved developer app |
 | 2 | Garmin | training, sleep, HRV, body battery | OAuth | Strong athlete coverage |
 | 3 | Whoop / Fitbit | HRV, strain, sleep | OAuth2 / webhooks | Fitbit Web API access is restricted for new apps — verify before building |
 | 3 | Cronometer / Yazio / MFP | meals, macros | OAuth or export | Nutrition; APIs vary |
 | — | Open Food Facts | barcode → nutrients | none | Enrich manual food entries |
 
-Each provider is a separate connector that emits `DailyHealthSummary` fragments. Sync on demand when the user opens Digital Twin (polling every 6–12h is optional later). Prefer pull-on-open over webhooks in a no-account app (webhooks need a stable server-side subscriber).
+Webhooks: still deferred. They need a stable `vault_id` that outlives cookie rotation, which an anonymous cookie does not give us.
+
+---
+
+## Data worth having
+
+Signal groups worth mapping to neuro-relevant mechanisms (dopamine, cortisol, serotonin, melatonin, adenosine, BDNF, GABA/glutamate, glucose):
+
+| Group | Fields | Why |
+| --- | --- | --- |
+| Sleep | bedtime/wake, duration, REM/deep/light, efficiency, night HRV | melatonin, adenosine, hippocampus, mood |
+| Activity | steps, workouts (type, min, HR zones), calories, resting HR, HRV, readiness | BDNF, dopamine, cortisol |
+| Nutrition | caffeine mg, alcohol g, water ml, macros | glucose, serotonin, adenosine |
+| Stress / vitals | stress score, HRV trend, skin temp if present | cortisol, amygdala vs prefrontal |
+
+A provider does **not** get to define the schema: it maps its payload onto `DailySignals` (§5 of the design) and becomes a third provenance tier (`confirmed > fragment > extracted`). The old `DailyHealthSummary` shape is gone; `agent/`-side atlas coverage decides what is even usable — sleep architecture and HRV currently have no atlas item, so they cannot light a region yet.
 
 ---
 
 ## Identity and OAuth without accounts
 
-Third-party OAuth still produces **per-user refresh tokens**. NeuroAtlas does not have users. Those two facts are compatible if identity is a **browser vault**, not a person.
+Third-party OAuth produces per-user refresh tokens while NeuroAtlas has no users. Compatible if identity is a **browser vault**, not a person — this part of the 2026-10 design still holds:
 
-**Are accounts required?** No. They become useful only for multi-device sync, durable webhooks, or GDPR requests that must follow a person across browsers. None of that is in scope.
+1. App credentials live in server env only.
+2. The opaque `vault_id` cookie is a device session, not an account.
+3. Refresh tokens must be encrypted at rest (AES-256-GCM with `HKDF(SERVER_TOKEN_KEY, vault_id)`) and never sent to the client. **Note:** none of that machinery exists now — it was deleted with the connectors, and only a real provider justifies bringing it back.
+4. Never store provider tokens in `localStorage` (XSS-visible) and never attempt confidential-client OAuth in the browser.
 
-**Do not store tokens in `localStorage`.** XSS can read them. Most health APIs are **confidential clients** (`client_secret` cannot ship in the SPA), so the OAuth code exchange must happen on the server.
-
-### Recommended model: anonymous encrypted vault
-
-1. **App credentials** (`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, …) live in server env only.
-2. **Vault cookie.** On first “Connect Strava”, the server sets an HttpOnly, Secure, SameSite cookie: opaque `vault_id` (UUID). No email, no password, no login UI. This is a device session, not an account.
-3. **Token storage.** After the OAuth callback, encrypt `refresh_token` with AES-256-GCM. Key = `HKDF(SERVER_TOKEN_KEY, vault_id)`. Store `{ vault_id, provider, ciphertext, iv, expiry, scopes }` in MongoDB (`oauth_vaults`). Access tokens are short-lived and never sent to the client.
-4. **API use.** Connectors run on the server, keyed by the cookie. The client never sees provider tokens. Gemini receives only a minimized `DailyHealthSummary` + 7-day trend, same as today’s Daily Log path.
-5. **Revoke / wipe.** Disconnect calls the provider revoke endpoint, deletes the vault row. “Clear my data” deletes all `DailyHealthSummary` docs for that `vault_id` and the cookie.
-6. **New browser / cleared cookies.** Connections are gone. Optional later (still not an account): download a recovery file = encrypted export of vault records, unlockable with a locally generated passphrase stored only on the device.
-
-### Rejected alternatives
-
-| Approach | Why not |
-| --- | --- |
-| Tokens only in IndexedDB | Confidential-client OAuth cannot complete in the browser; refresh tokens are XSS-visible; no server sync |
-| Email/password “just for OAuth” | Contradicts the no-login product |
-| Encrypt tokens with a key that never leaves the device | Server cannot refresh in the background; still need a confidential-client callback, so complexity without much gain for pull-on-open |
-
-Webhooks (Oura, Whoop): defer. They need a stable `vault_id` that outlives cookie rotation. Poll-on-open is enough for Phase A–B.
-
----
-
-## Runtime AI (not `agent/`)
-
-Extend `build_user_message` in `server/app/services/gemini.py`. Input is Daily Log + today’s summary + 7-day averages. Require the model to cite the numbers. Do not pass raw provider payloads.
-
-```
-sleep_hours=6.2 (deep=1.1h, rem=1.4h, efficiency=0.72)
-coffee_cups=2  mood_label=Neutral
-steps=8200  workout=[running 35min avgHr=148]
-nutrition={calories:2100, protein:120g, caffeine:180mg, water:1800ml}
-vitals={restingHr:58, hrv:38ms, stress:42}
-trend_7d={sleep_avg:6.8, hrv_avg:45, stress_avg:55}
-```
-
-Deterministic insight layer (server, not `agent/`) can pre-map signals → `affectedSections` so Gemini stays consistent with the atlas language:
-
-| Signal | Likely effect |
-| --- | --- |
-| Sleep &lt; 6h / low efficiency | Frontal `depresses`, Amygdala `stimulates` (cortisol ↑) |
-| High REM (trend) | Hippocampus `stimulates` |
-| Cardio 30–60 min | Hippocampus + Nucleus Accumbens `stimulates` (BDNF / dopamine) |
-| High HRV / high body battery | Amygdala `depresses` |
-| Low HRV / high stress | Amygdala `stimulates`; chronic → Prefrontal `damages` |
-| Caffeine &gt; 200 mg | Thalamus `stimulates` (adenosine block) |
-| Alcohol | Brainstem `depresses` |
-| High-GI / sugar spike | Hypothalamus `modulates` |
-| Water &lt; ~1.5 L | Prefrontal `depresses` |
-
-Heuristics need a literature pass against `research.json` before shipping. They must be implemented in `server/`, not by invoking `agent/`.
-
----
-
-## Privacy
-
-- Explicit connect screen: what is pulled, why, retention. Revoke anytime.
-- Fetch only fields listed above.
-- Tokens encrypted at rest; Gemini gets minimized current + 7-day aggregates only.
-- GDPR for a vault: export and delete by `vault_id` (cookie / recovery file). No person-level identity unless accounts are added later.
+Rejected then, still rejected: email/password "just for OAuth"; device-only keys that prevent server-side refresh.
 
 ---
 
 ## Phases
 
-**A — Plumbing:** ✅ Done (2026-10). `DailyHealthSummary` + `oauth_vaults` in MongoDB; Strava + FatSecret connectors; connect/disconnect UI (Connected Apps panel); `GET /api/me/health?from=&to=` (cookie-scoped); `POST /api/integrations/sync`.
-
-**B — Insight:** ✅ Done (2026-10). Heuristic map (`server/app/services/insights.py`, anchored to atlas entries); richer Gemini prompt (today's summary + 7-day trend, numbers cited); source labels in the Twin's "Today's data" panel.
-
-**C — More connectors:** ⏸ Deferred. Oura, Garmin, one more nutrition source, Open Food Facts scan. Chat (`02_AI_AND_FUTURE.md` §A) using the same summary, still via server Gemini, never `agent/`.
-
+**A — Plumbing:** ❌ Removed (built 2026-10, deleted 2026-10-09).
+**B — Insight:** ❌ Removed with A; replaced by atlas grounding in the design above.
+**C — Providers:** ⏸ Blocked on the user registering a provider app and shipping credentials. Not blocked on code.
 **D — Optional:** Health Connect / HealthKit via a native wrapper; accounts only if multi-device demand appears.
-
-First build: vault + Strava + canonical schema, then fold the summary into `/api/my-brain/analyze`.

@@ -25,7 +25,7 @@ More details about the project specification can be found in the `docs/` folder:
 
 - [01_MVP_SCOPE.md](docs/01_MVP_SCOPE.md) - Features scope for the first release
 - [02_AI_AND_FUTURE.md](docs/02_AI_AND_FUTURE.md) - Scalability and future plans
-- [03_LIFESTYLE_INTEGRATION_PLAN.md](docs/03_LIFESTYLE_INTEGRATION_PLAN.md) - Integration plan for external lifestyle / nutrition / physical activity apps
+- [03_LIFESTYLE_INTEGRATION_PLAN.md](docs/03_LIFESTYLE_INTEGRATION_PLAN.md) - Deferred backlog of external lifestyle / nutrition / activity providers (nothing is integrated; why the first attempt was removed)
 
 ## Getting Started
 

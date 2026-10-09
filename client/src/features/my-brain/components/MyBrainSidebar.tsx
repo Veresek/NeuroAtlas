@@ -1,6 +1,5 @@
 import MyBrainIcon from '@/assets/my-brain.svg?react';
 import { Button } from '@/components/ui/Button';
-import { ConnectedAppsPanel } from '@/features/integrations/components/ConnectedAppsPanel';
 import { useMyBrain } from '../hooks/useMyBrain';
 
 interface MyBrainSidebarProps {
@@ -51,9 +50,6 @@ export function MyBrainSidebar({ onSelectItem }: MyBrainSidebarProps) {
 					</div>
 				</div>
 			</div>
-
-			{/* Third-party integrations */}
-			<ConnectedAppsPanel />
 
 			{/* Daily note */}
 			<div className='px-4 py-5 flex flex-col gap-2'>

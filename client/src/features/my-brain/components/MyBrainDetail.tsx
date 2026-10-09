@@ -2,7 +2,6 @@ import CloseIcon from '@/assets/close.svg?react';
 import ChevronDownIcon from '@/assets/chevron-down.svg?react';
 import MyBrainIcon from '@/assets/my-brain.svg?react';
 import { BrainSectionList } from '@/components/shared/BrainSectionList';
-import { TodayDataPanel } from '@/features/integrations/components/TodayDataPanel';
 import { useMyBrain } from '../hooks/useMyBrain';
 
 interface MyBrainDetailProps {
@@ -11,7 +10,7 @@ interface MyBrainDetailProps {
 }
 
 export function MyBrainDetail({ item, onClose }: MyBrainDetailProps) {
-	const { isGenerating, analysis, error, log } = useMyBrain();
+	const { isGenerating, analysis, error } = useMyBrain();
 
 	return (
 		<>
@@ -54,8 +53,6 @@ export function MyBrainDetail({ item, onClose }: MyBrainDetailProps) {
 						</p>
 					</div>
 				)}
-
-				{!isGenerating && <TodayDataPanel log={log} />}
 
 				{!isGenerating && error && (
 					<div className='rounded-lg border border-red-200 bg-red-50/80 px-3 py-3 text-red-800 text-xs leading-relaxed'>

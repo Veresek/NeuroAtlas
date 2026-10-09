@@ -8,9 +8,6 @@ from .settings import settings
 
 
 DB_NAME = "neuroatlas"
-VAULTS_COLLECTION = "oauth_vaults"
-SUMMARIES_COLLECTION = "daily_health_summaries"
-STATES_COLLECTION = "oauth_states"
 
 _client: Optional[Any] = None
 
@@ -30,15 +27,3 @@ def get_db() -> AsyncIOMotorDatabase:
 			settings.mongo_url, serverSelectionTimeoutMS=5000
 		)
 	return _client[DB_NAME]
-
-
-def get_vaults():
-	return get_db()[VAULTS_COLLECTION]
-
-
-def get_summaries():
-	return get_db()[SUMMARIES_COLLECTION]
-
-
-def get_states():
-	return get_db()[STATES_COLLECTION]
