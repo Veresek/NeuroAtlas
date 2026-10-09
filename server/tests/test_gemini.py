@@ -123,22 +123,24 @@ def test_parse_analysis_caps_affected_sections():
 
 
 def test_parse_analysis_keeps_one_entry_per_section():
-	# gemma repeats regions with conflicting effect types in a single answer.
+	# Live gemma answer: Hippocampus three times with three effect types, Amygdala
+	# twice with the same pair. A region list with repeats is not usable in the UI.
 	payload = {
 		"message": "text",
 		"affectedSections": [
 			{"section": "Frontal Lobe", "effectType": "depresses"},
+			{"section": "Hippocampus", "effectType": "modulates"},
 			{"section": "Amygdala", "effectType": "stimulates"},
-			{"section": "Frontal Lobe", "effectType": "stimulates"},
 			{"section": "Hippocampus", "effectType": "depresses"},
-			{"section": "Amygdala", "effectType": "damages"},
+			{"section": "Hippocampus", "effectType": "damages"},
+			{"section": "Amygdala", "effectType": "stimulates"},
 		],
 	}
 	analysis = parse_analysis(candidate_envelope(json.dumps(payload)))
 	assert [(s.section, s.effectType) for s in analysis.affectedSections] == [
 		("Frontal Lobe", "depresses"),
+		("Hippocampus", "modulates"),
 		("Amygdala", "stimulates"),
-		("Hippocampus", "depresses"),
 	]
 
 

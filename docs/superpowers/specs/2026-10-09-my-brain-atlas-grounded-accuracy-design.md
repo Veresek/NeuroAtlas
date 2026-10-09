@@ -372,6 +372,10 @@ Transport is separated too: `httpx.TransportError` becomes a retryable `503 "Gem
 
 Deliberately unchanged: `responseMimeType` + `responseSchema` (the endpoint does honor them — the object came back well-shaped; the trailing token is sampler noise, cheaper to ignore than to fight), `temperature: 0.7`, and the client's retry-on-`502`, which is right precisely because the sampler is nondeterministic: a second attempt can return clean JSON.
 
-Coverage: 15 tests, including the observed `…}\n``` ` shape, fences with leading prose, a response split across parts, the dedupe case, the cap, the timeout mapping, and each rejection branch. The dedupe and timeout cases were written against the pre-fix code, which returned the duplicates and the `502`-with-empty-`detail` respectively.
+Coverage: 15 tests, including the observed `…}\n``` ` shape, fences with leading prose, a response split across parts, the dedupe case, the cap, the timeout mapping, and each rejection branch. Process, stated exactly: the parse and timeout cases were each run RED against the unfixed code first (the timeout one failed as `assert 502 == 503`). The dedupe rule came out of a **successful live call on the pre-dedupe build**, which returned `Hippocampus` three times and `Amygdala` twice in a six-entry answer; the test encodes that response, so it is pinned to observed output rather than to imagination.
 
-**Still open at the time of writing:** upstream returned `503 high demand` for every attempt in the last few minutes, so the dedupe path has one live confirmation (the successful call above, before dedupe shipped) and no live call since. The behavior is covered by tests; re-check in the UI once the provider recovers.
+Live confirmation after the fix, two separate calls:
+- From the host, straight through `generate_daily_log_analysis` (pre-dedupe build): `503` on the first attempt, then `200` with an 808-character message — proving the parse fix — and the duplicated region list that motivated the dedupe rule.
+- Through the rebuilt container (`docker compose up -d --build --force-recreate --remove-orphans`, mongo service removed): `HTTP/1.1 200 OK`, three unique sections (`Frontal Lobe/depresses`, `Hippocampus/depresses`, `Hypothalamus/modulates`) and **no `Set-Cookie` at all** — the statelessness of §10.1 observed on the wire.
+
+The upstream still answers `503 high demand` on a fraction of attempts; that is its condition, not this bug, and it now arrives as a retryable 503 with a message instead of an empty-detail 502.
