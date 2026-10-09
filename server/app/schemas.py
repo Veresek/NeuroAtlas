@@ -1,15 +1,21 @@
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 BrainSectionEffectType = Literal["stimulates", "depresses", "damages", "modulates"]
 
 
 class MyBrainLog(BaseModel):
-	sleep: float = Field(..., ge=0, le=24)
-	coffee: float = Field(..., ge=0, le=50)
-	mood: int = Field(..., ge=0, le=4)
+	note: str = Field(..., min_length=1, max_length=2000)
+
+	@field_validator("note")
+	@classmethod
+	def note_must_not_be_blank(cls, value: str) -> str:
+		stripped = value.strip()
+		if not stripped:
+			raise ValueError("note must not be blank")
+		return stripped
 
 
 class AffectedBrainSection(BaseModel):

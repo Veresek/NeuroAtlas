@@ -1,18 +1,13 @@
 import MyBrainIcon from '@/assets/my-brain.svg?react';
-import { Slider } from '@/components/ui/Slider';
 import { Button } from '@/components/ui/Button';
 import { useMyBrain } from '../hooks/useMyBrain';
-
-const MOOD_LABELS = ['Awful', 'Bad', 'Neutral', 'Good', 'Great'];
-const MOOD_COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#00aaff'];
 
 interface MyBrainSidebarProps {
 	onSelectItem: (item: string, section: string) => void;
 }
 
 export function MyBrainSidebar({ onSelectItem }: MyBrainSidebarProps) {
-	const { log, setSleep, setCoffee, setMood, isGenerating, generate } =
-		useMyBrain();
+	const { log, setNote, isGenerating, generate } = useMyBrain();
 
 	const handleGenerate = async () => {
 		const today = new Date().toLocaleDateString('en-US', {
@@ -23,7 +18,6 @@ export function MyBrainSidebar({ onSelectItem }: MyBrainSidebarProps) {
 		onSelectItem(today, 'My Brain');
 		await generate();
 	};
-	const { sleep, coffee, mood } = log;
 
 	return (
 		<div className='flex-1 overflow-y-auto'>
@@ -57,42 +51,21 @@ export function MyBrainSidebar({ onSelectItem }: MyBrainSidebarProps) {
 				</div>
 			</div>
 
-			{/* Sliders */}
-			<div className='px-4 py-5 flex flex-col gap-7'>
-				<Slider
-					id='sleep-slider'
-					label='How many hours did you sleep?'
-					value={sleep}
-					min={0}
-					max={12}
-					step={0.5}
-					color='#00aaff'
-					displayValue={`${sleep}h`}
-					onChange={e => setSleep(Number(e.target.value))}
-				/>
-
-				<Slider
-					id='coffee-slider'
-					label='How many coffees did you drink?'
-					value={coffee}
-					min={0}
-					max={10}
-					step={1}
-					color='#f97316'
-					displayValue={coffee === 0 ? '—' : String(coffee)}
-					onChange={e => setCoffee(Number(e.target.value))}
-				/>
-
-				<Slider
-					id='mood-slider'
-					label='How is your mood?'
-					value={mood}
-					min={0}
-					max={4}
-					step={1}
-					color={MOOD_COLORS[mood]}
-					displayValue={MOOD_LABELS[mood]}
-					onChange={e => setMood(Number(e.target.value))}
+			{/* Daily note */}
+			<div className='px-4 py-5 flex flex-col gap-2'>
+				<label
+					htmlFor='day-note'
+					className='text-[13px] font-semibold text-gray-700'>
+					How was your day?
+				</label>
+				<textarea
+					id='day-note'
+					rows={5}
+					maxLength={2000}
+					value={log.note}
+					placeholder='e.g. slept 5h, three coffees by noon, long run in the evening, feeling a bit wired'
+					onChange={e => setNote(e.target.value)}
+					className='w-full resize-none rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#00aaff] focus:ring-2 focus:ring-[#00aaff]/20 transition-colors'
 				/>
 			</div>
 
@@ -103,7 +76,7 @@ export function MyBrainSidebar({ onSelectItem }: MyBrainSidebarProps) {
 					onClick={handleGenerate}
 					fullWidth
 					variant='primary'
-					disabled={isGenerating}>
+					disabled={isGenerating || !log.note.trim()}>
 					{isGenerating ? 'Generating...' : 'Generate'}
 				</Button>
 			</div>
