@@ -5,6 +5,7 @@ import re
 
 import httpx
 from fastapi import HTTPException
+from pydantic import ValidationError
 
 from ..schemas import AffectedBrainSection, DailyLogAnalysis, MyBrainLog
 from ..settings import settings
@@ -60,24 +61,6 @@ def build_user_message(log: MyBrainLog) -> str:
 MAX_AFFECTED_SECTIONS = 6
 
 
-def merge_sections(
-	heuristic: list[AffectedBrainSection],
-	gemini: list[AffectedBrainSection],
-) -> list[AffectedBrainSection]:
-	"""Heuristic sections first (deterministic, atlas-anchored), then Gemini's
-	new ones, capped at MAX_AFFECTED_SECTIONS."""
-	merged: list[AffectedBrainSection] = []
-	for entry in heuristic[:MAX_AFFECTED_SECTIONS]:
-		if entry not in merged:
-			merged.append(entry)
-	for entry in gemini:
-		if len(merged) >= MAX_AFFECTED_SECTIONS:
-			break
-		if entry not in merged:
-			merged.append(entry)
-	return merged
-
-
 def _schema() -> dict:
 	return {
 		"type": "object",
@@ -100,6 +83,59 @@ def _schema() -> dict:
 		},
 		"required": ["message", "affectedSections"],
 	}
+
+
+def _candidate_text(data: dict) -> str:
+	parts = (
+		(data.get("candidates") or [{}])[0].get("content") or {}
+	).get("parts") or []
+	return "".join(str(part.get("text") or "") for part in parts).strip()
+
+
+def _first_json_object(text: str) -> dict:
+	# gemma on this endpoint returns the object, then stray characters (a closing
+	# ``` fence, a newline plus a token), and sometimes prose before it. json.loads
+	# over the whole string rejects all of that as "Extra data".
+	candidates = [text]
+	if text.startswith("```"):
+		candidates.append(text.split("\n", 1)[-1])
+	brace = text.find("{")
+	if brace != -1:
+		candidates.append(text[brace:])
+	for candidate in candidates:
+		try:
+			value, _ = json.JSONDecoder().raw_decode(candidate.lstrip())
+		except ValueError:
+			continue
+		if isinstance(value, dict):
+			return value
+	raise ValueError("no JSON object in the model's text")
+
+
+def parse_analysis(data: dict) -> DailyLogAnalysis:
+	text = _candidate_text(data)
+	if not text:
+		raise HTTPException(status_code=502, detail="No analysis returned by Gemini.")
+
+	try:
+		payload = _first_json_object(text)
+	except ValueError as e:
+		raise HTTPException(status_code=502, detail="Invalid JSON returned by Gemini.") from e
+
+	try:
+		analysis = DailyLogAnalysis.model_validate(payload)
+	except ValidationError as e:
+		raise HTTPException(
+			status_code=502, detail="Unexpected analysis schema from Gemini."
+		) from e
+
+	unique: list[AffectedBrainSection] = []
+	for entry in analysis.affectedSections:
+		if not any(existing.section == entry.section for existing in unique):
+			unique.append(entry)
+
+	analysis.affectedSections = unique[:MAX_AFFECTED_SECTIONS]
+	return analysis
 
 
 async def generate_daily_log_analysis(log: MyBrainLog) -> DailyLogAnalysis:
@@ -127,8 +163,15 @@ async def generate_daily_log_analysis(log: MyBrainLog) -> DailyLogAnalysis:
 		},
 	}
 
-	async with httpx.AsyncClient(timeout=40) as client:
-		resp = await client.post(url, params=params, json=payload)
+	try:
+		async with httpx.AsyncClient(timeout=60) as client:
+			resp = await client.post(url, params=params, json=payload)
+	except httpx.TransportError as e:
+		# Timeouts and connection failures carry an empty str(), which used to
+		# reach the client as a 502 with no detail at all.
+		raise HTTPException(
+			status_code=503, detail="Gemini did not respond in time."
+		) from e
 
 	if resp.status_code in RETRYABLE_HTTP_STATUSES or RETRYABLE_MESSAGE.search(resp.text or ""):
 		# frontend already has retry; keep backend errors explicit
@@ -137,18 +180,5 @@ async def generate_daily_log_analysis(log: MyBrainLog) -> DailyLogAnalysis:
 	if not resp.is_success:
 		raise HTTPException(status_code=502, detail=f"Gemini error ({resp.status_code}).")
 
-	data = resp.json()
-	text = (
-		(data.get("candidates") or [{}])[0]
-		.get("content", {})
-		.get("parts", [{}])[0]
-		.get("text")
-	)
-	if not text or not str(text).strip():
-		raise HTTPException(status_code=502, detail="No analysis returned from Gemini.")
-
-	try:
-		return DailyLogAnalysis.model_validate(json.loads(text))
-	except Exception as e:
-		raise HTTPException(status_code=502, detail="Invalid JSON returned by Gemini.") from e
+	return parse_analysis(resp.json())
 
